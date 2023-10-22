@@ -15,4 +15,4 @@ deploy:
     name: production
     url: https://panel.movasagh.co
   only:
-    - main
+    - master
