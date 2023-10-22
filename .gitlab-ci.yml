@@ -1,0 +1,18 @@
+stages:
+  - deploy
+
+deploy:
+  image: alpine:latest
+  stage: deploy
+  tags:
+    - gitlab-org-docker
+  script:
+    - echo $ID_RSA
+    - chmod 0700 $ID_RSA
+    - apk update && apk add openssh-client
+    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP -p $SERVER_PORT "cd /opt/movasagh_frontend && git pull && docker-compose up -d --force-recreate --build"
+  environment:
+    name: production
+    url: https://panel.movasagh.co
+  only:
+    - main
