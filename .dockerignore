@@ -1,0 +1,8 @@
+.git
+.DS_Store
+node_modules
+!yarn-offline-mirror/
+!src/
+!package.json
+!yarn.lock
+!.yarnrc
