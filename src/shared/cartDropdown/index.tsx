@@ -4,14 +4,14 @@ import { Buy } from "react-iconly";
 import { useQuery } from "react-query";
 
 function CartDropdown() {
-  const { data, isLoading } = useQuery("cart-cart", () => getCartCart());
+  const { data } = useQuery("cart-cart", () => getCartCart());
   console.log(data);
   return (
     <Popover
       className="w-full sm:w-[430px] max-w-screen top-full shadow-card rounded-large"
       orientation="left"
       popoverBtn={
-        <PopoverButton className="btn btn-square btn-accent">
+        <PopoverButton className="btn btn-square btn-accent hover:bg-white decoration-transparent text-gray-800">
           <Buy />
         </PopoverButton>
       }
