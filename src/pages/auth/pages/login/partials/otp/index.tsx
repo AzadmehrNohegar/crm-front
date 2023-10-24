@@ -4,10 +4,12 @@ import {
 } from "@/api/account";
 import { RadialProgress } from "@/components/radialProgress";
 import { OtpInput } from "@/shared/otpInput";
+import { useAuthStore } from "@/store/auth";
 import { usePersianConvert } from "@/utils/usePersianConvert";
 import { FormEvent, useState } from "react";
 import { Edit } from "react-iconly";
 import { useMutation } from "react-query";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useCountdown, useEffectOnce } from "usehooks-ts";
 
@@ -19,6 +21,9 @@ interface IAuthLoginOtpProps {
 function AuthLoginOtp({ resetFlow, phone }: IAuthLoginOtpProps) {
   const [otpValue, setOtpValue] = useState("");
   const [error, setError] = useState(false);
+
+  const { loginUser } = useAuthStore();
+  const navigate = useNavigate();
 
   const { convertPersian2English } = usePersianConvert();
 
@@ -40,7 +45,12 @@ function AuthLoginOtp({ resetFlow, phone }: IAuthLoginOtpProps) {
 
   const verifyOtp = useMutation(postAccountAuthCheckOTP, {
     onSuccess: (res) => {
-      console.log(res);
+      const { access_token, refresh_token } = res?.data as {
+        access_token: string;
+        refresh_token: string;
+      };
+      loginUser(access_token, refresh_token);
+      navigate("/");
     },
     onError: () => {
       toast("رمز یکبار مصرف اشتباه است.", {

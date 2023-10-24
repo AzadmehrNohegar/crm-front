@@ -1,11 +1,13 @@
 import { postAccountAuthLoginPassword } from "@/api/account";
 import { Input } from "@/components/input";
 import { loginMethod } from "@/model";
+import { useAuthStore } from "@/store/auth";
 import { usePersianConvert } from "@/utils/usePersianConvert";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Show } from "react-iconly";
 import { useMutation } from "react-query";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 interface IAuthLoginPasswordProps {
@@ -21,6 +23,8 @@ interface IAuthLoginPasswordForm {
 function AuthLoginPassword({ changeStep, phone }: IAuthLoginPasswordProps) {
   const [isPassword, setIsPassword] = useState(true);
 
+  const navigate = useNavigate();
+  const { loginUser } = useAuthStore();
   const { convertPersian2English } = usePersianConvert();
 
   const {
@@ -36,10 +40,14 @@ function AuthLoginPassword({ changeStep, phone }: IAuthLoginPasswordProps) {
 
   const passwordLogin = useMutation(postAccountAuthLoginPassword, {
     onSuccess: (res) => {
-      console.log(res);
+      const { access_token, refresh_token } = res?.data as {
+        access_token: string;
+        refresh_token: string;
+      };
+      loginUser(access_token, refresh_token);
+      navigate("/");
     },
     onError: () => {
-      console.log("darizer");
       toast("شماره موبایل یا رمز عبور اشتباه است.", {
         type: "error",
       });
@@ -67,7 +75,7 @@ function AuthLoginPassword({ changeStep, phone }: IAuthLoginPasswordProps) {
       </span>
       <Input
         type={isPassword ? "password" : "text"}
-        className="input input-bordered w-full h-10 sm:h-12 ltr text-end"
+        className="input input-bordered w-full ltr text-end"
         label="رمز عبور"
         placeholder="رمز عبور را وارد کنید"
         error={errors.password}

@@ -6,7 +6,7 @@ import tsconfigPaths from "vite-tsconfig-paths";
 export default defineConfig({
   plugins: [react(), tsconfigPaths()],
   optimizeDeps: {
-    exclude: ["chart.js"],
+    exclude: ["chart.js", "react-loading-skeleton"],
   },
   define: { global: "window" },
 });

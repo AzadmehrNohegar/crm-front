@@ -74,7 +74,7 @@ function AuthLoginCredentials({
       </span>
       <Input
         type="text"
-        className="input input-bordered w-full h-10 sm:h-12 ltr text-end"
+        className="input input-bordered w-full ltr text-end"
         label="شماره موبایل"
         placeholder="شماره موبایل را وارد کنید"
         error={errors.phone}

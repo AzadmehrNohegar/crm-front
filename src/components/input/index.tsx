@@ -8,22 +8,34 @@ interface IInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   containerClassName?: string;
   label?: string;
   iconEnd?: React.ReactNode;
+  block?: boolean;
 }
 
 const Input = forwardRef(
   (props: IInputProps, ref: React.ForwardedRef<HTMLInputElement>) => {
-    const { error, className, containerClassName, iconEnd, label, ...rest } =
-      props;
+    const {
+      error,
+      className,
+      containerClassName,
+      iconEnd,
+      block = true,
+      label,
+      ...rest
+    } = props;
     return (
       <div
-        className={clsx("flex items-start flex-col w-full", containerClassName)}
+        className={clsx(
+          "flex items-start flex-col",
+          block && " w-full",
+          containerClassName
+        )}
       >
         {label ? (
           <label className="label label-text">
             <span className="text-grey-500 text-xs">{label}</span>
           </label>
         ) : null}
-        <div className="flex items-center relative w-full">
+        <div className={clsx("flex items-center relative", block && " w-full")}>
           <input
             ref={ref}
             className={clsx("h-10 sm:h-12", className)}

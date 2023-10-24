@@ -1,8 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useAuthStore } from "@/store/auth";
 import axios, {
   AxiosError,
   AxiosInstance,
   AxiosRequestConfig,
   AxiosResponse,
+  InternalAxiosRequestConfig,
 } from "axios";
 import { toast } from "react-toastify";
 
@@ -27,19 +30,19 @@ const headers: Readonly<Record<string, string | boolean>> = {
   "Content-Type": "application/json; charset=utf-8",
 };
 
-// const injectToken = (
-//   config: InternalAxiosRequestConfig
-// ): InternalAxiosRequestConfig => {
-//   try {
-//     const token = useAuthStore.getState().access;
-//     if (token != "") {
-//       config.headers.Authorization = `Bearer ${token}`;
-//     }
-//     return config;
-//   } catch (error: unknown) {
-//     throw new Error(error);
-//   }
-// };
+const injectToken = (
+  config: InternalAxiosRequestConfig
+): InternalAxiosRequestConfig => {
+  try {
+    const token = useAuthStore.getState().access;
+    if (token != "") {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  } catch (error: unknown) {
+    throw new Error(error as string);
+  }
+};
 
 export class Http {
   private instance: AxiosInstance | null = null;
@@ -54,9 +57,9 @@ export class Http {
       headers,
     });
 
-    // http.interceptors.request.use(injectToken, (error) => {
-    //   return Promise.reject(error);
-    // });
+    http.interceptors.request.use(injectToken, (error) => {
+      return Promise.reject(error);
+    });
 
     http.interceptors.response.use(
       (response) => {
@@ -71,20 +74,20 @@ export class Http {
     return http;
   }
 
-  request<T = unknown, R = AxiosResponse<T>>(
+  request<T = any, R = AxiosResponse<T>>(
     config: AxiosCustomRequestConfig
   ): Promise<R> {
     return this.http.request(config);
   }
 
-  get<T = unknown, R = AxiosResponse<T>>(
+  get<T = any, R = AxiosResponse<T>>(
     url: string,
     config?: AxiosCustomRequestConfig
   ): Promise<R> {
     return this.http.get<T, R>(url, config);
   }
 
-  post<T = unknown, R = AxiosResponse<T>>(
+  post<T = any, R = AxiosResponse<T>>(
     url: string,
     data?: T,
     config?: AxiosCustomRequestConfig
@@ -92,7 +95,7 @@ export class Http {
     return this.http.post<T, R>(url, data, config);
   }
 
-  put<T = unknown, R = AxiosResponse<T>>(
+  put<T = any, R = AxiosResponse<T>>(
     url: string,
     data?: T,
     config?: AxiosCustomRequestConfig
@@ -100,7 +103,7 @@ export class Http {
     return this.http.put<T, R>(url, data, config);
   }
 
-  patch<T = unknown, R = AxiosResponse<T>>(
+  patch<T = any, R = AxiosResponse<T>>(
     url: string,
     data?: T,
     config?: AxiosCustomRequestConfig
@@ -108,7 +111,7 @@ export class Http {
     return this.http.patch<T, R>(url, data, config);
   }
 
-  delete<T = unknown, R = AxiosResponse<T>>(
+  delete<T = any, R = AxiosResponse<T>>(
     url: string,
     config?: AxiosCustomRequestConfig
   ): Promise<R> {
@@ -117,20 +120,20 @@ export class Http {
 
   private handleUnauthorized = (error: AxiosError) => {
     const { config } = error;
-    console.log(config);
-    // if (useAuthStore.getState().refresh) {
-    //   useAuthStore
-    //     .getState()
-    //     .refreshUser()
-    //     .then(() => this.http.request(config))
-    //     .catch(() => useAuthStore.getState().logoutUser());
-    // }
+    console.log(useAuthStore.getState().refresh);
+    if (useAuthStore.getState().refresh) {
+      useAuthStore
+        .getState()
+        .refreshUser()
+        .then(() => this.http.request(config as AxiosRequestConfig))
+        .catch(() => useAuthStore.getState().logoutUser());
+    }
   };
 
   private handleError(error: AxiosError) {
-    const { status } = error;
+    const { response } = error;
 
-    switch (status) {
+    switch (response?.status) {
       case StatusCode.ServerDown: {
         toast("خطا در اتصال به سرور.", {
           type: "error",

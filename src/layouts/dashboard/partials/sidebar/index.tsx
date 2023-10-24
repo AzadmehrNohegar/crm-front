@@ -1,0 +1,121 @@
+import { Fragment } from "react";
+import { Bag, Calling, Chart, Home, Logout, Notification } from "react-iconly";
+import { NavLink } from "react-router-dom";
+import clsx from "clsx";
+
+function DashboardSidebar() {
+  return (
+    <aside className="w-1/6 bg-grey-50 h-full rounded-l-[30px]">
+      <ul className="w-full h-full py-8 flex flex-col gap-y-5">
+        <li>
+          <NavLink
+            to="/"
+            end
+            className={({ isActive }) =>
+              clsx(
+                "flex items-center gap-x-2 ms-6 p-5 transition-colors hover:bg-grey-100 rounded-r-[50px]",
+                isActive && "text-primary bg-white"
+              )
+            }
+          >
+            {({ isActive }) => (
+              <Fragment>
+                <Home filled={isActive} />
+                صفحه اصلی
+              </Fragment>
+            )}
+          </NavLink>
+        </li>
+        <li>
+          <NavLink
+            to="/products"
+            end
+            className={({ isActive }) =>
+              clsx(
+                "flex items-center gap-x-2 ms-6 p-5 transition-colors hover:bg-grey-100 rounded-r-[50px]",
+                isActive && "text-primary bg-white"
+              )
+            }
+          >
+            {({ isActive }) => (
+              <Fragment>
+                <Bag filled={isActive} />
+                محصولات
+              </Fragment>
+            )}
+          </NavLink>
+        </li>
+        <li>
+          <NavLink
+            to="/reports"
+            end
+            className={({ isActive }) =>
+              clsx(
+                "flex items-center gap-x-2 ms-6 p-5 transition-colors hover:bg-grey-100 rounded-r-[50px]",
+                isActive && "text-primary bg-white"
+              )
+            }
+          >
+            {({ isActive }) => (
+              <Fragment>
+                <Chart filled={isActive} />
+                گزارشات
+              </Fragment>
+            )}
+          </NavLink>
+        </li>
+        <li>
+          <NavLink
+            to="/support"
+            end
+            className={({ isActive }) =>
+              clsx(
+                "flex items-center gap-x-2 ms-6 p-5 transition-colors hover:bg-grey-100 rounded-r-[50px]",
+                isActive && "text-primary bg-white"
+              )
+            }
+          >
+            {({ isActive }) => (
+              <Fragment>
+                <Calling filled={isActive} />
+                پشتیبانی
+              </Fragment>
+            )}
+          </NavLink>
+        </li>
+        <li className="mt-auto">
+          <NavLink
+            to="/notifications"
+            end
+            className={({ isActive }) =>
+              clsx(
+                "flex items-center gap-x-2 ms-6 p-5 transition-colors hover:bg-grey-100 rounded-r-[50px]",
+                isActive && "text-primary bg-white"
+              )
+            }
+          >
+            {({ isActive }) => (
+              <Fragment>
+                <Notification filled={isActive} />
+                پیام‌های سیستم
+                <span className="badge badge-warning inline-block ms-auto px-1 text-grey-800 text-[10px]">
+                  12
+                </span>
+              </Fragment>
+            )}
+          </NavLink>
+        </li>
+        <li>
+          <button
+            className={clsx("flex text-danger items-center gap-x-2 ms-6 p-5")}
+          >
+            <Logout />
+            خروج از حساب کاربری
+          </button>
+        </li>
+      </ul>
+    </aside>
+  );
+}
+
+export { DashboardSidebar };

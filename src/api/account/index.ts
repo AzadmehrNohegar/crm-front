@@ -23,3 +23,13 @@ export const postAccountAuthRegistration = async ({
 }: AxiosCustomRequestConfig) => {
   return await http.post("/account/auth/registration/", body);
 };
+
+export const postAccountAuthRefreshToken = async ({
+  body,
+}: AxiosCustomRequestConfig) => {
+  return await http.post("/account/auth/refresh-token/", body);
+};
+
+export const getAccountMyProfile = async () => {
+  return await http.get("/account/account/my_profile/");
+};
