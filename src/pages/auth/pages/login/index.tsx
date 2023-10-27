@@ -31,8 +31,12 @@ function AuthLogin() {
           />
         ) : null}
       </div>
-      <div className="w-7/12 py-6">
-        <img src="/images/auth-bg1.png" alt="auth bg" />
+      <div className="w-7/12">
+        <img
+          src="/images/auth-bg1.png"
+          className="max-h-[95vh] mx-auto"
+          alt="auth bg"
+        />
       </div>
     </main>
   );

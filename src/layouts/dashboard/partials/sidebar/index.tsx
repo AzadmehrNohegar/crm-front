@@ -1,5 +1,12 @@
 import { Fragment } from "react";
-import { Bag, Calling, Chart, Home, Logout, Notification } from "react-iconly";
+import {
+  Bag,
+  Calling,
+  Bookmark,
+  Home,
+  Logout,
+  Notification,
+} from "react-iconly";
 import { NavLink } from "react-router-dom";
 import clsx from "clsx";
 
@@ -47,7 +54,7 @@ function DashboardSidebar() {
         </li>
         <li>
           <NavLink
-            to="/reports"
+            to="/orders"
             end
             className={({ isActive }) =>
               clsx(
@@ -58,8 +65,8 @@ function DashboardSidebar() {
           >
             {({ isActive }) => (
               <Fragment>
-                <Chart filled={isActive} />
-                گزارشات
+                <Bookmark filled={isActive} />
+                سفارشات
               </Fragment>
             )}
           </NavLink>

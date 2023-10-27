@@ -10,20 +10,27 @@ export default {
       },
       height: {
         container: "calc(100vh - 89px)",
+        innerContainer: "calc(100vh - 129px)",
         extended: "calc(16px + 1.6rem)",
       },
       maxHeight: {
         container: "calc(100vh - 89px)",
+        innerContainer: "calc(100vh - 129px)",
       },
       width: {
         container: "calc(5/6 * 100% - 2.5rem)",
         extended: "calc(100% + 16px)",
+      },
+      borderRadius: {
+        custom: "20px",
       },
       boxShadow: {
         ev1: "0px 2px 4px 1px rgba(30, 30, 30, 0.04), 0px 1px 1px 0px rgba(30, 30, 30, 0.02)",
         ev2: "0px 4px 10px 0px rgba(30, 30, 30, 0.08), 0px 1px 4px 0px rgba(30, 30, 30, 0.04)",
         ev3: "0px 8px 32px 0px rgba(30, 30, 30, 0.08), 0px 2px 20px 0px rgba(30, 30, 30, 0.04)",
         ev4: "0px 24px 60px 0px rgba(30, 30, 30, 0.12), 0px 8px 20px 0px rgba(30, 30, 30, 0.06)",
+        header:
+          "0px 8px 32px 0px rgba(46, 51, 56, 0.08), 0px 2px 20px 0px rgba(46, 51, 56, 0.04)",
       },
       colors: {
         primary: {

@@ -15,7 +15,6 @@ interface IProductCardProps extends product {
 }
 
 function ProductCard({
-  api_origin,
   category,
   image,
   name,
@@ -30,7 +29,7 @@ function ProductCard({
 
   const createCartItem = useMutation(postCartCartItem, {
     onSuccess: () => {
-      queryClient.invalidateQueries(api_origin);
+      queryClient.invalidateQueries();
     },
   });
 
@@ -71,8 +70,6 @@ function ProductCard({
         setIsSelectStateOpen(false);
       });
 
-  console.log(product_price);
-
   return (
     <div
       className={clsx(
@@ -81,15 +78,15 @@ function ProductCard({
       )}
     >
       <Link
-        to={`products/${id}`}
-        className="shadow-ev2 w-full h-full rounded-[20px] py-5 px-4 flex flex-col gap-y-5 bg-white"
+        to={`/products/${id}`}
+        className="shadow-ev2 w-full h-full rounded-custom py-5 px-4 flex flex-col gap-y-5 bg-white"
       >
         <div className="flex items-center gap-x-4 justify-between">
           <img
             src={image}
             width={154}
             height={154}
-            className="rounded-[20px]"
+            className="rounded-custom"
             alt="product thumbnail"
           />
           {optimisticQuantity === 0 ? (
@@ -153,7 +150,7 @@ function ProductCard({
             </div>
           )}
         </div>
-        <span className="text-sm text-gray-600">
+        <span className="text-sm text-grey-600">
           {name}{" "}
           {serverSelectedPrice
             ? `- ${serverSelectedPrice.weight} ${
@@ -187,7 +184,7 @@ function ProductCard({
       <Transition
         show={isSelectStateOpen}
         as="div"
-        className="absolute w-full h-full flex flex-col bg-white bg-opacity-75 inset-0 rounded-[20px] p-4"
+        className="absolute w-full h-full flex flex-col bg-white bg-opacity-75 inset-0 rounded-custom p-4"
       >
         <div className="flex justify-end">
           <button

@@ -27,3 +27,9 @@ export const getProductCategory = async ({
 export const getProductBrand = async ({ params }: AxiosCustomRequestConfig) => {
   return await http.get("/product/brand/", { params });
 };
+
+export const getProductProductById = async ({
+  id,
+}: AxiosCustomRequestConfig) => {
+  return await http.get(`/product/product/${id}/`);
+};

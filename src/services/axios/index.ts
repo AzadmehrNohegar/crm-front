@@ -120,7 +120,6 @@ export class Http {
 
   private handleUnauthorized = (error: AxiosError) => {
     const { config } = error;
-    console.log(useAuthStore.getState().refresh);
     if (useAuthStore.getState().refresh) {
       useAuthStore
         .getState()

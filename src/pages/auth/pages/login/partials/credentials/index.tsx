@@ -64,7 +64,7 @@ function AuthLoginCredentials({
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="w-full flex flex-col items-start justify-center gap-y-4 border border-gray-200 rounded-[20px] p-5"
+      className="w-full flex flex-col items-start justify-center gap-y-4 border border-grey-200 rounded-custom p-5"
     >
       <h2 className="text-lg sm:text-xl font-bold text-grey-800">
         ورود به حساب کاربری
@@ -103,7 +103,7 @@ function AuthLoginCredentials({
         </button>
       </div>
       <div className="w-full flex items-center justify-center gap-x-8">
-        <span className="text-[13px] font-light text-gray-600">
+        <span className="text-[13px] font-light text-grey-600">
           حساب کاربری دارید؟
         </span>
         <Link

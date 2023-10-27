@@ -1,36 +1,42 @@
 import { getCartCart } from "@/api/cart";
 import { Popover, PopoverButton } from "@/components/popover";
+import { cart_item } from "@/model";
 import { Buy } from "react-iconly";
 import { useQuery } from "react-query";
+import { CartDropdownItem } from "./partials/cartDropdownItem";
+import { Link } from "react-router-dom";
 
 function CartDropdown() {
-  const { data } = useQuery("cart-cart", () => getCartCart());
-  console.log(data);
+  const { data: cartData } = useQuery("cart-cart", () => getCartCart());
+
   return (
     <Popover
-      className="w-full sm:w-[430px] max-w-screen top-full shadow-card rounded-large"
+      className="w-full sm:w-[430px] max-w-screen top-full shadow-card rounded-custom shadow-ev3 z-30"
       orientation="left"
       popoverBtn={
-        <PopoverButton className="btn btn-square btn-accent hover:bg-white decoration-transparent text-gray-800">
+        <PopoverButton className="btn btn-square btn-accent hover:bg-white decoration-transparent text-grey-800">
           <Buy />
         </PopoverButton>
       }
     >
-      <div className="my-4 flex items-center justify-between">
-        <h6 className="font-semibold text-base">لیست اعلانات</h6>
-        {/* <button className="text-primary">
-          علامت به عنوان خوانده شده
-        </button> */}
-      </div>
-      {/* <div className="divide-y max-h-96 overflow-y-auto">
-        {notif.map((item, index) => (
-          <NotificationItem item={item} key={index} />
+      <div className="my-4 flex flex-col gap-y-4 items-center h-96 overflow-y-auto divide-y">
+        {cartData?.data.results[0]?.cart_item?.map((item: cart_item) => (
+          <CartDropdownItem key={item.id} {...item} />
         ))}
-      </div> */}
-      <div className="border-t">
-        {/* <Link to="/notification" className="btn btn-link block my-4 w-full">
-          مشاهده همه
-        </Link> */}
+      </div>
+      <div className="flex items-center justify-between px-2 py-4 border-t border-t-grey-200">
+        <span className="text-sm">مبلغ قابل پرداخت</span>
+        <span className="bg-success-50 px-4 py-2 border-none text-xs text-grey-500 rounded-lg inline-flex gap-x-2 items-center">
+          <strong className="text-sm font-bold text-success-500">
+            {Number(cartData?.data.results[0]?.total_amount).toLocaleString()}
+          </strong>
+          تومان
+        </span>
+      </div>
+      <div className="pb-4">
+        <Link to="/checkout" className="btn btn-sm btn-block btn-primary">
+          تسویه حساب
+        </Link>
       </div>
     </Popover>
   );

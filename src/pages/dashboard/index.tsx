@@ -17,7 +17,7 @@ function Dashboard() {
         <div className="flex items-center justify-between gap-x-4 mt-6">
           <Link
             to="/products"
-            className="flex flex-col items-center justify-center gap-y-4 shadow-ev2 hover:shadow-ev3 w-full py-8 rounded-[20px] transition-all"
+            className="flex flex-col items-center justify-center gap-y-4 shadow-ev2 hover:shadow-ev3 w-full py-8 rounded-custom transition-all"
           >
             <div className="w-16 bg-grey-50 h-16 flex items-center justify-center rounded-xl p-2">
               <img src="/images/category-6.png" alt="category 6" />
@@ -26,7 +26,7 @@ function Dashboard() {
           </Link>
           <Link
             to="/products"
-            className="flex flex-col items-center justify-center gap-y-4 shadow-ev2 hover:shadow-ev3 w-full py-8 rounded-[20px] transition-all"
+            className="flex flex-col items-center justify-center gap-y-4 shadow-ev2 hover:shadow-ev3 w-full py-8 rounded-custom transition-all"
           >
             <div className="w-16 bg-grey-50 h-16 flex items-center justify-center rounded-xl p-2">
               <img src="/images/category-2.png" alt="category 2" />
@@ -35,7 +35,7 @@ function Dashboard() {
           </Link>
           <Link
             to="/products"
-            className="flex flex-col items-center justify-center gap-y-4 shadow-ev2 hover:shadow-ev3 w-full py-8 rounded-[20px] transition-all"
+            className="flex flex-col items-center justify-center gap-y-4 shadow-ev2 hover:shadow-ev3 w-full py-8 rounded-custom transition-all"
           >
             <div className="w-16 bg-grey-50 h-16 flex items-center justify-center rounded-xl p-2">
               <img src="/images/category-1.png" alt="category 1" />
@@ -44,7 +44,7 @@ function Dashboard() {
           </Link>
           <Link
             to="/products"
-            className="flex flex-col items-center justify-center gap-y-4 shadow-ev2 hover:shadow-ev3 w-full py-8 rounded-[20px] transition-all"
+            className="flex flex-col items-center justify-center gap-y-4 shadow-ev2 hover:shadow-ev3 w-full py-8 rounded-custom transition-all"
           >
             <div className="w-16 bg-grey-50 h-16 flex items-center justify-center rounded-xl p-2">
               <img src="/images/category-3.png" alt="category 3" />
@@ -53,7 +53,7 @@ function Dashboard() {
           </Link>
           <Link
             to="/products"
-            className="flex flex-col items-center justify-center gap-y-4 shadow-ev2 hover:shadow-ev3 w-full py-8 rounded-[20px] transition-all"
+            className="flex flex-col items-center justify-center gap-y-4 shadow-ev2 hover:shadow-ev3 w-full py-8 rounded-custom transition-all"
           >
             <div className="w-16 bg-grey-50 h-16 flex items-center justify-center rounded-xl p-2">
               <img src="/images/category-4.png" alt="category 4" />
@@ -62,7 +62,7 @@ function Dashboard() {
           </Link>
           <Link
             to="/products"
-            className="flex flex-col items-center justify-center gap-y-4 shadow-ev2 hover:shadow-ev3 w-full py-8 rounded-[20px] transition-all"
+            className="flex flex-col items-center justify-center gap-y-4 shadow-ev2 hover:shadow-ev3 w-full py-8 rounded-custom transition-all"
           >
             <div className="w-16 bg-grey-50 h-16 flex items-center justify-center rounded-xl p-2">
               <img src="/images/category-5.png" alt="category 5" />

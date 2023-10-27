@@ -13,7 +13,6 @@ function DashboardIntroProducts() {
       },
     })
   );
-  console.log(introProduct);
 
   if (isLoading) return <>...loading</>;
 

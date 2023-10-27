@@ -34,7 +34,7 @@ function ProductsList() {
           <div className="dropdown">
             <label
               tabIndex={0}
-              className="btn btn-ghost btn-link decoration-transparent text-gray-800"
+              className="btn btn-ghost btn-link decoration-transparent text-grey-800"
             >
               <Filter />
               مرتب سازی
@@ -65,7 +65,7 @@ function ProductsList() {
                 </button>
                 <button
                   onClick={() => {
-                    searchParams.set("ordering", "+product_price");
+                    searchParams.set("ordering", "product_price");
                     setSearchParams(searchParams);
                   }}
                 >

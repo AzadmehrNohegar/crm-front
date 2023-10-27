@@ -8,7 +8,7 @@ function AuthRegister() {
   return (
     <main className="flex h-screen items-center p-8 gap-x-6">
       <div className="w-5/12">
-        <div className="w-full flex flex-col items-start justify-center gap-y-4 border border-gray-200 rounded-[20px] p-5">
+        <div className="w-full flex flex-col items-start justify-center gap-y-4 border border-grey-200 rounded-custom p-5">
           <h2 className="text-lg sm:text-xl font-bold text-grey-800">
             تکمیل فرم درخواست حساب کاربری
           </h2>
@@ -40,8 +40,12 @@ function AuthRegister() {
           {type === "real" ? <AuthRegisterReal /> : null}
         </div>
       </div>
-      <div className="w-7/12 py-6">
-        <img src="/images/auth-bg1.png" alt="auth bg" />
+      <div className="w-7/12">
+        <img
+          src="/images/auth-bg1.png"
+          className="max-h-[95vh] mx-auto"
+          alt="auth bg"
+        />
       </div>
     </main>
   );

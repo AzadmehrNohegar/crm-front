@@ -28,7 +28,7 @@ function Select({
           className
         )}
       >
-        <Listbox.Button className="relative w-full text-start cursor-default rounded-lg border border-gray-200 py-3 ps-4 pe-10 focus:outline-none h-full min-h-[50px]">
+        <Listbox.Button className="relative w-full text-start cursor-default rounded-lg border border-grey-200 py-3 ps-4 pe-10 focus:outline-none h-full min-h-[50px]">
           <span className="block truncate">{selected}</span>
           <span className="pointer-events-none absolute inset-y-0 end-1 flex items-center pr-2 text-grey-600">
             <ChevronDown />

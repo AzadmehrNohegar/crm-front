@@ -1,6 +1,6 @@
 import { Transition } from "@headlessui/react";
 import clsx from "clsx";
-import React, { forwardRef } from "react";
+import React, { forwardRef, useId } from "react";
 import { FieldError } from "react-hook-form";
 
 interface IInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -20,8 +20,12 @@ const Input = forwardRef(
       iconEnd,
       block = true,
       label,
+      id,
       ...rest
     } = props;
+
+    const inputId = useId();
+
     return (
       <div
         className={clsx(
@@ -31,12 +35,13 @@ const Input = forwardRef(
         )}
       >
         {label ? (
-          <label className="label label-text">
+          <label htmlFor={id || inputId} className="label label-text">
             <span className="text-grey-500 text-xs">{label}</span>
           </label>
         ) : null}
         <div className={clsx("flex items-center relative", block && " w-full")}>
           <input
+            id={id || inputId}
             ref={ref}
             className={clsx("h-10 sm:h-12", className)}
             {...rest}

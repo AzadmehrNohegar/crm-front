@@ -83,7 +83,7 @@ function AuthLoginOtp({ resetFlow, phone }: IAuthLoginOtpProps) {
   return (
     <form
       onSubmit={onSubmit}
-      className="w-full flex flex-col items-start justify-center gap-y-4 border border-gray-200 rounded-[20px] p-5"
+      className="w-full flex flex-col items-start justify-center gap-y-4 border border-grey-200 rounded-custom p-5"
     >
       <h2 className="text-lg sm:text-xl font-bold text-grey-800">
         کد فعالسازی رو وارد کنید.

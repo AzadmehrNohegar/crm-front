@@ -24,21 +24,19 @@ function ProductListFilters() {
     })
   );
 
-  const {
-    data: brands,
-    isLoading,
-    isRefetching,
-  } = useQuery(["product-brands", brandSearchDebouced], () =>
-    getProductBrand({
-      params: {
-        page_size: 10,
-        search: brandSearchDebouced,
-      },
-    })
+  const { data: brands, isLoading } = useQuery(
+    ["product-brands", brandSearchDebouced],
+    () =>
+      getProductBrand({
+        params: {
+          page_size: 10,
+          search: brandSearchDebouced,
+        },
+      })
   );
 
   return (
-    <div className="w-1/4 flex flex-col gap-y-4 border rounded-[20px] py-5 px-4 h-fit overflow-y-auto sticky top-0">
+    <div className="w-1/4 flex flex-col gap-y-4 border rounded-custom py-5 px-4 h-fit overflow-y-auto sticky top-0">
       <div className="flex items-center justify-between">
         <h4 className="text-base font-bold">فیلترها</h4>
         <button className="btn btn-ghost text-danger px-0 btn-link decoration-transparent">
@@ -101,7 +99,7 @@ function ProductListFilters() {
             setSearchParams(searchParams);
           }}
         />
-        {isLoading || isRefetching ? (
+        {isLoading ? (
           <Skeleton count={2} height={40} />
         ) : (
           brands?.data.results.map((item: brand) => (

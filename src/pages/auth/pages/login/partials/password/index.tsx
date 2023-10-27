@@ -65,7 +65,7 @@ function AuthLoginPassword({ changeStep, phone }: IAuthLoginPasswordProps) {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="w-full flex flex-col items-start justify-center gap-y-4 border border-gray-200 rounded-[20px] p-5"
+      className="w-full flex flex-col items-start justify-center gap-y-4 border border-grey-200 rounded-custom p-5"
     >
       <h2 className="text-base sm:text-xl font-bold text-grey-800">
         ورود با رمز عبور
@@ -101,7 +101,7 @@ function AuthLoginPassword({ changeStep, phone }: IAuthLoginPasswordProps) {
       </button>
 
       <div className="w-full flex items-center justify-center gap-x-8">
-        <span className="text-[13px] font-light text-gray-600">ورود با</span>
+        <span className="text-[13px] font-light text-grey-600">ورود با</span>
         <button
           className="text-[13px] btn btn-ghost text-grey-800 font-bold"
           onClick={() => changeStep("otp")}

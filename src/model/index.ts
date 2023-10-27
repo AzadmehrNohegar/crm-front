@@ -72,6 +72,27 @@ export type product = {
   brand: number;
 };
 
+export type cart_item = {
+  id: number;
+  category_name: string;
+  quantity: number;
+  cart: number;
+  product_price: {
+    id: number;
+    weight: number;
+    measure_type: measure_type;
+    price: number;
+    discount_price: number;
+    tax: number;
+    product: {
+      id: number;
+      name: string;
+      image: string;
+    };
+    quantity: number;
+  };
+};
+
 export const MEASURE_TYPES: IDictionary<string> = {
   KILOGRAM: "کیلوگرم",
   GRAM: "گرم",
