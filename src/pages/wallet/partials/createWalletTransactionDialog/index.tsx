@@ -8,10 +8,15 @@ interface ICreateWalletTransactionDialogForm {
   description: string;
 }
 
+interface ICreateWalletTransactionDialogProps extends IExtendedDialogProps {
+  customer: number;
+}
+
 function CreateWalletTransactionDialog({
   closeModal,
   isOpen,
-}: IExtendedDialogProps) {
+  customer,
+}: ICreateWalletTransactionDialogProps) {
   const {
     register,
     handleSubmit,
@@ -24,7 +29,7 @@ function CreateWalletTransactionDialog({
   });
 
   const onSubmit = (values: ICreateWalletTransactionDialogForm) =>
-    console.log(values);
+    console.log(values, customer);
 
   return (
     <Dialog isOpen={isOpen} closeModal={closeModal} placement="center">

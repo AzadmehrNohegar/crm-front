@@ -7,10 +7,35 @@ import {
   Logout,
   Notification,
 } from "react-iconly";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import clsx from "clsx";
+import { useMutation } from "react-query";
+import { postAccountAuthLogout } from "@/api/account";
+import { useAuthStore } from "@/store/auth";
+import { toast } from "react-toastify";
 
 function DashboardSidebar() {
+  const navigate = useNavigate();
+
+  const { refresh, logoutUser } = useAuthStore();
+
+  const logoutAccount = useMutation(postAccountAuthLogout, {
+    onSuccess: () => {
+      toast("از حساب کاربری خود خارج شدید.", {
+        type: "info",
+      });
+      logoutUser();
+      navigate("/auth");
+    },
+  });
+
+  const handleLogout = () =>
+    logoutAccount.mutate({
+      body: {
+        refresh,
+      },
+    });
+
   return (
     <aside className="w-1/6 bg-grey-50 h-full rounded-l-[30px]">
       <ul className="w-full h-full py-8 flex flex-col gap-y-5">
@@ -115,6 +140,7 @@ function DashboardSidebar() {
         <li>
           <button
             className={clsx("flex text-danger items-center gap-x-2 ms-6 p-5")}
+            onClick={handleLogout}
           >
             <Logout />
             خروج از حساب کاربری

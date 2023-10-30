@@ -1,7 +1,7 @@
 import { postAccountAuthLoginOTP } from "@/api/account";
 import { Input } from "@/components/input";
 import { MOBILE_FORMAT } from "@/constants";
-import { loginMethod } from "@/model";
+import { login_method } from "@/model";
 import { usePersianConvert } from "@/utils/usePersianConvert";
 import { useForm } from "react-hook-form";
 import { useMutation } from "react-query";
@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 
 interface IAuthLoginCredentialsProps {
-  changeStep: (step: loginMethod) => void;
+  changeStep: (step: login_method) => void;
   persistPhone: (val: string) => void;
 }
 

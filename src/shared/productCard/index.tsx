@@ -1,4 +1,3 @@
-import { Close, Minus, Plus } from "@/assets/icons";
 import { useMemo, useState } from "react";
 import { Delete } from "react-iconly";
 import { Link } from "react-router-dom";
@@ -8,6 +7,9 @@ import { useMutation, useQueryClient } from "react-query";
 import { postCartCartItem } from "@/api/cart";
 import { Transition } from "@headlessui/react";
 import { RadioSelect } from "@/components/radioSelect";
+import { Plus } from "@/assets/icons/Plus";
+import { Minus } from "@/assets/icons/Minus";
+import { Close } from "@/assets/icons/Close";
 
 interface IProductCardProps extends product {
   api_origin: string;

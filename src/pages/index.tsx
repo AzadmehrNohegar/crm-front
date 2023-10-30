@@ -8,6 +8,7 @@ const DashboardPage = lazy(() => import("./dashboard"));
 const ProductsPage = lazy(() => import("./products"));
 const CheckoutPage = lazy(() => import("./checkout"));
 const WalletPage = lazy(() => import("./wallet"));
+const SupportPage = lazy(() => import("./support"));
 
 function BasePage() {
   return (
@@ -18,6 +19,7 @@ function BasePage() {
           <Route path="products/*" element={<ProductsPage />} />
           <Route path="checkout" element={<CheckoutPage />} />
           <Route path="wallet" element={<WalletPage />} />
+          <Route path="support/*" element={<SupportPage />} />
         </Route>
       </Route>
       <Route path="auth/*" element={<AuthPage />} />

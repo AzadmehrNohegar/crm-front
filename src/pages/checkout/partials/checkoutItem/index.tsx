@@ -2,10 +2,10 @@ import { postCartCartItem } from "@/api/cart";
 import { MEASURE_TYPES, cart_item } from "@/model";
 import { useState } from "react";
 import { Delete } from "react-iconly";
-import { Plus } from "@/assets/icons";
+import { Plus } from "@/assets/icons/Plus";
 import { useMutation, useQueryClient } from "react-query";
 import clsx from "clsx";
-import { Minus } from "@/assets/icons";
+import { Minus } from "@/assets/icons/Minus";
 
 function CheckoutItem({ category_name, product_price, quantity }: cart_item) {
   const [optimisticQuantity, setOptimisticQuantity] = useState(quantity);

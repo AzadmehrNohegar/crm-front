@@ -1,6 +1,6 @@
 import { postAccountAuthLoginPassword } from "@/api/account";
 import { Input } from "@/components/input";
-import { loginMethod } from "@/model";
+import { login_method } from "@/model";
 import { useAuthStore } from "@/store/auth";
 import { usePersianConvert } from "@/utils/usePersianConvert";
 import { useState } from "react";
@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 interface IAuthLoginPasswordProps {
-  changeStep: (step: loginMethod) => void;
+  changeStep: (step: login_method) => void;
   phone: string;
 }
 

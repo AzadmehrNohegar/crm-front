@@ -1,20 +1,26 @@
 import { getPaymentWalletTransaction } from "@/api/payment";
-import { Plus } from "@/assets/icons";
+import { Plus } from "@/assets/icons/Plus";
 import { Checkbox } from "@/components/checkbox";
 import { DatePicker } from "@/components/datepicker";
 import { Input } from "@/components/input";
 import { Popover, PopoverButton } from "@/components/popover";
 import { Pagination } from "@/shared/pagination";
 import { Fragment, useState } from "react";
-import { Filter2, Search, Swap, Wallet as WalletIcon } from "react-iconly";
+import { Filter2, Search, Wallet as WalletIcon } from "react-iconly";
 import { useQuery } from "react-query";
 import { useLocation, useSearchParams } from "react-router-dom";
 import { useDebounce } from "usehooks-ts";
 import { CreateWalletTransactionDialog } from "./partials/createWalletTransactionDialog";
+import { getAccountMyProfile } from "@/api/account";
+import { WalletTable } from "./partials/walletTable";
 
 function Wallet() {
   const [searchParams, setSearchParams] = useSearchParams();
   const { search: locationSearch } = useLocation();
+
+  const { data: userProfile } = useQuery("user-profile", () =>
+    getAccountMyProfile()
+  );
 
   const [
     isCreateWalletTransactionDialogOpen,
@@ -24,7 +30,7 @@ function Wallet() {
   const [search, setSearch] = useState("");
   const debouncedSearch = useDebounce(search, 200);
 
-  const { data: walletTransactions } = useQuery(
+  const { data: walletTransactions, isLoading } = useQuery(
     ["wallet-transactions", debouncedSearch, locationSearch],
     () =>
       getPaymentWalletTransaction({
@@ -56,7 +62,7 @@ function Wallet() {
             }
             className="w-full top-full rounded-lg shadow-ev3 inset-x-0"
           >
-            <div className="flex flex-wrap p-4 gap-x-4">
+            <div className="flex flex-wrap py-4 gap-x-4">
               <div className="flex flex-wrap items-start gap-x-2 gap-y-4 pe-4 border-e border-e-grey-200">
                 <DatePicker
                   range
@@ -142,145 +148,17 @@ function Wallet() {
             />
           </div>
           <div className="overflow-x-auto">
-            <table className="table table-auto text-start">
-              <thead className="bg-grey-50">
-                <tr>
-                  <th align="right">
-                    <span className="text-2xl font-light">#</span>
-                  </th>
-                  <th align="right">
-                    <span className="inline-flex items-center text-sm text-grey-800">
-                      شرح تراکنش
-                      <button className="btn btn-ghost btn-square btn-sm">
-                        <Swap />
-                      </button>
-                    </span>
-                  </th>
-                  <th align="right">
-                    <span className="inline-flex items-center text-sm text-grey-800">
-                      شماره تراکنش
-                      <button className="btn btn-ghost btn-square btn-sm">
-                        <Swap />
-                      </button>
-                    </span>
-                  </th>
-
-                  <th align="right">
-                    <span className="inline-flex items-center text-sm text-grey-800">
-                      نوع
-                      <button className="btn btn-ghost btn-square btn-sm">
-                        <Swap />
-                      </button>
-                    </span>
-                  </th>
-                  <th align="right">
-                    <span className="inline-flex items-center text-sm text-grey-800">
-                      مبلغ
-                      <button className="btn btn-ghost btn-square btn-sm">
-                        <Swap />
-                      </button>
-                    </span>
-                  </th>
-                  <th align="right">
-                    <span className="inline-flex items-center text-sm text-grey-800">
-                      زمان تراکنش
-                      <button className="btn btn-ghost btn-square btn-sm">
-                        <Swap />
-                      </button>
-                    </span>
-                  </th>
-                  <th align="right">
-                    <span className="inline-flex items-center text-sm text-grey-800">
-                      وضعیت
-                      <button className="btn btn-ghost btn-square btn-sm">
-                        <Swap />
-                      </button>
-                    </span>
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>1</td>
-                  <td>شارژ کیف پول برای خرید تیر</td>
-                  <td>1460</td>
-                  <td>
-                    <span className="text-success-400">واریز</span>
-                  </td>
-                  <td>1۴۵,000 تومان</td>
-                  <td>
-                    {new Intl.DateTimeFormat("fa-IR", {
-                      dateStyle: "short",
-                      timeStyle: "short",
-                    }).format(new Date())}
-                  </td>
-                  <td>
-                    <span className="text-success-400">موفق</span>
-                  </td>
-                </tr>
-                <tr>
-                  <td>1</td>
-                  <td>شارژ کیف پول برای خرید تیر</td>
-                  <td>1460</td>
-                  <td>
-                    <span className="text-success-400">واریز</span>
-                  </td>
-                  <td>1۴۵,000 تومان</td>
-                  <td>
-                    {new Intl.DateTimeFormat("fa-IR", {
-                      dateStyle: "short",
-                      timeStyle: "short",
-                    }).format(new Date())}
-                  </td>
-                  <td>
-                    <span className="text-success-400">موفق</span>
-                  </td>
-                </tr>
-                <tr>
-                  <td>1</td>
-                  <td>شارژ کیف پول برای خرید تیر</td>
-                  <td>1460</td>
-                  <td>
-                    <span className="text-success-400">واریز</span>
-                  </td>
-                  <td>1۴۵,000 تومان</td>
-                  <td>
-                    {new Intl.DateTimeFormat("fa-IR", {
-                      dateStyle: "short",
-                      timeStyle: "short",
-                    }).format(new Date())}
-                  </td>
-                  <td>
-                    <span className="text-success-400">موفق</span>
-                  </td>
-                </tr>
-                <tr>
-                  <td>1</td>
-                  <td>شارژ کیف پول برای خرید تیر</td>
-                  <td>1460</td>
-                  <td>
-                    <span className="text-success-400">واریز</span>
-                  </td>
-                  <td>1۴۵,000 تومان</td>
-                  <td>
-                    {new Intl.DateTimeFormat("fa-IR", {
-                      dateStyle: "short",
-                      timeStyle: "short",
-                    }).format(new Date())}
-                  </td>
-                  <td>
-                    <span className="text-success-400">موفق</span>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+            <WalletTable
+              wallet_transactions={walletTransactions?.data.results}
+              isLoading={isLoading}
+            />
           </div>
         </div>
         <Pagination
           count={walletTransactions?.data.count}
           next={walletTransactions?.data.next}
           page={+searchParams.get("page")! || 1}
-          perPage={+searchParams.get("page_size")! || 9}
+          perPage={+searchParams.get("page_size")! || 10}
           prev={walletTransactions?.data.prev}
           setPage={(val) => {
             searchParams.set("page", String(val));
@@ -290,12 +168,12 @@ function Wallet() {
             searchParams.set("page_size", String(val));
             setSearchParams(searchParams);
           }}
-          isEven
         />
       </div>
       <CreateWalletTransactionDialog
         isOpen={isCreateWalletTransactionDialogOpen}
         closeModal={() => setIsCreateWalletTransactionDialogOpen(false)}
+        customer={userProfile?.data.customer?.id}
       />
     </Fragment>
   );

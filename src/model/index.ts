@@ -7,29 +7,17 @@ export interface IExtendedDialogProps {
   closeModal: () => void;
 }
 
-export type toastType = "primary" | "secondary" | "error" | "info" | "success";
-
-export type toast = {
-  id: number;
-  title: string;
-  message: string;
-  options: {
-    type: toastType;
-  };
-};
-
 export type placement = "center" | "top";
 
 export type size = "standard" | "fit";
 
-export type submenuItem = {
-  to: string;
-  label: string;
-};
-
-export type loginMethod = "otp" | "password";
+export type login_method = "otp" | "password";
 
 export type measure_type = "KILOGRAM" | "GRAM";
+
+export type wallet_transaction_type = "deposit" | "withdraw";
+
+export type ticket_type = "new" | "processing" | "closed";
 
 export type category = {
   id: number;
@@ -91,6 +79,47 @@ export type cart_item = {
     };
     quantity: number;
   };
+};
+
+export type wallet_transaction = {
+  id: number;
+  amount: number;
+  type: wallet_transaction_type;
+  description: string;
+  created_date: string;
+  modified_date: string;
+  customer: number;
+};
+
+export type ticket = {
+  id: number;
+  new_massage: 0;
+  status: ticket_type;
+  title: string;
+  message: string;
+  file: string;
+  is_admin_ticket: boolean;
+  created_at: string;
+};
+
+export type ticket_reply = {
+  created_at: string;
+  file: string;
+  id: number;
+  is_admin_response: boolean;
+  is_seen: boolean;
+  message: string;
+};
+
+export const TICKET_STATUS_TYPE: IDictionary<string> = {
+  new: "جدید",
+  processing: "درحال بررسی",
+  closed: "بسته شده",
+};
+
+export const WALLET_TRANSACTION_TYPE: IDictionary<string> = {
+  deposit: "واریز",
+  withdraw: "برداشت",
 };
 
 export const MEASURE_TYPES: IDictionary<string> = {

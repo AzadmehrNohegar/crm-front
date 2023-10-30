@@ -7,7 +7,8 @@ import { useMutation, useQuery, useQueryClient } from "react-query";
 import { Link, Navigate, useParams } from "react-router-dom";
 import clsx from "clsx";
 import { postCartCartItem } from "@/api/cart";
-import { Minus, Plus } from "@/assets/icons";
+import { Minus } from "@/assets/icons/Minus";
+import { Plus } from "@/assets/icons/Plus";
 
 function ProductDetails() {
   const { productId } = useParams();

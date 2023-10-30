@@ -1,9 +1,7 @@
-import {
-  ArrowLeft,
-  ArrowRight,
-  DoubleArrowLeft,
-  DoubleArrowRight,
-} from "@/assets/icons";
+import { ArrowLeft } from "@/assets/icons/ArrowLeft";
+import { ArrowRight } from "@/assets/icons/ArrowRight";
+import { DoubleArrowLeft } from "@/assets/icons/DoubleArrowLeft";
+import { DoubleArrowRight } from "@/assets/icons/DoubleArrowRight";
 import { Select } from "@/components/select";
 import clsx from "clsx";
 

@@ -33,3 +33,9 @@ export const postAccountAuthRefreshToken = async ({
 export const getAccountMyProfile = async () => {
   return await http.get("/account/account/my_profile/");
 };
+
+export const postAccountAuthLogout = async ({
+  body,
+}: AxiosCustomRequestConfig) => {
+  return await http.post("/account/auth/logout/", body);
+};

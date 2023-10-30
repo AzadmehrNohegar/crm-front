@@ -2,11 +2,11 @@ import { postCartCartItem } from "@/api/cart";
 import { MEASURE_TYPES, cart_item } from "@/model";
 import { useState } from "react";
 import { Delete } from "react-iconly";
-import { Plus } from "@/assets/icons";
+import { Plus } from "@/assets/icons/Plus";
 import { useMutation, useQueryClient } from "react-query";
 import { Link } from "react-router-dom";
 import clsx from "clsx";
-import { Minus } from "@/assets/icons";
+import { Minus } from "@/assets/icons/Minus";
 
 function CartDropdownItem({
   category_name,

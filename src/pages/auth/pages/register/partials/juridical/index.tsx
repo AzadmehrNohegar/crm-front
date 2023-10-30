@@ -1,5 +1,5 @@
 import { postAccountAuthRegistration } from "@/api/account";
-import { Close } from "@/assets/icons";
+import { Close } from "@/assets/icons/Close";
 import { Input } from "@/components/input";
 import { useForm } from "react-hook-form";
 import { useMutation } from "react-query";
