@@ -1,5 +1,5 @@
 import {
-  getTicketTicketsById,
+  // getTicketTicketsById,
   getTicketTicketsReplyById,
   postTicketTicketsReplyById,
 } from "@/api/ticket";
@@ -49,11 +49,11 @@ function SupportDetails() {
     }
   );
 
-  const { data: ticket } = useQuery(`ticket-${ticket_id}`, () =>
-    getTicketTicketsById({
-      id: ticket_id,
-    })
-  );
+  // const { data: ticket } = useQuery(`ticket-${ticket_id}`, () =>
+  //   getTicketTicketsById({
+  //     id: ticket_id,
+  //   })
+  // );
 
   const {
     register,
