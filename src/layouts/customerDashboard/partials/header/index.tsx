@@ -6,9 +6,10 @@ import Skeleton from "react-loading-skeleton";
 import { Input } from "@/components/input";
 import { CartDropdown } from "@/shared/cartDropdown";
 
-function DashboardHeader() {
-  const { data: userProfile, isLoading } = useQuery("user-profile", () =>
-    getAccountMyProfile()
+function CustomerDashboardHeader() {
+  const { data: userProfile, isLoading: isUserProfileLoading } = useQuery(
+    "user-profile",
+    () => getAccountMyProfile()
   );
 
   const { pathname } = useLocation();
@@ -16,7 +17,7 @@ function DashboardHeader() {
   return (
     <header className="px-5 sticky top-0 bg-white w-full py-5 flex items-center border-b border-b-grey-200 gap-x-3 z-10">
       <Link to="/account" className="flex items-center">
-        {isLoading ? (
+        {isUserProfileLoading ? (
           <Skeleton width={144} height={16} />
         ) : (
           <span className="inline-block w-36">
@@ -32,7 +33,13 @@ function DashboardHeader() {
           <Wallet />
           موجودی کیف پول
           <span className="inline-flex items-center gap-x-2 ms-auto sm:ms-10">
-            <strong className="text-grey-800">0</strong>
+            <strong className="text-grey-800">
+              {isUserProfileLoading ? (
+                <Skeleton height={16} width={36} inline />
+              ) : (
+                Number(userProfile?.data.customer?.wallet).toLocaleString()
+              )}{" "}
+            </strong>
             تومان
           </span>
         </Link>
@@ -59,4 +66,4 @@ function DashboardHeader() {
   );
 }
 
-export { DashboardHeader };
+export { CustomerDashboardHeader };

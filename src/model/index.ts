@@ -19,6 +19,8 @@ export type wallet_transaction_type = "deposit" | "withdraw";
 
 export type ticket_type = "new" | "processing" | "closed";
 
+export type user_roles = "CUSTOMER" | "ADMIN";
+
 export type category = {
   id: number;
   name: string;

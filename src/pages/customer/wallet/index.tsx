@@ -13,13 +13,15 @@ import { useDebounce } from "usehooks-ts";
 import { CreateWalletTransactionDialog } from "./partials/createWalletTransactionDialog";
 import { getAccountMyProfile } from "@/api/account";
 import { WalletTable } from "./partials/walletTable";
+import Skeleton from "react-loading-skeleton";
 
 function Wallet() {
   const [searchParams, setSearchParams] = useSearchParams();
   const { search: locationSearch } = useLocation();
 
-  const { data: userProfile } = useQuery("user-profile", () =>
-    getAccountMyProfile()
+  const { data: userProfile, isLoading: isUserProfileLoading } = useQuery(
+    "user-profile",
+    () => getAccountMyProfile()
   );
 
   const [
@@ -50,7 +52,13 @@ function Wallet() {
             <WalletIcon />
             موجودی کیف پول
             <span className="inline-flex items-center gap-x-2 ms-auto sm:ms-10">
-              <strong className="text-grey-800">0</strong>
+              <strong className="text-grey-800">
+                {isUserProfileLoading ? (
+                  <Skeleton height={16} width={56} inline />
+                ) : (
+                  Number(userProfile?.data.customer?.wallet).toLocaleString()
+                )}{" "}
+              </strong>
               تومان
             </span>
           </span>

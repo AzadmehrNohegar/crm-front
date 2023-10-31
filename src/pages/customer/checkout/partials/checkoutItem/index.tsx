@@ -44,13 +44,13 @@ function CheckoutItem({ category_name, product_price, quantity }: cart_item) {
       <div className="w-full flex flex-col justify-between">
         <span className="text-sm font-bold">{product_price.product.name}</span>
         <span className="flex w-1/2 items-center justify-between">
+          <span className="badge badge-accent text-xs">{category_name}</span>
           <strong className="text-sm">
             {product_price?.weight}{" "}
             <span className="text-xs text-grey-500 font-light">
               {MEASURE_TYPES[product_price?.measure_type]}
             </span>
           </strong>
-          <span className="badge badge-accent text-xs">{category_name}</span>
         </span>
       </div>
       <div className="flex flex-col items-end gap-y-2 justify-between">

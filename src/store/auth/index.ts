@@ -1,4 +1,5 @@
 import { postAccountAuthRefreshToken } from "@/api/account";
+import { user_roles } from "@/model";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
@@ -6,8 +7,13 @@ interface IAuthStore {
   access: string;
   refresh: string;
   isAuthenticated: boolean;
+  role: user_roles;
   refreshUser: () => Promise<void>;
-  loginUser: (accessToken: string, refreshToken: string) => void;
+  loginUser: (
+    accessToken: string,
+    refreshToken: string,
+    role: user_roles
+  ) => void;
   logoutUser: () => void;
 }
 
@@ -17,6 +23,7 @@ const useAuthStore = create<IAuthStore>()(
       access: "",
       refresh: "",
       isAuthenticated: false,
+      role: "CUSTOMER",
       refreshUser: () =>
         postAccountAuthRefreshToken({
           body: {
@@ -31,10 +38,11 @@ const useAuthStore = create<IAuthStore>()(
             set({ access: "", refresh: "", isAuthenticated: false });
           }),
 
-      loginUser: (accessToken, refreshToken) => {
+      loginUser: (accessToken, refreshToken, role) => {
         set({
           access: accessToken,
           refresh: refreshToken,
+          role,
           isAuthenticated: true,
         });
       },

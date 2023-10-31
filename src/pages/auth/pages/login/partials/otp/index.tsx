@@ -3,6 +3,7 @@ import {
   postAccountAuthLoginOTP,
 } from "@/api/account";
 import { RadialProgress } from "@/components/radialProgress";
+import { user_roles } from "@/model";
 import { OtpInput } from "@/shared/otpInput";
 import { useAuthStore } from "@/store/auth";
 import { usePersianConvert } from "@/utils/usePersianConvert";
@@ -45,11 +46,12 @@ function AuthLoginOtp({ resetFlow, phone }: IAuthLoginOtpProps) {
 
   const verifyOtp = useMutation(postAccountAuthCheckOTP, {
     onSuccess: (res) => {
-      const { access_token, refresh_token } = res?.data as {
+      const { access_token, refresh_token, role } = res?.data as {
         access_token: string;
         refresh_token: string;
+        role: user_roles;
       };
-      loginUser(access_token, refresh_token);
+      loginUser(access_token, refresh_token, role);
       navigate("/");
     },
     onError: () => {

@@ -14,7 +14,7 @@ import { postAccountAuthLogout } from "@/api/account";
 import { useAuthStore } from "@/store/auth";
 import { toast } from "react-toastify";
 
-function DashboardSidebar() {
+function CustomerDashboardSidebar() {
   const navigate = useNavigate();
 
   const { refresh, logoutUser } = useAuthStore();
@@ -151,4 +151,4 @@ function DashboardSidebar() {
   );
 }
 
-export { DashboardSidebar };
+export { CustomerDashboardSidebar };

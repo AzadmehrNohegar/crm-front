@@ -1,13 +1,13 @@
 import { Outlet } from "react-router-dom";
-import { DashboardHeader } from "./partials/header";
-import { DashboardSidebar } from "./partials/sidebar";
+import { CustomerDashboardHeader } from "./partials/header";
+import { CustomerDashboardSidebar } from "./partials/sidebar";
 
-function DashboardLayout() {
+function CustomerDashboardLayout() {
   return (
     <section className="flex relative items-center h-screen overflow-y-hidden">
-      <DashboardSidebar />
+      <CustomerDashboardSidebar />
       <main className="w-5/6 h-screen">
-        <DashboardHeader />
+        <CustomerDashboardHeader />
         <section className="p-5 h-container overflow-y-scroll">
           <Outlet />
         </section>
@@ -16,4 +16,4 @@ function DashboardLayout() {
   );
 }
 
-export { DashboardLayout };
+export { CustomerDashboardLayout };

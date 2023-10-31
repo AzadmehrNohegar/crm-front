@@ -7,6 +7,8 @@ export default {
       flexBasis: {
         modified: "calc(50% - 0.5rem)",
         modified3: "calc(33% - 0.5rem)",
+        modified5: "calc(20% - 0.5rem)",
+        modified6: "calc(16% - 0.5rem)",
       },
       height: {
         container: "calc(100vh - 89px)",

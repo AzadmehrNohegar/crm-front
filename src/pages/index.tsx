@@ -1,30 +1,13 @@
-import { DashboardLayout } from "@/layouts/dashboard";
-import { PrivateRoute } from "@/shared/privateRoute";
-import { lazy } from "react";
-import { Route, Routes } from "react-router-dom";
-
-const AuthPage = lazy(() => import("./auth"));
-const DashboardPage = lazy(() => import("./dashboard"));
-const ProductsPage = lazy(() => import("./products"));
-const CheckoutPage = lazy(() => import("./checkout"));
-const WalletPage = lazy(() => import("./wallet"));
-const SupportPage = lazy(() => import("./support"));
+import { useAuthStore } from "@/store/auth";
+import { CustomerRoutes } from "./customer";
+import { AdminRoutes } from "./admin";
 
 function BasePage() {
-  return (
-    <Routes>
-      <Route element={<PrivateRoute />}>
-        <Route element={<DashboardLayout />}>
-          <Route index element={<DashboardPage />} />
-          <Route path="products/*" element={<ProductsPage />} />
-          <Route path="checkout" element={<CheckoutPage />} />
-          <Route path="wallet" element={<WalletPage />} />
-          <Route path="support/*" element={<SupportPage />} />
-        </Route>
-      </Route>
-      <Route path="auth/*" element={<AuthPage />} />
-    </Routes>
-  );
+  const { role } = useAuthStore();
+
+  if (role === "ADMIN") return <AdminRoutes />;
+
+  return <CustomerRoutes />;
 }
 
 export default BasePage;

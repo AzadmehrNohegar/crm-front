@@ -1,6 +1,6 @@
 import { postAccountAuthLoginPassword } from "@/api/account";
 import { Input } from "@/components/input";
-import { login_method } from "@/model";
+import { login_method, user_roles } from "@/model";
 import { useAuthStore } from "@/store/auth";
 import { usePersianConvert } from "@/utils/usePersianConvert";
 import { useState } from "react";
@@ -40,11 +40,12 @@ function AuthLoginPassword({ changeStep, phone }: IAuthLoginPasswordProps) {
 
   const passwordLogin = useMutation(postAccountAuthLoginPassword, {
     onSuccess: (res) => {
-      const { access_token, refresh_token } = res?.data as {
+      const { access_token, refresh_token, role } = res?.data as {
         access_token: string;
         refresh_token: string;
+        role: user_roles;
       };
-      loginUser(access_token, refresh_token);
+      loginUser(access_token, refresh_token, role);
       navigate("/");
     },
     onError: () => {
