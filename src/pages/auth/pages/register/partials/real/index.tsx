@@ -41,7 +41,7 @@ function AuthRegisterReal() {
     },
     onError: (err: AxiosError) => {
       if ((err?.response?.data as Record<string, string>).user_national_code)
-        toast("حساب کاربری با این شماره ملی وجود دارد.", {
+        toast("کد ملی قبلا ثبت شده است.", {
           type: "error",
         });
     },
