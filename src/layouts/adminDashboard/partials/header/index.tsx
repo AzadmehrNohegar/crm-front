@@ -25,7 +25,8 @@ function AdminDashboardHeader() {
               className="rounded-full"
             />
             <span className="inline-block w-36">
-              {userProfile?.data.first_name} {userProfile?.data.last_name}
+              {userProfile?.data.first_name || "کاربر"}{" "}
+              {userProfile?.data.last_name}
             </span>
           </Fragment>
         )}

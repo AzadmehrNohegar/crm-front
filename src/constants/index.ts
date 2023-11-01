@@ -1,5 +1,5 @@
 export const MOBILE_FORMAT = new RegExp(
-  /^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/
+  /09(1[0-9]|3[1-9]|2[1-9])-?[0-9]{3}-?[0-9]{4}/
 );
 
 export const RE_DIGIT = new RegExp(/^\d+$/);

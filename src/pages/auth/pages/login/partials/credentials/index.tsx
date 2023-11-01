@@ -33,6 +33,7 @@ function AuthLoginCredentials({
     defaultValues: {
       phone: "",
     },
+    mode: "all",
   });
 
   const sendOtp = useMutation(postAccountAuthLoginOTP, {
@@ -77,17 +78,17 @@ function AuthLoginCredentials({
         type="text"
         className={clsx(
           "input input-bordered w-full ltr text-end",
-          isValid && "border-success focus:outline-success-100"
+          isValid && "border-success focus:outline-success-100",
+          !isValid && isDirty && "border-danger focus:outline-danger-100"
         )}
         label="شماره موبایل"
         placeholder="شماره موبایل را وارد کنید"
         error={errors.phone}
         {...register("phone", {
           required: "شماره موبایل خود را وارد کنید.",
-          pattern: {
-            value: MOBILE_FORMAT,
-            message: "شماره موبایل نادرست است.",
-          },
+          validate: (value) =>
+            (value.match(MOBILE_FORMAT) && value.length === 11) ||
+            "شماره موبایل نادرست است.",
         })}
       />
       <div className="flex items-center mt-28 justify-between w-full gap-x-4">

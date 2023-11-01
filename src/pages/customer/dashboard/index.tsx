@@ -1,21 +1,17 @@
-import { Link } from "react-router-dom";
 import { DashboardIntroProducts } from "./partials/introProducts";
 import { DashboardSuggestedProducts } from "./partials/suggestedProducts";
 import { DashboardCategoryProducts } from "./partials/categoryProducts";
+import { DashboardBrandProducts } from "./partials/brandProducts";
+import { DashboardCarouselProducts } from "./partials/carouselProducts";
 
 function Dashboard() {
   return (
     <div className="min-h-screen">
-      <Link to="/">
-        <img
-          src="/images/bannger-dashboard-temp.png"
-          className="w-full"
-          alt="banner temp"
-        />
-      </Link>
+      <DashboardCarouselProducts />
       <DashboardCategoryProducts />
       <DashboardIntroProducts />
       <DashboardSuggestedProducts />
+      <DashboardBrandProducts />
     </div>
   );
 }

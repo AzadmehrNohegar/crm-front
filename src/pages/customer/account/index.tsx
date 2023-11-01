@@ -6,6 +6,8 @@ import Skeleton from "react-loading-skeleton";
 import { useQuery } from "react-query";
 import clsx from "clsx";
 import { AccountChangePasswordDialog } from "./partials/accountChangePasswordDialog";
+import { AccountRealEdit } from "./partials/accountRealEdit";
+import { AccountJuridicalEdit } from "./partials/accountJuridical";
 
 function Account() {
   const [
@@ -13,10 +15,21 @@ function Account() {
     setIsAccountChangePasswordDialogOpen,
   ] = useState(false);
 
+  const [edit, setEdit] = useState<"REAL" | "JURIDICAL" | null>(null);
+
   const { data: userProfile, isLoading: isUserProfileLoading } = useQuery(
     "user-profile",
     () => getAccountMyProfile()
   );
+
+  const resetEdit = () => {
+    setEdit(null);
+  };
+
+  if (edit === "REAL") return <AccountRealEdit resetForm={resetEdit} />;
+
+  if (edit === "JURIDICAL")
+    return <AccountJuridicalEdit resetForm={resetEdit} />;
 
   return (
     <Fragment>
@@ -27,7 +40,8 @@ function Account() {
               <Skeleton width={144} height={50} />
             ) : (
               <Fragment>
-                {userProfile?.data.first_name} {userProfile?.data.last_name}
+                {userProfile?.data.first_name || "کاربر"}{" "}
+                {userProfile?.data.last_name}
                 <span
                   className={clsx(
                     "badge badge-lg text-sm font-normal",
@@ -49,7 +63,10 @@ function Account() {
             <Lock />
             تغییر رمز عبور
           </button>
-          <button className="btn btn-secondary btn-square">
+          <button
+            className="btn btn-secondary btn-square"
+            onClick={() => setEdit(userProfile?.data.customer?.contract_type)}
+          >
             <Edit />
           </button>
         </div>
@@ -57,7 +74,7 @@ function Account() {
           <ul className="flex flex-col divide-y px-5 py-3 border border-grey-200 rounded-custom">
             <li className="flex items-center justify-between py-4 text-sm">
               <span className="text-grey-600 font-light">شماره موبایل</span>
-              <strong>{userProfile?.data.phone_number}</strong>
+              <strong>{userProfile?.data.phone_number || "-"}</strong>
             </li>
             <li className="flex items-center justify-between py-4 text-sm">
               <span className="text-grey-600 font-light">کد ملی</span>
@@ -75,7 +92,26 @@ function Account() {
             </li>
           </ul>
         ) : (
-          <></>
+          <ul className="flex flex-col divide-y px-5 py-3 border border-grey-200 rounded-custom">
+            <li className="flex items-center justify-between py-4 text-sm">
+              <span className="text-grey-600 font-light">کد اقتصادی</span>
+              <strong>{userProfile?.data.company_economic_code || "-"}</strong>
+            </li>
+            <li className="flex items-center justify-between py-4 text-sm">
+              <span className="text-grey-600 font-light">شناسه ملی</span>
+              <strong>
+                {userProfile?.data.customer?.company_national_id || "-"}
+              </strong>
+            </li>
+            <li className="flex items-center justify-between py-4 text-sm">
+              <span className="text-grey-600 font-light">کد پستی</span>
+              <strong>{userProfile?.data.customer?.postal_code || "-"}</strong>
+            </li>
+            <li className="flex items-center justify-between py-4 text-sm">
+              <span className="text-grey-600 font-light">آدرس</span>
+              <strong>{userProfile?.data.customer?.address || "-"}</strong>
+            </li>
+          </ul>
         )}
       </div>
       <AccountChangePasswordDialog

@@ -35,9 +35,9 @@ function ProductCard({
     },
   });
 
-  const [optimisticQuantity, setOptimisticQuantity] = useState(
-    product_price?.reduce((prev, curr) => prev + curr.quantity, 0) || 0
-  );
+  const cumulativeQuantity = useMemo(() => {
+    return product_price?.reduce((prev, curr) => prev + curr.quantity, 0) || 0;
+  }, product_price);
 
   const serverSelectedPrice = useMemo(() => {
     return product_price?.filter((item) => item.quantity > 0)[0];
@@ -68,7 +68,6 @@ function ProductCard({
         },
       })
       .then(() => {
-        setOptimisticQuantity((prevState) => prevState + 1);
         setIsSelectStateOpen(false);
       });
 
@@ -91,7 +90,7 @@ function ProductCard({
             className="rounded-custom"
             alt="product thumbnail"
           />
-          {optimisticQuantity === 0 ? (
+          {cumulativeQuantity === 0 ? (
             <div className="border border-transparent mb-auto">
               {!isSelectStateOpen ? (
                 <button
@@ -103,7 +102,6 @@ function ProductCard({
                       setIsSelectStateOpen(true);
                     } else {
                       handleIncrementCartItem();
-                      setOptimisticQuantity((prevState) => prevState + 1);
                     }
                   }}
                   disabled={createCartItem.isLoading}
@@ -122,7 +120,6 @@ function ProductCard({
                   e.preventDefault();
                   e.stopPropagation();
                   handleIncrementCartItem();
-                  setOptimisticQuantity((prevState) => prevState + 1);
                 }}
                 disabled={createCartItem.isLoading}
               >
@@ -131,28 +128,32 @@ function ProductCard({
               {createCartItem.isLoading ? (
                 <span className="loading loading-spinner loading-md inline-block h-7 text-primary"></span>
               ) : (
-                <span className="text-lg font-bold">{optimisticQuantity}</span>
+                <span className="text-lg font-bold">{cumulativeQuantity}</span>
               )}
 
               <button
-                className={clsx(
-                  "btn btn-ghost btn-square",
-                  optimisticQuantity === 1 && "text-danger"
-                )}
+                className={clsx("btn btn-ghost btn-square")}
                 onClick={(e) => {
                   e.preventDefault();
                   e.stopPropagation();
                   handleDecrementCartItem();
-                  setOptimisticQuantity((prevState) => prevState - 1);
                 }}
                 disabled={createCartItem.isLoading}
               >
-                {optimisticQuantity === 1 ? <Delete /> : <Minus />}
+                {cumulativeQuantity === 1 ? <Delete /> : <Minus />}
               </button>
             </div>
           )}
         </div>
-        <span className="text-sm text-grey-600">
+        <span className="text-sm text-grey-600 max-w-[220px] w-full truncate overflow-x-hidden">
+          {name}{" "}
+          {serverSelectedPrice
+            ? `- ${serverSelectedPrice.weight} ${
+                MEASURE_TYPES[serverSelectedPrice.measure_type]
+              }`
+            : `- ${product_price?.[0].weight} ${
+                MEASURE_TYPES[product_price?.[0].measure_type]
+              }`}
           {name}{" "}
           {serverSelectedPrice
             ? `- ${serverSelectedPrice.weight} ${
@@ -176,8 +177,10 @@ function ProductCard({
                 : product_price?.[0].price.toLocaleString()}{" "}
             </span>{" "}
             {serverSelectedPrice
-              ? serverSelectedPrice.discount_price?.toLocaleString()
-              : product_price?.[0].discount_price?.toLocaleString() || ""}{" "}
+              ? serverSelectedPrice.discount_price?.toLocaleString() || ""
+              : product_price?.[0].discount_price?.toLocaleString() === "0"
+              ? ""
+              : product_price?.[0].discount_price?.toLocaleString()}{" "}
             <span className="text-xs font-light text-grey-500">تومان</span>
           </strong>
           <span className="badge badge-accent text-xs">{category?.name}</span>

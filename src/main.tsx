@@ -9,6 +9,7 @@ import { HelmetProvider } from "react-helmet-async";
 
 import "react-loading-skeleton/dist/skeleton.css";
 import "react-toastify/dist/ReactToastify.css";
+import { MovasaghLoading } from "./shared/movasaghLoading/index.tsx";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -20,7 +21,7 @@ const queryClient = new QueryClient({
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <Suspense fallback={<>...loading</>}>
+    <Suspense fallback={<MovasaghLoading />}>
       <BrowserRouter>
         <QueryClientProvider client={queryClient}>
           <HelmetProvider>

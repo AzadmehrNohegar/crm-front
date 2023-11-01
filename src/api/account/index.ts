@@ -45,3 +45,15 @@ export const postAccountChangePassword = async ({
 }: AxiosCustomRequestConfig) => {
   return await http.post("/account/change_password/", body);
 };
+
+export const getAccountSetting = async ({
+  params,
+}: AxiosCustomRequestConfig) => {
+  return await http.get("/account/setting/", { params });
+};
+
+export const putAccountUserUpdate = async ({
+  body,
+}: AxiosCustomRequestConfig) => {
+  return await http.put("/account/user_update/", body);
+};

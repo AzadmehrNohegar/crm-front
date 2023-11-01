@@ -123,6 +123,13 @@ export type ticket_reply = {
   message: string;
 };
 
+export type carousel = {
+  id: number;
+  mobile_banner: string;
+  desktop_banner: string;
+  url: string;
+};
+
 export const TICKET_STATUS_TYPE: IDictionary<string> = {
   new: "جدید",
   processing: "درحال بررسی",

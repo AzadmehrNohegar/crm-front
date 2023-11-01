@@ -118,7 +118,7 @@ function AuthLoginOtp({ resetFlow, phone }: IAuthLoginOtpProps) {
           <span className="text-xs text-grey-500">لطفا منتظر بمونید</span>
           {count > 0 ? (
             <span className="text-sm text-grey-600">
-              کد فعالسازی در حال ارساله
+              کد فعالسازی در حال ارسال است.
             </span>
           ) : null}
           {count === 0 ? (

@@ -8,8 +8,12 @@ import { getProductSuggestedProduct } from "@/api/product";
 import { useQuery } from "react-query";
 import { product } from "@/model";
 import { ProductCard } from "@/shared/productCard";
+import { useState } from "react";
+import Skeleton from "react-loading-skeleton";
 
 function DashboardSuggestedProducts() {
+  const [isMounted, setIsMounted] = useState(false);
+
   const { data: suggestedProduct, isLoading } = useQuery(
     "suggested-product",
     () =>
@@ -17,10 +21,13 @@ function DashboardSuggestedProducts() {
         params: {
           page_size: 5,
         },
-      })
+      }),
+    {
+      onSuccess: () => setTimeout(() => setIsMounted(true), 1000),
+    }
   );
 
-  if (isLoading) return <>...loading</>;
+  if (isLoading) return <Skeleton height={358} containerClassName="my-5" />;
 
   return (
     <div className="my-5 flex items-center py-8 px-5 bg-danger rounded-custom gap-x-4">
@@ -28,9 +35,14 @@ function DashboardSuggestedProducts() {
         <h1 className="text-2xl text-white text-center">پیشنهاد ویژه ما</h1>
         <img src="/images/confetti.png" alt="confetti" />
       </div>
-      <Swiper spaceBetween={-60} slidesPerView={4}>
+      <Swiper
+        init={isMounted}
+        slidesPerView={4}
+        spaceBetween={20}
+        watchOverflow
+      >
         {suggestedProduct?.data.results.map((item: product) => (
-          <SwiperSlide>
+          <SwiperSlide key={item.id}>
             <ProductCard
               key={item.id}
               api_origin={"suggested-product"}
@@ -39,42 +51,6 @@ function DashboardSuggestedProducts() {
           </SwiperSlide>
         ))}
 
-        {suggestedProduct?.data.results.map((item: product) => (
-          <SwiperSlide>
-            <ProductCard
-              key={item.id}
-              api_origin={"suggested-product"}
-              {...item}
-            />
-          </SwiperSlide>
-        ))}
-        {suggestedProduct?.data.results.map((item: product) => (
-          <SwiperSlide>
-            <ProductCard
-              key={item.id}
-              api_origin={"suggested-product"}
-              {...item}
-            />
-          </SwiperSlide>
-        ))}
-        {suggestedProduct?.data.results.map((item: product) => (
-          <SwiperSlide>
-            <ProductCard
-              key={item.id}
-              api_origin={"suggested-product"}
-              {...item}
-            />
-          </SwiperSlide>
-        ))}
-        {suggestedProduct?.data.results.map((item: product) => (
-          <SwiperSlide>
-            <ProductCard
-              key={item.id}
-              api_origin={"suggested-product"}
-              {...item}
-            />
-          </SwiperSlide>
-        ))}
         <SwiperSlide>
           <Link
             to="products"
