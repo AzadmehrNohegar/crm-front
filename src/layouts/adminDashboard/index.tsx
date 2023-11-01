@@ -1,19 +1,19 @@
 import { Outlet } from "react-router-dom";
-import { CustomerDashboardHeader } from "./partials/header";
-import { CustomerDashboardSidebar } from "./partials/sidebar";
+import { AdminDashboardHeader } from "./partials/header";
+import { AdminDashboardSidebar } from "./partials/sidebar";
 import { Fragment } from "react";
 import { Helmet } from "react-helmet-async";
 
-function CustomerDashboardLayout() {
+function AdminDashboardLayout() {
   return (
     <Fragment>
       <Helmet>
-        <body className="customer-panel" />
+        <body className="admin-panel" />
       </Helmet>
       <section className="flex relative items-center h-screen overflow-y-hidden">
-        <CustomerDashboardSidebar />
+        <AdminDashboardSidebar />
         <main className="w-5/6 h-screen">
-          <CustomerDashboardHeader />
+          <AdminDashboardHeader />
           <section className="p-5 h-container overflow-y-auto">
             <Outlet />
           </section>
@@ -23,4 +23,4 @@ function CustomerDashboardLayout() {
   );
 }
 
-export { CustomerDashboardLayout };
+export { AdminDashboardLayout };

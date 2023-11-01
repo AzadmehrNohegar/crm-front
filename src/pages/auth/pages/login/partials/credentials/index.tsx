@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import { useMutation } from "react-query";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
+import clsx from "clsx";
 
 interface IAuthLoginCredentialsProps {
   changeStep: (step: login_method) => void;
@@ -27,7 +28,7 @@ function AuthLoginCredentials({
     register,
     handleSubmit,
     getValues,
-    formState: { errors },
+    formState: { errors, isValid, isDirty },
   } = useForm({
     defaultValues: {
       phone: "",
@@ -36,7 +37,7 @@ function AuthLoginCredentials({
 
   const sendOtp = useMutation(postAccountAuthLoginOTP, {
     onSuccess: () => {
-      toast("رمز یکبار مصرف با موفقیت ارسال شد.", {
+      toast("کد با موفقیت ارسال شد.", {
         type: "success",
       });
       persistPhone(getValues().phone);
@@ -74,7 +75,10 @@ function AuthLoginCredentials({
       </span>
       <Input
         type="text"
-        className="input input-bordered w-full ltr text-end"
+        className={clsx(
+          "input input-bordered w-full ltr text-end",
+          isValid && "border-success focus:outline-success-100"
+        )}
         label="شماره موبایل"
         placeholder="شماره موبایل را وارد کنید"
         error={errors.phone}
@@ -91,13 +95,14 @@ function AuthLoginCredentials({
           type="button"
           className="btn btn-primary btn-outline basis-modified"
           onClick={handlePasswordLogin}
+          disabled={!isValid || !isDirty}
         >
           ورود با رمز عبور
         </button>
         <button
           type="submit"
-          className="btn btn-primary basis-modified text-[13px] sm:text-base"
-          disabled={sendOtp.isLoading}
+          className="btn btn-primary basis-modified text-[13px] sm:text-base disabled:bg-grey-200"
+          disabled={sendOtp.isLoading || !isValid || !isDirty}
         >
           دریافت کد فعالسازی
         </button>

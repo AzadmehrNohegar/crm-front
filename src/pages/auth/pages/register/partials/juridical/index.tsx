@@ -1,9 +1,11 @@
 import { postAccountAuthRegistration } from "@/api/account";
 import { Close } from "@/assets/icons/Close";
 import { Input } from "@/components/input";
+import { AxiosError } from "axios";
 import { useForm } from "react-hook-form";
 import { useMutation } from "react-query";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 interface IAuthRegisterJuridicalForm {
   company_economic_code: string;
@@ -21,7 +23,7 @@ function AuthRegisterJuridical() {
     register,
     handleSubmit,
     setValue,
-    formState: { dirtyFields, errors },
+    formState: { dirtyFields, errors, isValid, isDirty },
   } = useForm<IAuthRegisterJuridicalForm>({
     defaultValues: {
       company_economic_code: "",
@@ -37,6 +39,12 @@ function AuthRegisterJuridical() {
     onSuccess: () => {
       navigate("../result?status=success");
     },
+    onError: (err: AxiosError) => {
+      if ((err?.response?.data as Record<string, string>).company_national_id)
+        toast("کد ملی مجموعه قبلا ثبت شده است.", {
+          type: "error",
+        });
+    },
   });
 
   const onSubmit = (values: IAuthRegisterJuridicalForm) =>
@@ -49,7 +57,7 @@ function AuthRegisterJuridical() {
 
   return (
     <form
-      className="w-full flex flex-col gap-y-4"
+      className="w-full flex flex-col gap-y-2"
       onSubmit={handleSubmit(onSubmit)}
     >
       <Input
@@ -100,7 +108,7 @@ function AuthRegisterJuridical() {
         type="text"
         placeholder="کد اقتصادی را وارد کنید"
         label="کد اقتصادی"
-        className="input input-bordered w-full"
+        className="input input-bordered w-full input-sm"
         error={errors.company_economic_code}
         iconEnd={
           dirtyFields.company_economic_code ? (
@@ -183,7 +191,12 @@ function AuthRegisterJuridical() {
           required: "این فیلد اجباری است.",
         })}
       />
-      <button className="btn btn-block btn-primary mt-6">ثبت درخواست</button>
+      <button
+        className="btn btn-block btn-primary mt-4 disabled:bg-grey-200"
+        disabled={!isValid || !isDirty}
+      >
+        ثبت درخواست
+      </button>
     </form>
   );
 }

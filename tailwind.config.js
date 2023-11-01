@@ -15,6 +15,11 @@ export default {
         innerContainer: "calc(100vh - 129px)",
         extended: "calc(16px + 1.6rem)",
       },
+      minHeight: {
+        container: "calc(100vh - 89px)",
+        innerContainer: "calc(100vh - 129px)",
+        extended: "calc(16px + 1.6rem)",
+      },
       maxHeight: {
         container: "calc(100vh - 89px)",
         innerContainer: "calc(100vh - 129px)",

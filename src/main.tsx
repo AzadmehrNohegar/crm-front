@@ -5,6 +5,7 @@ import "./index.css";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { BrowserRouter } from "react-router-dom";
 import { ScrollToTop } from "@/shared/scrollToTop/index.tsx";
+import { HelmetProvider } from "react-helmet-async";
 
 import "react-loading-skeleton/dist/skeleton.css";
 import "react-toastify/dist/ReactToastify.css";
@@ -22,8 +23,10 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     <Suspense fallback={<>...loading</>}>
       <BrowserRouter>
         <QueryClientProvider client={queryClient}>
-          <App />
-          <ScrollToTop />
+          <HelmetProvider>
+            <App />
+            <ScrollToTop />
+          </HelmetProvider>
         </QueryClientProvider>
       </BrowserRouter>
     </Suspense>

@@ -39,3 +39,9 @@ export const postAccountAuthLogout = async ({
 }: AxiosCustomRequestConfig) => {
   return await http.post("/account/auth/logout/", body);
 };
+
+export const postAccountChangePassword = async ({
+  body,
+}: AxiosCustomRequestConfig) => {
+  return await http.post("/account/change_password/", body);
+};

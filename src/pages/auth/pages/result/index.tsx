@@ -2,7 +2,7 @@ import { AuthResultSuccess } from "./partials/success";
 
 function AuthResult() {
   return (
-    <main className="flex h-screen items-center p-8 gap-x-6">
+    <main className="flex h-screen items-center p-8 gap-x-8">
       <div className="w-5/12">
         <AuthResultSuccess />
       </div>

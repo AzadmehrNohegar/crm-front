@@ -1,9 +1,11 @@
 import { postAccountAuthRegistration } from "@/api/account";
 import { Close } from "@/assets/icons/Close";
 import { Input } from "@/components/input";
+import { AxiosError } from "axios";
 import { useForm } from "react-hook-form";
 import { useMutation } from "react-query";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 interface IAuthRegisterRealForm {
   first_name: string;
@@ -21,7 +23,7 @@ function AuthRegisterReal() {
     register,
     handleSubmit,
     setValue,
-    formState: { dirtyFields, errors },
+    formState: { dirtyFields, errors, isDirty, isValid },
   } = useForm<IAuthRegisterRealForm>({
     defaultValues: {
       first_name: "",
@@ -37,6 +39,12 @@ function AuthRegisterReal() {
     onSuccess: () => {
       navigate("../result?status=success");
     },
+    onError: (err: AxiosError) => {
+      if ((err?.response?.data as Record<string, string>).user_national_code)
+        toast("حساب کاربری با این شماره ملی وجود دارد.", {
+          type: "error",
+        });
+    },
   });
 
   const onSubmit = (values: IAuthRegisterRealForm) =>
@@ -49,7 +57,7 @@ function AuthRegisterReal() {
 
   return (
     <form
-      className="w-full flex flex-col gap-y-4"
+      className="w-full flex flex-col gap-y-2"
       onSubmit={handleSubmit(onSubmit)}
     >
       <Input
@@ -180,7 +188,12 @@ function AuthRegisterReal() {
           required: "این فیلد اجباری است.",
         })}
       />
-      <button className="btn btn-block btn-primary mt-6">ثبت درخواست</button>
+      <button
+        className="btn btn-block btn-primary disabled:bg-grey-200 mt-4"
+        disabled={!isValid || !isDirty}
+      >
+        ثبت درخواست
+      </button>
     </form>
   );
 }

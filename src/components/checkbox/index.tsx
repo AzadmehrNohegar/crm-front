@@ -4,10 +4,12 @@ import { ReactNode } from "react";
 interface ICheckboxProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string | ReactNode;
   containerClassName?: string;
+  labelClassName?: string;
 }
 
 function Checkbox(props: ICheckboxProps) {
-  const { label, containerClassName, className, ...rest } = props;
+  const { label, containerClassName, className, labelClassName, ...rest } =
+    props;
 
   return (
     <label
@@ -16,7 +18,7 @@ function Checkbox(props: ICheckboxProps) {
         containerClassName
       )}
     >
-      <span className="label-text">{label}</span>
+      <span className={clsx("label-text", labelClassName)}>{label}</span>
       <input
         type="checkbox"
         className={clsx(

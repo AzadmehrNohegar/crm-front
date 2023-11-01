@@ -10,7 +10,7 @@ function AuthLogin() {
   const [persistedPhone, setPersistedPhone] = useState("");
 
   return (
-    <main className="flex h-screen items-center p-8 gap-x-6">
+    <main className="flex h-screen items-center p-8 gap-x-8">
       <div className="w-5/12">
         {step === "credentials" ? (
           <AuthLoginCredentials

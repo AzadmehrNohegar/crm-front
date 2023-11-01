@@ -1,12 +1,23 @@
+import { AdminDashboardLayout } from "@/layouts/adminDashboard";
+import { PrivateRoute } from "@/shared/privateRoute";
 import { lazy } from "react";
 import { Route, Routes } from "react-router-dom";
 
 const AuthPage = lazy(() => import("../auth"));
+const DashboardPage = lazy(() => import("./dashboard"));
 
 function AdminRoutes() {
   return (
     <Routes>
-      <Route index element={<>gg</>} />
+      <Route element={<PrivateRoute />}>
+        <Route element={<AdminDashboardLayout />}>
+          <Route index element={<DashboardPage />} />
+          <Route path="products/*" element={<>products</>} />
+          <Route path="orders/*" element={<>orders</>} />
+          <Route path="users/*" element={<>users</>} />
+          <Route path="support/*" element={<>support</>} />
+        </Route>
+      </Route>
       <Route path="auth/*" element={<AuthPage />} />
     </Routes>
   );

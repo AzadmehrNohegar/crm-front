@@ -23,19 +23,25 @@
     width: 5px;
   }
 
+  ::-webkit-scrollbar-thumb:hover {
+    background: #aaa;
+  }
+
   ::-webkit-scrollbar-track {
     background: #eee;
     border-radius: 10px;
   }
 
-  ::-webkit-scrollbar-thumb {
+  .customer-panel ::-webkit-scrollbar-thumb {
     background: #d12e36;
     border-radius: 10px;
   }
 
-  ::-webkit-scrollbar-thumb:hover {
-    background: #aaa;
+  .admin-panel ::-webkit-scrollbar-thumb {
+    background: #005eff;
+    border-radius: 10px;
   }
+
   html,
   body {
     font-family: dana, sans-serif;
@@ -58,5 +64,8 @@
 
   .bidi-override {
     unicode-bidi: bidi-override;
+  }
+  details.collapse summary {
+    display: flex !important;
   }
 }

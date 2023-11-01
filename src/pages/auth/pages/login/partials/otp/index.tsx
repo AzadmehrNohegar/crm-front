@@ -36,7 +36,7 @@ function AuthLoginOtp({ resetFlow, phone }: IAuthLoginOtpProps) {
 
   const resendOtp = useMutation(postAccountAuthLoginOTP, {
     onSuccess: () => {
-      toast("رمز یکبار مصرف با موفقیت ارسال شد.", {
+      toast("کد با موفقیت ارسال شد.", {
         type: "success",
       });
       resetCountdown();
@@ -55,7 +55,7 @@ function AuthLoginOtp({ resetFlow, phone }: IAuthLoginOtpProps) {
       navigate("/");
     },
     onError: () => {
-      toast("رمز یکبار مصرف اشتباه است.", {
+      toast("کد اشتباه است.", {
         type: "error",
       });
     },

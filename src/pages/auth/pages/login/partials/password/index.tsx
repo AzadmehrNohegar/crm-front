@@ -5,7 +5,7 @@ import { useAuthStore } from "@/store/auth";
 import { usePersianConvert } from "@/utils/usePersianConvert";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { Show } from "react-iconly";
+import { Hide, Show } from "react-iconly";
 import { useMutation } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -86,13 +86,13 @@ function AuthLoginPassword({ changeStep, phone }: IAuthLoginPasswordProps) {
             className="absolute end-4 inset-y-auto text-grey-600"
             onClick={() => setIsPassword((prevState) => !prevState)}
           >
-            <Show />
+            {isPassword ? <Show /> : <Hide />}
           </button>
         }
         {...register("password", {
           required: "رمز عبور خود را وارد کنید.",
-          min: {
-            value: 6,
+          minLength: {
+            value: 5,
             message: "رمز عبور بیشتر از ۵ کاراکتر است.",
           },
         })}

@@ -21,6 +21,16 @@ export type ticket_type = "new" | "processing" | "closed";
 
 export type user_roles = "CUSTOMER" | "ADMIN";
 
+export type contract_types = "REAL" | "JURIDICAL";
+
+export type card_types =
+  | "primary"
+  | "secondary"
+  | "success"
+  | "warning"
+  | "info"
+  | "danger";
+
 export type category = {
   id: number;
   name: string;
@@ -127,4 +137,9 @@ export const WALLET_TRANSACTION_TYPE: IDictionary<string> = {
 export const MEASURE_TYPES: IDictionary<string> = {
   KILOGRAM: "کیلوگرم",
   GRAM: "گرم",
+};
+
+export const CONTRACT_TYPES: IDictionary<string> = {
+  REAL: "حقیقی",
+  JURIDICAL: "حقوقی",
 };
