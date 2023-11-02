@@ -12,7 +12,7 @@ function DashboardBrandProducts() {
   const [isMounted, setIsMounted] = useState(false);
 
   const { data: brands, isLoading } = useQuery(
-    "dashboard-product-brands",
+    "product-brands",
     () =>
       getProductBrand({
         params: {

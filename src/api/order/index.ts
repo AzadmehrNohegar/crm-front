@@ -7,3 +7,15 @@ export const postOrderCreateOrder = async ({
     headers: { "Content-Type": "multipart/form-data" },
   });
 };
+
+export const getOrderOrderList = async ({
+  params,
+}: AxiosCustomRequestConfig) => {
+  return await http.get("/order/order_list/", { params });
+};
+
+export const getOrderOrderListById = async ({
+  id,
+}: AxiosCustomRequestConfig) => {
+  return await http.get(`/order/order_list/${id}`);
+};

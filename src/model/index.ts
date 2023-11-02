@@ -93,6 +93,17 @@ export type cart_item = {
   };
 };
 
+export type order_item = {
+  id: number;
+  name: string;
+  quantity: number;
+  unit_price: number;
+  discount_amount: number;
+  tax_amount: number;
+  order: number;
+  product: number;
+};
+
 export type wallet_transaction = {
   id: number;
   amount: number;
@@ -128,6 +139,37 @@ export type carousel = {
   mobile_banner: string;
   desktop_banner: string;
   url: string;
+};
+
+export type order_type = "completed" | "pending" | "canceled" | "need_payment";
+
+export type order = {
+  id: number;
+  order_item: order_item[];
+  payment: {
+    id: number;
+    status: string;
+    amount: number;
+    wallet_transaction: number | null;
+    offline_transaction: number | null;
+    online_transaction: number | null;
+  };
+  status: order_type;
+  need_tax: boolean;
+  created_date: string;
+};
+
+export const ORDER_TYPES: IDictionary<string> = {
+  completed: "موفق",
+  pending: "درحال بررسی",
+  canceled: "ناموفق",
+  need_payment: "نیاز به پرداخت",
+};
+
+export const PAYMENT_TYPE: IDictionary<string> = {
+  offline_transaction: "افلاین",
+  online_transaction: "درگاه",
+  wallet_transaction: "کیف پول",
 };
 
 export const TICKET_STATUS_TYPE: IDictionary<string> = {

@@ -1,33 +1,35 @@
-import { getTicketTickets } from "@/api/ticket";
-import { Plus } from "@/assets/icons/Plus";
 import { Checkbox } from "@/components/checkbox";
 import { Input } from "@/components/input";
 import { Popover, PopoverButton } from "@/components/popover";
 import { Fragment, useState } from "react";
-import { Filter2, Search } from "react-iconly";
+import { Filter2, Search, Upload } from "react-iconly";
 import { useQuery } from "react-query";
-import { Link, useLocation, useSearchParams } from "react-router-dom";
+import { useLocation, useSearchParams } from "react-router-dom";
 import { useDebounce } from "usehooks-ts";
-import { TicketsTable } from "./partials/ticketsTable";
 import { Pagination } from "@/shared/pagination";
 import { DatePicker } from "@/components/datepicker";
 import Skeleton from "react-loading-skeleton";
+import { getOrderOrderList } from "@/api/order";
+import { OrdersTable } from "./partials/ordersTable";
 
-function SupportList() {
+function OrdersList() {
   const [searchParams, setSearchParams] = useSearchParams();
   const { search: locationSearch } = useLocation();
 
   const [search, setSearch] = useState("");
   const debouncedSearch = useDebounce(search, 200);
 
-  const { data: ticketsPagination, isLoading } = useQuery(
-    ["tickets-transactions", debouncedSearch, locationSearch],
+  const { data: ordersPagination, isLoading } = useQuery(
+    ["orders-transactions", debouncedSearch, locationSearch],
     () =>
-      getTicketTickets({
+      getOrderOrderList({
         params: {
           search: debouncedSearch,
           page: searchParams.get("page") || 1,
           page_size: searchParams.get("page_size") || 10,
+          ...(searchParams.get("status")
+            ? { status: searchParams.get("status") }
+            : {}),
         },
       })
   );
@@ -40,21 +42,20 @@ function SupportList() {
       </Fragment>
     );
 
-  if (!isLoading && ticketsPagination?.data.results.length === 0)
-    return (
-      <div className="h-innerContainer flex flex-col items-center justify-center gap-y-4 max-w-3xl mx-auto">
-        <img src="/images/support-empty-1.png" alt="support empty" />
-        <span className="text-xl">هنوز تیکت پشتیبانی‌ای ثبت نشده است.</span>
-        <Link to="./create" className="btn btn-primary btn-block">
-          <Plus />
-          تیکت پشتیبانی جدید
-        </Link>
-      </div>
-    );
+  // if (!isLoading && ordersPagination?.data.results.length === 0)
+  //   return (
+  //     <div className="h-innerContainer flex flex-col items-center justify-center gap-y-4 max-w-3xl mx-auto">
+  //       <img src="/images/orders-empty-1.png" alt="orders empty" />
+  //       <span className="text-xl">هنوز سفارشی ثبت نشده است.</span>
+  //     </div>
+  //   );
 
   return (
     <div className="relative">
       <div className="flex items-center w-full gap-x-4 relative justify-between">
+        <button className="btn btn-success btn-square">
+          <Upload />
+        </button>
         <Popover
           popoverBtn={
             <PopoverButton className="btn btn-warning btn-square text-grey-800">
@@ -74,12 +75,12 @@ function SupportList() {
             </div>
             <div className="flex items-center gap-x-4">
               <Checkbox
-                label="درحال بررسی"
+                label="موفق"
                 containerClassName="w-fit"
-                checked={searchParams.get("status") === "processing"}
+                checked={searchParams.get("status") === "completed"}
                 onChange={(e) => {
                   if (e.currentTarget.checked) {
-                    searchParams.set("status", "processing");
+                    searchParams.set("status", "completed");
                     setSearchParams(searchParams);
                   } else {
                     searchParams.delete("status");
@@ -88,12 +89,26 @@ function SupportList() {
                 }}
               />
               <Checkbox
-                label="بسته شده"
+                label="درحال بررسی"
                 containerClassName="w-fit"
-                checked={searchParams.get("status") === "closed"}
+                checked={searchParams.get("status") === "pending"}
                 onChange={(e) => {
                   if (e.currentTarget.checked) {
-                    searchParams.set("status", "closed");
+                    searchParams.set("status", "pending");
+                    setSearchParams(searchParams);
+                  } else {
+                    searchParams.delete("status");
+                    setSearchParams(searchParams);
+                  }
+                }}
+              />
+              <Checkbox
+                label="ناموفق"
+                containerClassName="w-fit"
+                checked={searchParams.get("status") === "canceled"}
+                onChange={(e) => {
+                  if (e.currentTarget.checked) {
+                    searchParams.set("status", "canceled");
                     setSearchParams(searchParams);
                   } else {
                     searchParams.delete("status");
@@ -110,14 +125,10 @@ function SupportList() {
             </button>
           </div>
         </Popover>
-        <Link to="./create" className="btn btn-primary">
-          <Plus />
-          تیکت پشتیبانی جدید
-        </Link>
       </div>
       <div className="my-6">
         <div className="flex items-center bg-grey-50 rounded-t-custom justify-between px-4">
-          <h3 className="text-base w-full">لیست تیکت پشتیبانی</h3>
+          <h3 className="text-base w-full">سفارشات</h3>
           <Input
             className="input input-bordered h-10 ms-auto input-ghost max-w-full w-96"
             containerClassName="my-4"
@@ -132,18 +143,18 @@ function SupportList() {
           />
         </div>
         <div className="overflow-x-auto">
-          <TicketsTable
-            tickets={ticketsPagination?.data.results}
+          <OrdersTable
+            orders={ordersPagination?.data.results}
             isLoading={isLoading}
           />
         </div>
       </div>
       <Pagination
-        count={ticketsPagination?.data.count}
-        next={ticketsPagination?.data.next}
+        count={ordersPagination?.data.count}
+        next={ordersPagination?.data.next}
         page={+searchParams.get("page")! || 1}
         perPage={+searchParams.get("page_size")! || 10}
-        prev={ticketsPagination?.data.prev}
+        prev={ordersPagination?.data.prev}
         setPage={(val) => {
           searchParams.set("page", String(val));
           setSearchParams(searchParams);
@@ -157,4 +168,4 @@ function SupportList() {
   );
 }
 
-export default SupportList;
+export default OrdersList;

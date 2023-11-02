@@ -1,17 +1,25 @@
-import { TICKET_STATUS_TYPE, ticket } from "@/model";
+import { ORDER_TYPES, PAYMENT_TYPE, order } from "@/model";
 import { Show, Swap } from "react-iconly";
 import Skeleton from "react-loading-skeleton";
 import { Link, useSearchParams } from "react-router-dom";
 import clsx from "clsx";
 import { Fragment } from "react";
 
-interface ITicketsTableProps {
+interface IOrdersTableProps {
   isLoading: boolean;
-  tickets?: ticket[];
+  orders?: order[];
 }
 
-function TicketsTable({ isLoading, tickets }: ITicketsTableProps) {
+function OrdersTable({ isLoading, orders }: IOrdersTableProps) {
   const [searchParams] = useSearchParams();
+
+  const parsePaymentType = (order: order) => {
+    if (order.payment.offline_transaction)
+      return PAYMENT_TYPE["offline_transaction"];
+    if (order.payment.online_transaction)
+      return PAYMENT_TYPE["online_transaction"];
+    return PAYMENT_TYPE["wallet_transaction"];
+  };
 
   return (
     <div className="overflow-x-auto">
@@ -23,14 +31,6 @@ function TicketsTable({ isLoading, tickets }: ITicketsTableProps) {
             </th>
             <th align="right">
               <span className="inline-flex items-center text-sm text-grey-800">
-                عنوان
-                <button className="btn btn-ghost btn-square btn-sm">
-                  <Swap />
-                </button>
-              </span>
-            </th>
-            <th align="right">
-              <span className="inline-flex items-center text-sm text-grey-800">
                 شماره سفارش‌
                 <button className="btn btn-ghost btn-square btn-sm">
                   <Swap />
@@ -39,7 +39,7 @@ function TicketsTable({ isLoading, tickets }: ITicketsTableProps) {
             </th>
             <th align="right">
               <span className="inline-flex items-center text-sm text-grey-800">
-                زمان
+                نوع پرداخت‌
                 <button className="btn btn-ghost btn-square btn-sm">
                   <Swap />
                 </button>
@@ -47,7 +47,15 @@ function TicketsTable({ isLoading, tickets }: ITicketsTableProps) {
             </th>
             <th align="right">
               <span className="inline-flex items-center text-sm text-grey-800">
-                پیام جدید
+                مبلغ
+                <button className="btn btn-ghost btn-square btn-sm">
+                  <Swap />
+                </button>
+              </span>
+            </th>
+            <th align="right">
+              <span className="inline-flex items-center text-sm text-grey-800">
+                زمان تراکنش
                 <button className="btn btn-ghost btn-square btn-sm">
                   <Swap />
                 </button>
@@ -71,9 +79,6 @@ function TicketsTable({ isLoading, tickets }: ITicketsTableProps) {
                 <td>
                   <Skeleton height={51} />
                 </td>
-                <td className="w-1/2">
-                  <Skeleton height={51} />
-                </td>
                 <td>
                   <Skeleton height={51} />
                 </td>
@@ -85,6 +90,9 @@ function TicketsTable({ isLoading, tickets }: ITicketsTableProps) {
                 </td>
                 <td>
                   <Skeleton height={51} />
+                </td>
+                <td>
+                  <Skeleton height={51} width={44} />
                 </td>
                 <td>
                   <Skeleton height={51} width={44} />
@@ -94,9 +102,6 @@ function TicketsTable({ isLoading, tickets }: ITicketsTableProps) {
                 <td>
                   <Skeleton height={51} />
                 </td>
-                <td className="w-1/2">
-                  <Skeleton height={51} />
-                </td>
                 <td>
                   <Skeleton height={51} />
                 </td>
@@ -112,10 +117,13 @@ function TicketsTable({ isLoading, tickets }: ITicketsTableProps) {
                 <td>
                   <Skeleton height={51} width={44} />
                 </td>
+                <td>
+                  <Skeleton height={51} width={44} />
+                </td>
               </tr>
             </Fragment>
           ) : null}
-          {tickets?.map((item, index: number) => (
+          {orders?.map((item, index: number) => (
             <tr key={item.id}>
               <td>
                 {((+searchParams.get("page")! || 1) - 1) *
@@ -123,38 +131,25 @@ function TicketsTable({ isLoading, tickets }: ITicketsTableProps) {
                   index +
                   1}
               </td>
-              <td className="w-1/2">{item.title}</td>
               <td>{item.id}</td>
+              <td>{parsePaymentType(item)}</td>
+              <td>{item.payment.amount}</td>
               <td>
-                <span className="inline-block min-w-max">
-                  {new Intl.DateTimeFormat("fa-IR", {
-                    dateStyle: "short",
-                    timeStyle: "short",
-                  }).format(new Date(item.created_at))}
-                </span>
+                {new Intl.DateTimeFormat("fa-IR", {
+                  dateStyle: "short",
+                  timeStyle: "short",
+                }).format(new Date(item.created_date))}
               </td>
               <td>
                 <span
                   className={clsx(
-                    "badge inline-block ms-auto px-1 text-sm",
-                    item.new_massage > 0 && "badge-warning text-grey-800",
-                    item.new_massage === 0 && "badge-accent text-grey-400"
+                    "font-light text-sm",
+                    item.status === "completed" && "text-success",
+                    item.status === "pending" && "text-grey-600",
+                    item.status === "canceled" && "text-danger"
                   )}
                 >
-                  {item.new_massage}
-                </span>
-              </td>
-              <td>
-                <span
-                  className={clsx(
-                    "badge inline-block px-1 text-xs",
-                    item.status === "new" && "badge-success text-white",
-                    item.status === "processing" &&
-                      "badge-secondary text-secondary",
-                    item.status === "closed" && "badge-accent text-grey-400"
-                  )}
-                >
-                  {TICKET_STATUS_TYPE[item.status]}
+                  {ORDER_TYPES[item.status]}
                 </span>
               </td>
               <td align="left">
@@ -173,4 +168,4 @@ function TicketsTable({ isLoading, tickets }: ITicketsTableProps) {
   );
 }
 
-export { TicketsTable };
+export { OrdersTable };

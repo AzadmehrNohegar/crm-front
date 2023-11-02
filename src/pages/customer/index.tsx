@@ -10,6 +10,7 @@ const CheckoutPage = lazy(() => import("./checkout"));
 const WalletPage = lazy(() => import("./wallet"));
 const SupportPage = lazy(() => import("./support"));
 const AccountPage = lazy(() => import("./account"));
+const OrdersPage = lazy(() => import("./orders"));
 
 function CustomerRoutes() {
   return (
@@ -18,10 +19,11 @@ function CustomerRoutes() {
         <Route element={<CustomerDashboardLayout />}>
           <Route index element={<DashboardPage />} />
           <Route path="products/*" element={<ProductsPage />} />
-          <Route path="checkout" element={<CheckoutPage />} />
-          <Route path="wallet" element={<WalletPage />} />
           <Route path="support/*" element={<SupportPage />} />
+          <Route path="orders/*" element={<OrdersPage />} />
+          <Route path="wallet" element={<WalletPage />} />
           <Route path="account" element={<AccountPage />} />
+          <Route path="checkout" element={<CheckoutPage />} />
         </Route>
       </Route>
       <Route path="auth/*" element={<AuthPage />} />
