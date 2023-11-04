@@ -101,7 +101,8 @@ export type order_item = {
   discount_amount: number;
   tax_amount: number;
   order: number;
-  product: number;
+  product: product | number;
+  product_price: product_price;
 };
 
 export type wallet_transaction = {

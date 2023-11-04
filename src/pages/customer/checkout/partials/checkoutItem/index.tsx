@@ -62,7 +62,9 @@ function CheckoutItem({ category_name, product_price, quantity }: cart_item) {
           >
             {product_price?.price.toLocaleString()}{" "}
           </span>{" "}
-          {product_price?.discount_price?.toLocaleString() || ""}{" "}
+          {product_price?.discount_price !== 0
+            ? product_price?.discount_price?.toLocaleString()
+            : ""}{" "}
           <span className="text-xs font-light text-grey-500">تومان</span>
         </strong>
         <div className="flex border border-grey-200 rounded-[10px] w-36 gap-y-3 items-center justify-between h-full">

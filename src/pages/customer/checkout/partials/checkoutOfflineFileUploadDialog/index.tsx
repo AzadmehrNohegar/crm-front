@@ -5,7 +5,7 @@ import { Input } from "@/components/input";
 import { IExtendedDialogProps } from "@/model";
 import { Controller, useForm } from "react-hook-form";
 import { useMutation } from "react-query";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 interface ICheckoutOfflineFileUploadDialogForm {
   file: FileList | null;
@@ -16,6 +16,8 @@ function CheckoutOfflineFileUploadDialog({
   isOpen,
 }: IExtendedDialogProps) {
   const [searchParams] = useSearchParams();
+
+  const navigate = useNavigate();
 
   const {
     register,
@@ -30,8 +32,9 @@ function CheckoutOfflineFileUploadDialog({
   });
 
   const checkoutCart = useMutation(postOrderCreateOrder, {
-    onSuccess: () => {
-      console.log("gg");
+    onSuccess: (res) => {
+      const { order_id } = res.data as { order_id: number };
+      navigate(`/orders/${order_id}`);
     },
   });
 

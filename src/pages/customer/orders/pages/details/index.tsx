@@ -1,9 +1,17 @@
 import { getOrderOrderListById } from "@/api/order";
-import { ORDER_TYPES, PAYMENT_TYPE, order } from "@/model";
+import {
+  MEASURE_TYPES,
+  ORDER_TYPES,
+  PAYMENT_TYPE,
+  order,
+  order_item,
+  product,
+} from "@/model";
 import { CollapseWrapper } from "@/shared/collapseWrapper";
 import clsx from "clsx";
 import { Fragment } from "react";
 import { Chart, ChevronLeft } from "react-iconly";
+import Skeleton from "react-loading-skeleton";
 import { useQuery } from "react-query";
 import { Link, useParams } from "react-router-dom";
 
@@ -17,14 +25,21 @@ function OrderDetails() {
   );
 
   const parsePaymentType = (order: order) => {
-    if (order.payment.offline_transaction)
+    if (order?.payment.offline_transaction)
       return PAYMENT_TYPE["offline_transaction"];
-    if (order.payment.online_transaction)
+    if (order?.payment.online_transaction)
       return PAYMENT_TYPE["online_transaction"];
     return PAYMENT_TYPE["wallet_transaction"];
   };
 
-  if (isLoading) return <>loading...</>;
+  if (isLoading)
+    return (
+      <Fragment>
+        <Skeleton height={56} />
+        <Skeleton height={405} />
+        <Skeleton height={341} />
+      </Fragment>
+    );
 
   return (
     <Fragment>
@@ -43,7 +58,7 @@ function OrderDetails() {
           <span className="text-grey-800 font-semibold">{order_id}</span>
         </li>
       </ul>
-      <CollapseWrapper title="جزئیات سفارش" className="flex flex-col gap-y-4">
+      <CollapseWrapper title="جزئیات سفارش" className="flex flex-col">
         <div className="flex items-center justify-between">
           <h5 className="text-base font-semibold">وضعیت سفارش</h5>
           <span
@@ -91,6 +106,60 @@ function OrderDetails() {
             </strong>
           </li>
         </ul>
+      </CollapseWrapper>
+      <CollapseWrapper title="سبد خرید شما" className="flex flex-col divide-y">
+        {orderDetails?.data.order_item.map(
+          (item: order_item, index: number) => (
+            <div className="flex w-full gap-x-4 py-5 items-stretch">
+              <span className="inline-flex h-auto items-center justify-center rounded-lg bg-grey-100 text-grey-600 text-center min-w-[30px]">
+                {index + 1}
+              </span>
+              <img
+                src={(item.product as product).image}
+                width={60}
+                height={60}
+                alt="product thumbnail"
+              />
+              <div className="w-full flex flex-col justify-between">
+                <span className="text-sm font-bold">
+                  {(item.product as product).name}
+                </span>
+                <span className="flex w-1/2 items-center justify-between">
+                  <span className="badge badge-accent text-xs">
+                    {(item.product as product).category.name}
+                  </span>
+                  <strong className="text-sm">
+                    {item.product_price.weight || ""}{" "}
+                    <span className="text-xs text-grey-500 font-light">
+                      {MEASURE_TYPES[item.product_price.measure_type]}
+                    </span>
+                  </strong>
+                </span>
+              </div>
+              <div className="flex flex-col items-end gap-y-2 justify-between">
+                <strong className="text-sm inline-flex items-center gap-x-1">
+                  <span
+                    className={clsx(
+                      item?.discount_amount && "text-danger line-through"
+                    )}
+                  >
+                    {item?.unit_price.toLocaleString()}{" "}
+                  </span>{" "}
+                  {item?.discount_amount === 0
+                    ? ""
+                    : item?.discount_amount?.toLocaleString() || ""}{" "}
+                  <span className="text-xs font-light text-grey-500">
+                    تومان
+                  </span>
+                </strong>
+                <strong className="text-sm font-semibold">
+                  {item.quantity}{" "}
+                  <span className="text-grey-500 font-light text-xs">عدد</span>
+                </strong>
+              </div>
+            </div>
+          )
+        )}
       </CollapseWrapper>
     </Fragment>
   );

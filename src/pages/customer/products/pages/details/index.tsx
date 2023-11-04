@@ -143,7 +143,11 @@ function ProductDetails() {
                     : productDetails?.data.product_price?.[0].price.toLocaleString()}{" "}
                 </span>{" "}
                 {serverSelectedPrice
-                  ? serverSelectedPrice.discount_price?.toLocaleString()
+                  ? serverSelectedPrice.discount_price === 0
+                    ? ""
+                    : serverSelectedPrice.discount_price?.toLocaleString()
+                  : productDetails?.data.product_price?.[0].discount_price === 0
+                  ? ""
                   : productDetails?.data.product_price?.[0].discount_price?.toLocaleString() ||
                     ""}{" "}
                 <span className="text-base font-light text-grey-500">
@@ -164,9 +168,14 @@ function ProductDetails() {
                         setOptimisticQuantity((prevState) => prevState + 1);
                       }
                     }}
-                    disabled={createCartItem.isLoading}
+                    disabled={
+                      productDetails?.data.inventory === 0 ||
+                      createCartItem.isLoading
+                    }
                   >
-                    افزودن به سبد خرید
+                    {productDetails?.data.inventory === 0
+                      ? "ناموجود"
+                      : "افزودن به سبد خرید"}
                   </button>
                 </div>
               ) : (

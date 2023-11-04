@@ -16,12 +16,14 @@ function ProductListFilters() {
 
   const brandSearchDebouced = useDebounce(brandSearch, 200);
 
-  const { data: categories } = useQuery("product-categories", () =>
-    getProductCategory({
-      params: {
-        page_size: 10,
-      },
-    })
+  const { data: categories, isLoading: isCategoriesLoading } = useQuery(
+    "product-categories",
+    () =>
+      getProductCategory({
+        params: {
+          page_size: 10,
+        },
+      })
   );
 
   const { data: brands, isLoading } = useQuery(
@@ -56,23 +58,27 @@ function ProductListFilters() {
             setSearchParams(searchParams);
           }}
         />
-        {categories?.data.results.map((item: category) => (
-          <Checkbox
-            key={item.id}
-            label={item.name}
-            containerClassName="w-fit"
-            checked={searchParams.get("category__id") === String(item.id)}
-            onChange={(e) => {
-              if (e.currentTarget.checked) {
-                searchParams.set("category__id", `${item.id}`);
-                setSearchParams(searchParams);
-              } else {
-                searchParams.delete("category__id");
-                setSearchParams(searchParams);
-              }
-            }}
-          />
-        ))}
+        {isCategoriesLoading ? (
+          <Skeleton count={2} height={40} />
+        ) : (
+          categories?.data.results.map((item: category) => (
+            <Checkbox
+              key={item.id}
+              label={item.name}
+              containerClassName="w-fit"
+              checked={searchParams.get("category__id") === String(item.id)}
+              onChange={(e) => {
+                if (e.currentTarget.checked) {
+                  searchParams.set("category__id", `${item.id}`);
+                  setSearchParams(searchParams);
+                } else {
+                  searchParams.delete("category__id");
+                  setSearchParams(searchParams);
+                }
+              }}
+            />
+          ))
+        )}
       </div>
       <div className="flex flex-col">
         <h5 className="text-sm font-bold text-primary mb-2 bg-clip-content relative after:absolute after:w-3/4 after:h-px after:inset-y-1/2 after:left-0 after:bg-primary">

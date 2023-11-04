@@ -23,6 +23,7 @@ function ProductCard({
   id,
   product_price,
   containerClassName,
+  inventory,
 }: IProductCardProps) {
   const queryClient = useQueryClient();
 
@@ -37,7 +38,7 @@ function ProductCard({
 
   const cumulativeQuantity = useMemo(() => {
     return product_price?.reduce((prev, curr) => prev + curr.quantity, 0) || 0;
-  }, product_price);
+  }, [product_price]);
 
   const serverSelectedPrice = useMemo(() => {
     return product_price?.filter((item) => item.quantity > 0)[0];
@@ -104,9 +105,10 @@ function ProductCard({
                       handleIncrementCartItem();
                     }
                   }}
-                  disabled={createCartItem.isLoading}
+                  disabled={inventory === 0 || createCartItem.isLoading}
                 >
                   <Plus />
+                  {inventory === 0 ? <span>ناموجود</span> : null}
                 </button>
               ) : (
                 <span className="inline-block w-12 h-12"></span>
@@ -146,14 +148,6 @@ function ProductCard({
           )}
         </div>
         <span className="text-sm text-grey-600 max-w-[220px] w-full truncate overflow-x-hidden">
-          {name}{" "}
-          {serverSelectedPrice
-            ? `- ${serverSelectedPrice.weight} ${
-                MEASURE_TYPES[serverSelectedPrice.measure_type]
-              }`
-            : `- ${product_price?.[0].weight} ${
-                MEASURE_TYPES[product_price?.[0].measure_type]
-              }`}
           {name}{" "}
           {serverSelectedPrice
             ? `- ${serverSelectedPrice.weight} ${

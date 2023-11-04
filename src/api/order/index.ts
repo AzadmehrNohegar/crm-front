@@ -17,5 +17,5 @@ export const getOrderOrderList = async ({
 export const getOrderOrderListById = async ({
   id,
 }: AxiosCustomRequestConfig) => {
-  return await http.get(`/order/order_list/${id}`);
+  return await http.get(`/order/order_list/${id}/`);
 };

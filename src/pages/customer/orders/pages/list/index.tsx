@@ -31,7 +31,10 @@ function OrdersList() {
             ? { status: searchParams.get("status") }
             : {}),
         },
-      })
+      }),
+    {
+      keepPreviousData: true,
+    }
   );
 
   if (isLoading)

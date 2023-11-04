@@ -6,7 +6,7 @@ import { Fragment, useState } from "react";
 import { Input } from "@/components/input";
 import { Bookmark, InfoCircle, Wallet } from "react-iconly";
 import { Checkbox } from "@/components/checkbox";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { getAccountMyProfile } from "@/api/account";
 import Skeleton from "react-loading-skeleton";
 import clsx from "clsx";
@@ -20,6 +20,8 @@ function Checkout() {
     setIsCheckoutOfflineFileUploadDialogOpen,
   ] = useState(false);
 
+  const navigate = useNavigate();
+
   const { data: cartData, isLoading: isCartDataLoading } = useQuery(
     "cart-cart",
     () => getCartCart()
@@ -30,8 +32,9 @@ function Checkout() {
   );
 
   const checkoutCart = useMutation(postOrderCreateOrder, {
-    onSuccess: () => {
-      console.log("gg");
+    onSuccess: (res) => {
+      const { order_id } = res.data as { order_id: number };
+      navigate(`/orders/${order_id}`);
     },
   });
 
@@ -63,6 +66,14 @@ function Checkout() {
       setIsCheckoutOfflineFileUploadDialogOpen(true);
     }
   };
+
+  if (cartData?.data.results[0]?.cart_item?.length === 0)
+    return (
+      <div className="h-innerContainer flex flex-col items-center justify-center gap-y-4 max-w-3xl mx-auto">
+        <img src="/images/cart-empty-1.png" alt="cart empty" />
+        <span className="text-xl">سبد خرید شما خالی است.</span>
+      </div>
+    );
 
   return (
     <Fragment>
