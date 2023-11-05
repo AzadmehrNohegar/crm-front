@@ -1,14 +1,13 @@
 import { Checkbox } from "@/components/checkbox";
 import { Input } from "@/components/input";
 import { Popover, PopoverButton } from "@/components/popover";
-import { Fragment, useState } from "react";
+import { useState } from "react";
 import { Filter2, Search, Upload } from "react-iconly";
 import { useQuery } from "react-query";
 import { useLocation, useSearchParams } from "react-router-dom";
 import { useDebounce } from "usehooks-ts";
 import { Pagination } from "@/shared/pagination";
 import { DatePicker } from "@/components/datepicker";
-import Skeleton from "react-loading-skeleton";
 import { getOrderOrderList } from "@/api/order";
 import { OrdersTable } from "./partials/ordersTable";
 
@@ -30,28 +29,18 @@ function OrdersList() {
           ...(searchParams.get("status")
             ? { status: searchParams.get("status") }
             : {}),
+          ...(searchParams.get("ordering")
+            ? { ordering: searchParams.get("ordering") || "" }
+            : {}),
+          ...(searchParams.get("payment__created_date")
+            ? {
+                payment__created_date:
+                  searchParams.get("payment__created_date") || "",
+              }
+            : {}),
         },
-      }),
-    {
-      keepPreviousData: true,
-    }
+      })
   );
-
-  if (isLoading)
-    return (
-      <Fragment>
-        <Skeleton height={48} />
-        <Skeleton height={400} className="my-6" />
-      </Fragment>
-    );
-
-  // if (!isLoading && ordersPagination?.data.results.length === 0)
-  //   return (
-  //     <div className="h-innerContainer flex flex-col items-center justify-center gap-y-4 max-w-3xl mx-auto">
-  //       <img src="/images/orders-empty-1.png" alt="orders empty" />
-  //       <span className="text-xl">هنوز سفارشی ثبت نشده است.</span>
-  //     </div>
-  //   );
 
   return (
     <div className="relative">
@@ -70,7 +59,14 @@ function OrdersList() {
           <div className="flex flex-wrap py-4 gap-x-4">
             <div className="flex flex-wrap items-start gap-x-2 gap-y-4 pe-4 border-e border-e-grey-200">
               <DatePicker
-                range
+                value={searchParams.get("payment__created_date") || ""}
+                onChange={(val) => {
+                  searchParams.set(
+                    "payment__created_date",
+                    new Date((val?.valueOf() as number) || "").toISOString()
+                  );
+                  setSearchParams(searchParams);
+                }}
                 containerClassName="w-full min-w-[350px]"
                 id="date"
                 placeholder="تاریخ مورد نظر را انتخاب کنید."

@@ -3,7 +3,7 @@ import { Plus } from "@/assets/icons/Plus";
 import { Checkbox } from "@/components/checkbox";
 import { Input } from "@/components/input";
 import { Popover, PopoverButton } from "@/components/popover";
-import { Fragment, useState } from "react";
+import { useState } from "react";
 import { Filter2, Search } from "react-iconly";
 import { useQuery } from "react-query";
 import { Link, useLocation, useSearchParams } from "react-router-dom";
@@ -11,7 +11,6 @@ import { useDebounce } from "usehooks-ts";
 import { TicketsTable } from "./partials/ticketsTable";
 import { Pagination } from "@/shared/pagination";
 import { DatePicker } from "@/components/datepicker";
-import Skeleton from "react-loading-skeleton";
 
 function SupportList() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -31,25 +30,20 @@ function SupportList() {
           ...(searchParams.get("status")
             ? { status: searchParams.get("status") || "" }
             : {}),
+          ...(searchParams.get("ordering")
+            ? { ordering: searchParams.get("ordering") || "" }
+            : {}),
+          ...(searchParams.get("created_at")
+            ? { created_at: searchParams.get("created_at") || "" }
+            : {}),
         },
-      }),
-    {
-      keepPreviousData: true,
-    }
+      })
   );
-
-  if (isLoading)
-    return (
-      <Fragment>
-        <Skeleton height={48} />
-        <Skeleton height={400} className="my-6" />
-      </Fragment>
-    );
 
   if (
     !isLoading &&
     ticketsPagination?.data.results.length === 0 &&
-    !searchParams.get("status")
+    searchParams.toString() === ""
   )
     return (
       <div className="h-innerContainer flex flex-col items-center justify-center gap-y-4 max-w-3xl mx-auto">
@@ -76,7 +70,14 @@ function SupportList() {
           <div className="flex flex-wrap py-4 gap-x-4">
             <div className="flex flex-wrap items-start gap-x-2 gap-y-4 pe-4 border-e border-e-grey-200">
               <DatePicker
-                range
+                value={searchParams.get("created_at") || ""}
+                onChange={(val) => {
+                  searchParams.set(
+                    "created_at",
+                    new Date((val?.valueOf() as number) || "").toISOString()
+                  );
+                  setSearchParams(searchParams);
+                }}
                 containerClassName="w-full min-w-[350px]"
                 id="date"
                 placeholder="تاریخ مورد نظر را انتخاب کنید."
@@ -155,12 +156,10 @@ function SupportList() {
             }
           />
         </div>
-        <div className="overflow-x-auto">
-          <TicketsTable
-            tickets={ticketsPagination?.data.results}
-            isLoading={isLoading}
-          />
-        </div>
+        <TicketsTable
+          tickets={ticketsPagination?.data.results}
+          isLoading={isLoading}
+        />
       </div>
       <Pagination
         count={ticketsPagination?.data.count}

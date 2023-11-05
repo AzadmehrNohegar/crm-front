@@ -58,7 +58,7 @@ function Dashboard() {
             <ChevronLeft />
           </Link>
         </div>
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto pb-24">
           <table className="table table-auto text-start">
             <thead className="bg-secondary-50">
               <tr>

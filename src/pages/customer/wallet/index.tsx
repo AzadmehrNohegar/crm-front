@@ -40,6 +40,12 @@ function Wallet() {
           search: debouncedSearch,
           page: searchParams.get("page") || 1,
           page_size: searchParams.get("page_size") || 10,
+          ...(searchParams.get("ordering")
+            ? { ordering: searchParams.get("ordering") || "" }
+            : {}),
+          ...(searchParams.get("created_date")
+            ? { created_date: searchParams.get("created_date") || "" }
+            : {}),
         },
       })
   );
@@ -73,7 +79,14 @@ function Wallet() {
             <div className="flex flex-wrap py-4 gap-x-4">
               <div className="flex flex-wrap items-start gap-x-2 gap-y-4 pe-4 border-e border-e-grey-200">
                 <DatePicker
-                  range
+                  value={searchParams.get("created_date") || ""}
+                  onChange={(val) => {
+                    searchParams.set(
+                      "created_date",
+                      new Date((val?.valueOf() as number) || "").toISOString()
+                    );
+                    setSearchParams(searchParams);
+                  }}
                   containerClassName="w-full min-w-[350px]"
                   id="date"
                   placeholder="تاریخ مورد نظر را انتخاب کنید."
@@ -155,12 +168,10 @@ function Wallet() {
               }
             />
           </div>
-          <div className="overflow-x-auto">
-            <WalletTable
-              wallet_transactions={walletTransactions?.data.results}
-              isLoading={isLoading}
-            />
-          </div>
+          <WalletTable
+            wallet_transactions={walletTransactions?.data.results}
+            isLoading={isLoading}
+          />
         </div>
         <Pagination
           count={walletTransactions?.data.count}

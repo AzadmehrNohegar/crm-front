@@ -11,7 +11,7 @@ interface IOrdersTableProps {
 }
 
 function OrdersTable({ isLoading, orders }: IOrdersTableProps) {
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const parsePaymentType = (order: order) => {
     if (order.payment.offline_transaction)
@@ -21,8 +21,18 @@ function OrdersTable({ isLoading, orders }: IOrdersTableProps) {
     return PAYMENT_TYPE["wallet_transaction"];
   };
 
+  const handleSort = (val: string) => {
+    if (searchParams.get("ordering") === val) {
+      searchParams.set("ordering", `-${val}`);
+      setSearchParams(searchParams);
+    } else {
+      searchParams.set("ordering", val);
+      setSearchParams(searchParams);
+    }
+  };
+
   return (
-    <div className="overflow-x-auto">
+    <div className="overflow-x-auto pb-24">
       <table className="table table-auto text-start">
         <thead className="bg-grey-50">
           <tr>
@@ -32,23 +42,26 @@ function OrdersTable({ isLoading, orders }: IOrdersTableProps) {
             <th align="right">
               <span className="inline-flex items-center text-sm text-grey-800">
                 شماره سفارش‌
-                <button className="btn btn-ghost btn-square btn-sm">
+                <button
+                  className="btn btn-ghost btn-square btn-sm"
+                  value="id"
+                  onClick={(e) => handleSort(e.currentTarget.value)}
+                >
                   <Swap />
                 </button>
               </span>
             </th>
             <th align="right">
-              <span className="inline-flex items-center text-sm text-grey-800">
-                نوع پرداخت‌
-                <button className="btn btn-ghost btn-square btn-sm">
-                  <Swap />
-                </button>
-              </span>
+              <span className="text-sm text-grey-800">نوع پرداخت‌</span>
             </th>
             <th align="right">
               <span className="inline-flex items-center text-sm text-grey-800">
                 مبلغ
-                <button className="btn btn-ghost btn-square btn-sm">
+                <button
+                  className="btn btn-ghost btn-square btn-sm"
+                  value="amount"
+                  onClick={(e) => handleSort(e.currentTarget.value)}
+                >
                   <Swap />
                 </button>
               </span>
@@ -56,7 +69,11 @@ function OrdersTable({ isLoading, orders }: IOrdersTableProps) {
             <th align="right">
               <span className="inline-flex items-center text-sm text-grey-800">
                 زمان تراکنش
-                <button className="btn btn-ghost btn-square btn-sm">
+                <button
+                  className="btn btn-ghost btn-square btn-sm"
+                  value="created_date"
+                  onClick={(e) => handleSort(e.currentTarget.value)}
+                >
                   <Swap />
                 </button>
               </span>
@@ -64,7 +81,11 @@ function OrdersTable({ isLoading, orders }: IOrdersTableProps) {
             <th align="right">
               <span className="inline-flex items-center text-sm text-grey-800">
                 وضعیت
-                <button className="btn btn-ghost btn-square btn-sm">
+                <button
+                  className="btn btn-ghost btn-square btn-sm"
+                  value="status"
+                  onClick={(e) => handleSort(e.currentTarget.value)}
+                >
                   <Swap />
                 </button>
               </span>
