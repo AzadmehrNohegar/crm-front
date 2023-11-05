@@ -38,7 +38,7 @@ function Pagination({
       )}
     >
       <div className="flex text-sm items-center gap-x-2 p-2 rounded-xl">
-        <button className="btn btn-md btn-square btn-ghost">
+        <button className="btn btn-md btn-square btn-ghost" disabled>
           <DoubleArrowRight />
         </button>
         <button
@@ -69,7 +69,7 @@ function Pagination({
         >
           <ArrowLeft />
         </button>
-        <button className="btn btn-md btn-square btn-ghost">
+        <button className="btn btn-md btn-square btn-ghost" disabled>
           <DoubleArrowLeft />
         </button>
       </div>

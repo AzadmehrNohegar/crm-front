@@ -9,8 +9,8 @@ function AuthRegister() {
   const [type, setType] = useState<contract_types>("REAL");
 
   return (
-    <main className="flex h-screen items-center p-8 gap-x-8">
-      <div className="w-5/12">
+    <main className="flex flex-col-reverse justify-between sm:justify-normal gap-y-4 sm:gap-y-0 sm:flex-row h-screen items-center p-2 sm:p-8 gap-x-8">
+      <div className="w-full sm:w-5/12 h-full max-h-[48vh]">
         <div className="w-full flex flex-col items-start justify-center gap-y-2 border border-grey-200 rounded-custom p-5">
           <div className="flex items-center justify-between w-full">
             <h2 className="text-lg sm:text-xl font-bold text-grey-800">
@@ -20,7 +20,8 @@ function AuthRegister() {
               to=".."
               className="btn btn-link btn-ghost text-grey-800 px-0 decoration-transparent"
             >
-              بازگشت به صفحه ورود
+              <span className="hidden sm:inline">بازگشت به صفحه ورود</span>
+              <span className="inline sm:hidden">بازگشت</span>
               <ArrowLeft />
             </Link>
           </div>
@@ -29,7 +30,10 @@ function AuthRegister() {
           </span>
           <div className="w-full flex items-center gap-x-2">
             <span className="text-sm inline-block me-auto">
-              نوع حساب کاربری خود را مشخص کنید.
+              <span className="hidden sm:inline">
+                نوع حساب کاربری خود را مشخص کنید.
+              </span>
+              <span className="inline sm:hidden">نوع حساب کاربری</span>
             </span>
             <label htmlFor="real">حقیقی</label>
             <input
@@ -52,12 +56,16 @@ function AuthRegister() {
           {type === "REAL" ? <AuthRegisterReal /> : null}
         </div>
       </div>
-      <div className="w-7/12">
-        <img
-          src="/images/auth-bg1.png"
-          className="max-h-[95vh] mx-auto"
-          alt="auth bg"
-        />
+      <div className="w-full sm:w-7/12 h-full sm:h-auto max-h-[47vh] sm:max-h-auto">
+        <picture>
+          <source media="(min-width:768px)" src="/images/auth-bg1.png" />
+          <source media="(max-width:768px)" src="/images/auth-bg1-mobile.png" />
+          <img
+            src="/images/auth-bg1.png"
+            className="max-h-[95vh] mx-auto h-full sm:h-auto"
+            alt="auth bg"
+          />
+        </picture>
       </div>
     </main>
   );

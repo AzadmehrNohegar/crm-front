@@ -41,7 +41,7 @@ function AuthResultSuccess() {
               </div>
               آدرس
             </span>
-            <address className="not-italic">
+            <address className="not-italic text-sm text-justify sm:text-base max-w-[50%]">
               تهران، بازار بزرگ، بازار نوروز خان، سرای عزیزیان، پلاک ۶۷
             </address>
           </li>

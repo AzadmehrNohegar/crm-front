@@ -66,7 +66,7 @@ function AuthLoginPassword({ changeStep, phone }: IAuthLoginPasswordProps) {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="w-full flex flex-col items-start justify-center gap-y-4 border border-grey-200 rounded-custom p-5"
+      className="w-full flex flex-col items-start justify-center gap-y-4 border border-grey-200 rounded-custom p-5 h-full"
     >
       <h2 className="text-base sm:text-xl font-bold text-grey-800">
         ورود با رمز عبور
@@ -97,7 +97,7 @@ function AuthLoginPassword({ changeStep, phone }: IAuthLoginPasswordProps) {
           },
         })}
       />
-      <button className="btn btn-primary btn-block mt-5">
+      <button className="btn btn-primary btn-block mt-auto sm:mt-5">
         ورود با رمز عبور
       </button>
 

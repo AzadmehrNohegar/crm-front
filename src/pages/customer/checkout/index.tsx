@@ -11,7 +11,7 @@ import { getAccountMyProfile } from "@/api/account";
 import Skeleton from "react-loading-skeleton";
 import clsx from "clsx";
 import { postOrderCreateOrder } from "@/api/order";
-import CheckoutOfflineFileUploadDialog from "./partials/checkoutOfflineFileUploadDialog";
+import { CheckoutOfflineFileUploadDialog } from "./partials/checkoutOfflineFileUploadDialog";
 
 function Checkout() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -78,7 +78,7 @@ function Checkout() {
   return (
     <Fragment>
       <div className="flex items-start gap-x-4">
-        <div className="w-8/12 h-innerContainer flex flex-col gap-y-4">
+        <div className="w-full sm:w-8/12 h-innerContainer flex flex-col gap-y-4">
           <h4 className="font-bold">محصولات انتخابی شما:</h4>
           <div className="w-full flex flex-col divide-y gap-y-4 max-h-1/2 overflow-y-auto">
             {cartData?.data.results[0]?.cart_item?.map((item: cart_item) => (
@@ -134,7 +134,7 @@ function Checkout() {
           </div>
         </div>
 
-        <div className="w-4/12 border border-grey-200 rounded-custom p-5 flex flex-col gap-y-4">
+        <div className="hidden sm:flex w-4/12 border border-grey-200 rounded-custom p-5 flex-col gap-y-4">
           <h2 className="text-xl">انتخاب نحوه پرداخت</h2>
           <div className="flex items-center justify-between">
             <span>پرداخت از کیف پول</span>

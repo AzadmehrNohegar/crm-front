@@ -27,7 +27,7 @@ function DashboardIntroProducts() {
           <ArrowLeft />
         </Link>
       </div>
-      <div className="flex items-center justify-evenly gap-x-4">
+      <div className="flex items-center justify-evenly gap-x-4 flex-nowrap sm:flex-wrap overflow-x-auto ps-40 pe-2 py-4 sm:p-0">
         {isLoading ? (
           <Skeleton
             count={5}

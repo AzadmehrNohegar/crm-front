@@ -85,7 +85,7 @@ function AuthLoginOtp({ resetFlow, phone }: IAuthLoginOtpProps) {
   return (
     <form
       onSubmit={onSubmit}
-      className="w-full flex flex-col items-start justify-center gap-y-4 border border-grey-200 rounded-custom p-5"
+      className="w-full flex flex-col items-start justify-center gap-y-4 border border-grey-200 rounded-custom p-5 h-full"
     >
       <h2 className="text-lg sm:text-xl font-bold text-grey-800">
         کد فعالسازی رو وارد کنید.
@@ -133,7 +133,7 @@ function AuthLoginOtp({ resetFlow, phone }: IAuthLoginOtpProps) {
         </div>
         <RadialProgress max={60} progress={count} />
       </div>
-      <button className="btn btn-block btn-primary mt-10">
+      <button className="btn btn-block btn-primary mt-auto sm:mt-10">
         ورود به حساب کاربری
       </button>
     </form>

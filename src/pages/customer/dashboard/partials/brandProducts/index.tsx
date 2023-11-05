@@ -30,8 +30,15 @@ function DashboardBrandProducts() {
     <div className="flex my-10 items-start gap-y-4 flex-col">
       <Swiper
         init={isMounted}
-        slidesPerView={6}
-        spaceBetween={20}
+        slidesPerView={1.5}
+        width={340}
+        breakpoints={{
+          768: {
+            slidesPerView: 6,
+            spaceBetween: 20,
+            width: null,
+          },
+        }}
         watchOverflow
         modules={[Navigation]}
         className="w-full"

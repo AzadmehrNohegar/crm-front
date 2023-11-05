@@ -34,16 +34,17 @@ function CheckoutItem({ category_name, product_price, quantity }: cart_item) {
     });
 
   return (
-    <div className="flex w-full gap-x-4 first-of-type:pt-0 pt-4">
+    <div className="flex w-full gap-x-0 gap-y-4 sm:gap-x-4 first-of-type:pt-0 pt-4 flex-wrap sm:flex-nowrap">
       <img
         src={product_price.product.image}
         width={60}
         height={60}
+        className="basis-2/12"
         alt="product thumbnail"
       />
-      <div className="w-full flex flex-col justify-between">
+      <div className="w-auto basis-10/12 sm:w-full flex flex-col justify-between">
         <span className="text-sm font-bold">{product_price.product.name}</span>
-        <span className="flex w-1/2 items-center justify-between">
+        <span className="flex items-center justify-between w-full sm:w-1/2 flex-row-reverse sm:flex-row">
           <span className="badge badge-accent text-xs">{category_name}</span>
           <strong className="text-sm">
             {product_price?.weight}{" "}
@@ -53,7 +54,7 @@ function CheckoutItem({ category_name, product_price, quantity }: cart_item) {
           </strong>
         </span>
       </div>
-      <div className="flex flex-col items-end gap-y-2 justify-between">
+      <div className="flex flex-row-reverse sm:flex-col items-center sm:items-end gap-y-2 justify-between basis-full">
         <strong className="text-sm">
           <span
             className={clsx(

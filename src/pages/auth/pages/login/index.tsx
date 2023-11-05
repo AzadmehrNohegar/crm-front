@@ -10,8 +10,8 @@ function AuthLogin() {
   const [persistedPhone, setPersistedPhone] = useState("");
 
   return (
-    <main className="flex h-screen items-center p-8 gap-x-8">
-      <div className="w-5/12">
+    <main className="flex flex-col-reverse gap-y-4 sm:gap-y-0 sm:flex-row h-screen items-center p-2 sm:p-8 gap-x-8">
+      <div className="w-full sm:w-5/12 h-full">
         {step === "credentials" ? (
           <AuthLoginCredentials
             changeStep={(step) => setStep(step)}
@@ -31,12 +31,16 @@ function AuthLogin() {
           />
         ) : null}
       </div>
-      <div className="w-7/12">
-        <img
-          src="/images/auth-bg1.png"
-          className="max-h-[95vh] mx-auto"
-          alt="auth bg"
-        />
+      <div className="w-full sm:w-7/12 h-full sm:h-auto max-h-[47vh] sm:max-h-auto">
+        <picture>
+          <source media="(min-width:768px)" src="/images/auth-bg1.png" />
+          <source media="(max-width:768px)" src="/images/auth-bg1-mobile.png" />
+          <img
+            src="/images/auth-bg1.png"
+            className="max-h-[95vh] mx-auto h-full sm:h-auto"
+            alt="auth bg"
+          />
+        </picture>
       </div>
     </main>
   );

@@ -66,7 +66,7 @@ function AuthLoginCredentials({
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="w-full flex flex-col items-start justify-center gap-y-4 border border-grey-200 rounded-custom p-5"
+      className="w-full flex flex-col items-start justify-center gap-y-4 border border-grey-200 rounded-custom p-5 h-full"
     >
       <h2 className="text-lg sm:text-xl font-bold text-grey-800">
         ورود به حساب کاربری
@@ -91,7 +91,7 @@ function AuthLoginCredentials({
             "شماره موبایل نادرست است.",
         })}
       />
-      <div className="flex items-center mt-28 justify-between w-full gap-x-4">
+      <div className="flex items-center mt-auto sm:mt-28 justify-between w-full gap-x-4">
         <button
           type="button"
           className="btn btn-primary btn-outline basis-modified"

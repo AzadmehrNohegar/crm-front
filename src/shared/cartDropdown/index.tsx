@@ -6,9 +6,14 @@ import { useQuery } from "react-query";
 import { CartDropdownItem } from "./partials/cartDropdownItem";
 import { Link } from "react-router-dom";
 import { Fragment } from "react";
+import { useMediaQuery } from "usehooks-ts";
 
 function CartDropdown() {
   const { data: cartData } = useQuery("cart-cart", () => getCartCart());
+
+  const matches = useMediaQuery("(max-width: 768px)");
+
+  if (matches) return null;
 
   return (
     <Popover

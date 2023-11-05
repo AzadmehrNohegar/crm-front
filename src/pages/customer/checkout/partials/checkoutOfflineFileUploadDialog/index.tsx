@@ -119,4 +119,4 @@ function CheckoutOfflineFileUploadDialog({
   );
 }
 
-export default CheckoutOfflineFileUploadDialog;
+export { CheckoutOfflineFileUploadDialog };

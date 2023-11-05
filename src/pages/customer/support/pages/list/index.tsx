@@ -28,8 +28,14 @@ function SupportList() {
           search: debouncedSearch,
           page: searchParams.get("page") || 1,
           page_size: searchParams.get("page_size") || 10,
+          ...(searchParams.get("status")
+            ? { status: searchParams.get("status") || "" }
+            : {}),
         },
-      })
+      }),
+    {
+      keepPreviousData: true,
+    }
   );
 
   if (isLoading)
@@ -40,7 +46,11 @@ function SupportList() {
       </Fragment>
     );
 
-  if (!isLoading && ticketsPagination?.data.results.length === 0)
+  if (
+    !isLoading &&
+    ticketsPagination?.data.results.length === 0 &&
+    !searchParams.get("status")
+  )
     return (
       <div className="h-innerContainer flex flex-col items-center justify-center gap-y-4 max-w-3xl mx-auto">
         <img src="/images/support-empty-1.png" alt="support empty" />
@@ -73,6 +83,20 @@ function SupportList() {
               />
             </div>
             <div className="flex items-center gap-x-4">
+              <Checkbox
+                label="جدید"
+                containerClassName="w-fit"
+                checked={searchParams.get("status") === "new"}
+                onChange={(e) => {
+                  if (e.currentTarget.checked) {
+                    searchParams.set("status", "new");
+                    setSearchParams(searchParams);
+                  } else {
+                    searchParams.delete("status");
+                    setSearchParams(searchParams);
+                  }
+                }}
+              />
               <Checkbox
                 label="درحال بررسی"
                 containerClassName="w-fit"

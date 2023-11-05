@@ -133,7 +133,7 @@ function SupportCreate() {
           </Link>
           <button
             className="btn btn-primary w-40"
-            disabled={!isDirty || !isValid}
+            disabled={!isDirty || !isValid || createTicket.isLoading}
           >
             ایجاد تیکت پشتیبانی
           </button>

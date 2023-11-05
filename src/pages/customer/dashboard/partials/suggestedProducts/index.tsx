@@ -30,16 +30,30 @@ function DashboardSuggestedProducts() {
   if (isLoading) return <Skeleton height={358} containerClassName="my-5" />;
 
   return (
-    <div className="my-5 flex items-center py-8 px-5 bg-danger rounded-custom gap-x-4">
-      <div className="flex flex-col items-center justify-evenly h-full min-w-[150px]">
-        <h1 className="text-2xl text-white text-center">پیشنهاد ویژه ما</h1>
-        <img src="/images/confetti.png" alt="confetti" />
+    <div className="my-5 flex flex-col sm:flex-row items-center py-8 px-5 bg-danger rounded-custom gap-4 overflow-x-hidden">
+      <div className="flex flex-row sm:flex-col items-center justify-between sm:justify-evenly h-full min-w-[150px] w-full sm:w-auto">
+        <h1 className="text-base sm:text-2xl text-white text-center">
+          پیشنهاد ویژه ما
+        </h1>
+        <img
+          src="/images/confetti.png"
+          className="w-7 h-7 sm:w-auto sm:h-auto"
+          alt="confetti"
+        />
       </div>
       <Swiper
         init={isMounted}
-        slidesPerView={4}
-        spaceBetween={20}
+        slidesPerView={1.3}
+        width={340}
         watchOverflow
+        breakpoints={{
+          768: {
+            slidesPerView: 4,
+            spaceBetween: 20,
+            centeredSlides: false,
+            width: null,
+          },
+        }}
       >
         {suggestedProduct?.data.results.map((item: product) => (
           <SwiperSlide key={item.id}>
