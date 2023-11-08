@@ -109,7 +109,9 @@ function CartDropdownItem({
           >
             {product_price?.price.toLocaleString()}{" "}
           </span>{" "}
-          {product_price?.discount_price?.toLocaleString() || ""}{" "}
+          {product_price?.discount_price !== 0
+            ? product_price?.discount_price?.toLocaleString()
+            : ""}{" "}
           <span className="text-xs font-light text-grey-500">تومان</span>
         </strong>
       </div>

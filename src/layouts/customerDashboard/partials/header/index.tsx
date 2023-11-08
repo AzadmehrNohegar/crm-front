@@ -64,7 +64,7 @@ function CustomerDashboardHeader() {
         iconEnd={
           <button
             type="button"
-            className="absolute end-4 inset-y-auto btn btn-secondary btn-sm"
+            className="absolute end-2 inset-y-auto btn btn-secondary btn-sm"
           >
             پیدا کن
             <Search />
@@ -75,7 +75,7 @@ function CustomerDashboardHeader() {
       {matches ? (
         <Fragment>
           <Popover
-            className="w-full sm:w-[430px] max-w-screen left-0 top-2/3 shadow-card rounded-custom shadow-ev3 z-30"
+            className="w-full sm:w-[430px] max-w-screen top-2/3 shadow-card rounded-custom shadow-ev3 z-30"
             orientation="left"
             popoverBtn={
               <PopoverButton className="btn btn-square btn-sm btn-ghost focus:outline-none hover:bg-white decoration-transparent text-grey-800 ms-auto">

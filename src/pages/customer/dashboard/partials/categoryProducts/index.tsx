@@ -15,7 +15,7 @@ function DashboardCategoryProducts() {
 
   return (
     <div className="my-5">
-      <h2 className="text-xl">دسته بندی محصولات</h2>
+      <h2 className="text-base sm:text-xl">دسته بندی محصولات</h2>
       <div className="flex items-center justify-start gap-x-3 sm:gap-x-4 mt-6 flex-wrap sm:flex-nowrap">
         {isLoading ? (
           <Skeleton

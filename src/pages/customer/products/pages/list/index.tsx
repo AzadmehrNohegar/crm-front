@@ -1,16 +1,23 @@
 import { getProductProduct } from "@/api/product";
 import { product } from "@/model";
 import { ProductCard } from "@/shared/productCard";
-import { ChevronDown, Filter } from "react-iconly";
+import { ChevronDown, Filter, Filter2 } from "react-iconly";
 import { useQuery } from "react-query";
 import { ProductListFilters } from "./partials/filters";
 import { Pagination } from "@/shared/pagination";
 import { useLocation, useSearchParams } from "react-router-dom";
 import Skeleton from "react-loading-skeleton";
+import { useMediaQuery } from "usehooks-ts";
+import { ProductCardRow } from "@/shared/productCardRow";
+import { FiltersSlideover } from "./partials/filtersSlideover";
+import { useState } from "react";
 
 function ProductsList() {
   const [searchParams, setSearchParams] = useSearchParams();
+  const [isFiltersSlideoverOpen, setIsFiltersSlideoverOpen] = useState(false);
+
   const { search } = useLocation();
+  const matches = useMediaQuery("(max-width: 768px)");
 
   const { data: productsPagination, isLoading } = useQuery(
     ["products-pagination", search],
@@ -27,14 +34,21 @@ function ProductsList() {
   );
 
   return (
-    <div className="flex items-stretch relative gap-x-4 pb-20">
-      <ProductListFilters />
-      <div className="w-3/4 flex justify-start flex-wrap gap-4 h-fit">
+    <div className="flex items-stretch relative gap-x-4">
+      {!matches ? <ProductListFilters /> : null}
+      <div className="w-full sm:w-3/4 flex justify-start flex-wrap gap-4 h-fit mb-36">
         <div className="basis-full flex justify-end w-full">
+          <button
+            className="btn btn-ghost btn-link decoration-transparent text-grey-800 me-auto btn-sm px-0 inline-flex sm:hidden"
+            onClick={() => setIsFiltersSlideoverOpen(true)}
+          >
+            <Filter2 />
+            فیلترها
+          </button>
           <div className="dropdown">
             <label
               tabIndex={0}
-              className="btn btn-ghost btn-link decoration-transparent text-grey-800"
+              className="btn btn-ghost btn-link decoration-transparent text-grey-800 btn-sm px-0"
             >
               <Filter />
               مرتب سازی
@@ -84,14 +98,25 @@ function ProductsList() {
             className="basis-modified3"
           />
         ) : null}
-        {productsPagination?.data.results.map((item: product) => (
-          <ProductCard
-            containerClassName="basis-modified3"
-            key={item.id}
-            api_origin="products-pagination"
-            {...item}
-          />
-        ))}
+        {productsPagination?.data.results.map((item: product) => {
+          if (!matches)
+            return (
+              <ProductCard
+                containerClassName="basis-modified3"
+                key={item.id}
+                api_origin="products-pagination"
+                {...item}
+              />
+            );
+          return (
+            <ProductCardRow
+              containerClassName=""
+              key={item.id}
+              api_origin="products-pagination"
+              {...item}
+            />
+          );
+        })}
       </div>
       <Pagination
         count={productsPagination?.data.count}
@@ -109,6 +134,12 @@ function ProductsList() {
         }}
         isEven
       />
+      {matches ? (
+        <FiltersSlideover
+          isOpen={isFiltersSlideoverOpen}
+          setIsOpen={setIsFiltersSlideoverOpen}
+        />
+      ) : null}
     </div>
   );
 }

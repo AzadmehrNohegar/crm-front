@@ -6,6 +6,7 @@ import { IExtendedDialogProps } from "@/model";
 import { Controller, useForm } from "react-hook-form";
 import { useMutation } from "react-query";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import { toast } from "react-toastify";
 
 interface ICheckoutOfflineFileUploadDialogForm {
   file: FileList | null;
@@ -35,6 +36,9 @@ function CheckoutOfflineFileUploadDialog({
     onSuccess: (res) => {
       const { order_id } = res.data as { order_id: number };
       navigate(`/orders/${order_id}`);
+      toast("سفارش شما با موفقیت ثبت شد.", {
+        type: "success",
+      });
     },
   });
 
@@ -63,8 +67,8 @@ function CheckoutOfflineFileUploadDialog({
 
   return (
     <Dialog isOpen={isOpen} closeModal={closeModal} placement="center">
-      <Dialog.Title as="div" className="p-5 text-start shadow-header">
-        <h2 className="text-xl">افزایش موجودی</h2>
+      <Dialog.Title as="div" className="p-3.5 sm:p-5 text-start shadow-header">
+        <h2 className="text-base sm:text-xl">افزایش موجودی</h2>
       </Dialog.Title>
       <Dialog.Panel
         as="form"

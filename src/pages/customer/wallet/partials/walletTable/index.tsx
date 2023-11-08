@@ -1,4 +1,9 @@
-import { WALLET_TRANSACTION_TYPE, wallet_transaction } from "@/model";
+import {
+  STATUS_TYPE,
+  WALLET_TRANSACTION_TYPE,
+  wallet_transaction,
+} from "@/model";
+import clsx from "clsx";
 import { Swap } from "react-iconly";
 import Skeleton from "react-loading-skeleton";
 import { useSearchParams } from "react-router-dom";
@@ -22,7 +27,7 @@ function WalletTable({ isLoading, wallet_transactions }: IWalletTableProps) {
   };
 
   return (
-    <div className="overflow-x-auto pb-24">
+    <div className="overflow-x-auto">
       <table className="table table-auto text-start">
         <thead className="bg-grey-50">
           <tr>
@@ -148,7 +153,16 @@ function WalletTable({ isLoading, wallet_transactions }: IWalletTableProps) {
                 }).format(new Date(item.created_date))}
               </td>
               <td>
-                <span className="text-success-400">موفق</span>
+                <span
+                  className={clsx(
+                    "font-light",
+                    item.status === "success" && "text-success",
+                    item.status === "pending" && "text-grey-600",
+                    item.status === "failed" && "text-danger"
+                  )}
+                >
+                  {STATUS_TYPE[item.status]}
+                </span>
               </td>
             </tr>
           ))}

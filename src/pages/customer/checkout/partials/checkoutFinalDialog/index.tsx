@@ -1,32 +1,27 @@
-import { getCartCart } from "@/api/cart";
-import { useMutation, useQuery } from "react-query";
-import { CheckoutItem } from "./partials/checkoutItem";
-import { cart_item } from "@/model";
-import { Fragment, useState } from "react";
-import { Input } from "@/components/input";
-import { Bookmark, Discount, InfoCircle, Wallet } from "react-iconly";
-import { Checkbox } from "@/components/checkbox";
-import { useNavigate, useSearchParams } from "react-router-dom";
 import { getAccountMyProfile } from "@/api/account";
-import Skeleton from "react-loading-skeleton";
-import clsx from "clsx";
+import { getCartCart } from "@/api/cart";
 import { postOrderCreateOrder } from "@/api/order";
-import { CheckoutOfflineFileUploadDialog } from "./partials/checkoutOfflineFileUploadDialog";
-import { useMediaQuery } from "usehooks-ts";
-import CheckoutFinalDialog from "./partials/checkoutFinalDialog";
+import { Close } from "@/assets/icons/Close";
+import { Dialog } from "@/components/dialog";
+import { IExtendedDialogProps } from "@/model";
+import clsx from "clsx";
+import { Fragment } from "react";
+import { InfoCircle, Wallet } from "react-iconly";
+import Skeleton from "react-loading-skeleton";
+import { useMutation, useQuery } from "react-query";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { toast } from "react-toastify";
 
-function Checkout() {
+interface ICheckoutFinalDialogProps extends IExtendedDialogProps {
+  openOfflineDialog: () => void;
+}
+
+function CheckoutFinalDialog({
+  closeModal,
+  isOpen,
+  openOfflineDialog,
+}: ICheckoutFinalDialogProps) {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [
-    isCheckoutOfflineFileUploadDialogOpen,
-    setIsCheckoutOfflineFileUploadDialogOpen,
-  ] = useState(false);
-
-  const matches = useMediaQuery("(max-width: 768px)");
-
-  const [isCheckoutFinalDialogOpen, setIsCheckoutFinalDialogOpen] =
-    useState(false);
 
   const navigate = useNavigate();
 
@@ -74,92 +69,26 @@ function Checkout() {
     if (searchParams.get("payment_type") === "online") {
       handleCheckout();
     } else {
-      setIsCheckoutOfflineFileUploadDialogOpen(true);
+      openOfflineDialog();
     }
   };
 
-  if (cartData?.data.results[0]?.cart_item?.length === 0)
-    return (
-      <div className="h-max sm:h-innerContainer flex flex-col items-center justify-center gap-y-4 max-w-3xl mx-auto">
-        <img src="/images/cart-empty-1.png" alt="cart empty" />
-        <span className="text-xl">سبد خرید شما خالی است.</span>
-      </div>
-    );
-
   return (
-    <Fragment>
-      <div className="flex items-start gap-x-4">
-        <div className="w-full sm:w-8/12 h-max sm:h-innerContainer flex flex-col gap-y-4">
-          <h4 className="font-bold">محصولات انتخابی شما:</h4>
-          <div className="w-full flex flex-col divide-y gap-y-4 h-full max-h-full sm:max-h-1/2 overflow-y-auto">
-            {cartData?.data.results[0]?.cart_item?.map((item: cart_item) => (
-              <CheckoutItem key={item.id} {...item} />
-            ))}
-          </div>
-          <div className="flex flex-col gap-y-4 bg-grey-50 sm:bg-white rounded-custom p-5">
-            <h4 className="font-bold mb-4 mt-auto flex items-center gap-x-2">
-              <span className="p-1.5 bg-secondary text-white rounded-lg inline sm:hidden">
-                <Discount size="small" />
-              </span>
-              <span>کد تخفیف</span>
-            </h4>
-            <div className="flex items-center gap-x-4">
-              <Input
-                containerClassName="w-full"
-                placeholder="کد تخفیف رو وارد کنید"
-                name="code"
-                value={searchParams.get("code") || ""}
-                onChange={(e) => {
-                  searchParams.set("code", e.target.value);
-                  setSearchParams(searchParams);
-                }}
-                className="input input-bordered input-ghost sm:input-accent ltr text-end w-full"
-              />
-              <button
-                className="btn btn-primary"
-                disabled={!searchParams.get("code")}
-              >
-                اعمال کد
-              </button>
-            </div>
-          </div>
-
-          <div className="bg-white sm:bg-grey-50 shadow-ev3 sm:shadow-none p-5 rounded-custom flex flex-col gap-y-5">
-            <h5 className="text-base font-semibold flex items-center gap-x-2">
-              <span className="bg-grey-50 sm:bg-secondary p-1.5 rounded-lg text-grey-600 sm:text-white">
-                <Bookmark size="small" />
-              </span>
-              فاکتور رسمی
-            </h5>
-            <p>
-              کاربر عزیز شما میتونید از این قسمت با پرداخت ۹ درصد مالیات ارزش بر
-              افزوده درخواست فاکتور رسمی داشته باشید.
-            </p>
-            <Checkbox
-              label="درخواست فاکتور رسمی دارم"
-              containerClassName="w-fit"
-              className="checkbox-sm"
-              checked={searchParams.get("need_tax") === "true"}
-              onChange={(e) => {
-                if (e.currentTarget.checked) {
-                  searchParams.set("need_tax", "true");
-                  setSearchParams(searchParams);
-                } else {
-                  searchParams.delete("need_tax");
-                  setSearchParams(searchParams);
-                }
-              }}
-            />
-          </div>
-          <button
-            className="block sm:hidden btn btn-primary btn-block"
-            onClick={() => setIsCheckoutFinalDialogOpen(true)}
-          >
-            تسویه حساب
-          </button>
-        </div>
-
-        <div className="hidden sm:flex w-4/12 border border-grey-200 rounded-custom p-5 flex-col gap-y-4">
+    <Dialog isOpen={isOpen} closeModal={closeModal} placement="center">
+      <Dialog.Title
+        as="div"
+        className="p-3.5 sm:p-5 text-start shadow-header flex items-center justify-between"
+      >
+        <h2 className="text-base sm:text-xl">جزئیات</h2>
+        <button
+          className="btn btn-ghost btn-sm sm:btn-md btn-link btn-square text-grey-800 decoration-transparent"
+          onClick={closeModal}
+        >
+          <Close className="sclae-100 sm:scale-125" />
+        </button>
+      </Dialog.Title>
+      <Dialog.Panel>
+        <div className="flex w-full p-5 flex-col gap-y-4">
           <h2 className="text-base sm:text-xl">انتخاب نحوه پرداخت</h2>
           <div className="flex items-center justify-between">
             <span>پرداخت از کیف پول</span>
@@ -333,22 +262,9 @@ function Checkout() {
             تسویه حساب
           </button>
         </div>
-      </div>
-      <CheckoutOfflineFileUploadDialog
-        isOpen={isCheckoutOfflineFileUploadDialogOpen}
-        closeModal={() => setIsCheckoutOfflineFileUploadDialogOpen(false)}
-      />
-      {matches ? (
-        <CheckoutFinalDialog
-          isOpen={isCheckoutFinalDialogOpen}
-          closeModal={() => setIsCheckoutFinalDialogOpen(false)}
-          openOfflineDialog={() =>
-            setIsCheckoutOfflineFileUploadDialogOpen(true)
-          }
-        />
-      ) : null}
-    </Fragment>
+      </Dialog.Panel>
+    </Dialog>
   );
 }
 
-export default Checkout;
+export default CheckoutFinalDialog;

@@ -230,7 +230,7 @@ function SupportDetails() {
             alt="support bg"
           />
           <div className="flex flex-col gap-y-4 p-5 w-full bg-grey-50 rounded-custom">
-            <h2 className="text-xl">با ما در ارتباط باشید</h2>
+            <h2 className="text-base sm:text-xl">با ما در ارتباط باشید</h2>
             <p className="text-grey-600 font-light">
               برای ارتباط با ما کافی است فرم را تکمیل کنید تا در اسرع وقت
               کارشناسان با شما تماس بگیرند و یا از طریق راه‌های ارتباطی

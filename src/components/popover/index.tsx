@@ -44,8 +44,8 @@ function Popover({
           className={clsx(
             className,
             "absolute z-40 mt-3 transform px-4 bg-white shadow-hue",
-            orientation === "left" && "left-6 origin-top-left",
-            orientation === "right" && "right-6 origin-top-right"
+            orientation === "left" && "left-0 sm:left-6 origin-top-left",
+            orientation === "right" && "right-0 sm:right-6 origin-top-right"
           )}
         >
           {children}

@@ -5,13 +5,13 @@ import { NavLink } from "react-router-dom";
 
 function CustomerDashboardNavigation() {
   return (
-    <div className="btm-nav z-30 flex items-center bg-gray-50 h-fit py-2">
+    <div className="btm-nav z-30 flex items-center bg-grey-50 h-fit py-2">
       <NavLink
         to="/"
         end
         className={({ isActive }) =>
           clsx(
-            "btn rounded-[100px] max-w-max",
+            "btn rounded-[100px] max-w-max flex-row text-xs btn-sm",
             !isActive && "btn-ghost",
             isActive && "btn-primary"
           )
@@ -29,7 +29,7 @@ function CustomerDashboardNavigation() {
         end
         className={({ isActive }) =>
           clsx(
-            "btn rounded-[100px] max-w-max",
+            "btn rounded-[100px] max-w-max flex-row text-xs btn-sm",
             !isActive && "btn-ghost",
             isActive && "btn-primary"
           )
@@ -47,7 +47,7 @@ function CustomerDashboardNavigation() {
         end
         className={({ isActive }) =>
           clsx(
-            "btn rounded-[100px] max-w-max",
+            "btn rounded-[100px] max-w-max flex-row text-xs btn-sm",
             !isActive && "btn-ghost",
             isActive && "btn-primary"
           )
@@ -65,7 +65,7 @@ function CustomerDashboardNavigation() {
         end
         className={({ isActive }) =>
           clsx(
-            "btn rounded-[100px] max-w-max",
+            "btn rounded-[100px] max-w-max flex-row text-xs btn-sm",
             !isActive && "btn-ghost",
             isActive && "btn-primary"
           )
@@ -82,7 +82,7 @@ function CustomerDashboardNavigation() {
         to="/checkout"
         className={({ isActive }) =>
           clsx(
-            "btn rounded-[100px] max-w-max",
+            "btn rounded-[100px] max-w-max flex-row text-xs btn-sm",
             !isActive && "btn-ghost",
             isActive && "btn-primary"
           )

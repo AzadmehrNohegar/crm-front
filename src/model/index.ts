@@ -23,6 +23,8 @@ export type user_roles = "CUSTOMER" | "ADMIN";
 
 export type contract_types = "REAL" | "JURIDICAL";
 
+export type status_types = "success" | "pending" | "failed";
+
 export type card_types =
   | "primary"
   | "secondary"
@@ -113,6 +115,7 @@ export type wallet_transaction = {
   created_date: string;
   modified_date: string;
   customer: number;
+  status: status_types;
 };
 
 export type ticket = {
@@ -177,6 +180,12 @@ export const TICKET_STATUS_TYPE: IDictionary<string> = {
   new: "جدید",
   processing: "درحال بررسی",
   closed: "بسته شده",
+};
+
+export const STATUS_TYPE: IDictionary<string> = {
+  success: "موفق",
+  pending: "در حال بررسی",
+  failed: "ناموفق",
 };
 
 export const WALLET_TRANSACTION_TYPE: IDictionary<string> = {

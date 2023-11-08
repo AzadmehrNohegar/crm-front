@@ -44,7 +44,7 @@ function DashboardBrandProducts() {
         className="w-full"
       >
         <div className="flex items-center justify-between w-full absolute -top-4 z-20">
-          <h2 className="text-xl">دسته بندی محصولات</h2>
+          <h2 className="text-base sm:text-xl">دسته بندی محصولات</h2>
           <SwiperControls />
         </div>
         {brands?.data.results.map((item: brand) => (
@@ -59,7 +59,7 @@ function DashboardBrandProducts() {
                 className="w-full h-16 object-contain"
                 alt="brand image"
               />
-              <span className="inline-block w-full rounded-lg bg-gray-100 text-center">
+              <span className="inline-block w-full rounded-lg bg-grey-100 text-center">
                 {item.name}
               </span>
             </Link>
