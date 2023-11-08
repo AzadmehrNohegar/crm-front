@@ -37,7 +37,7 @@ function AuthLogin() {
           <source media="(max-width:768px)" src="/images/auth-bg1-mobile.png" />
           <img
             src="/images/auth-bg1.png"
-            className="max-h-[93vh] mx-0 sm:mx-auto w-full sm:w-fit h-full sm:h-full object-cover object-bottom rounded-t-2xl"
+            className="max-h-[93vh] mx-0 sm:mx-auto w-full h-full sm:h-full object-cover object-bottom rounded-t-2xl"
             alt="auth bg"
           />
         </picture>
