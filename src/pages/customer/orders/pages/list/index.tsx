@@ -147,7 +147,7 @@ function OrdersList() {
           />
           <div className="rounded-custom border border-grey-200">
             <div className="flex items-center bg-grey-50 rounded-t-custom justify-between p-4 sm:py-0">
-              <h3 className="text-sm sm:text-base w-full">سوابق کیف پول</h3>
+              <h3 className="text-sm sm:text-base w-full">سفارشات</h3>
             </div>
             <MobileOrdersTable
               orders={ordersPagination?.data.results}
