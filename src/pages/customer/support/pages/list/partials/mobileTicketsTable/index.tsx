@@ -1,25 +1,17 @@
-import { ORDER_TYPES, PAYMENT_TYPE, order } from "@/model";
+import { TICKET_STATUS_TYPE, ticket } from "@/model";
 import { Show } from "react-iconly";
 import Skeleton from "react-loading-skeleton";
 import { Link, useSearchParams } from "react-router-dom";
 import clsx from "clsx";
 import { Fragment } from "react";
 
-interface IMobileOrdersTableProps {
+interface IMobileTicketsTableProps {
   isLoading: boolean;
-  orders?: order[];
+  tickets?: ticket[];
 }
 
-function MobileOrdersTable({ isLoading, orders }: IMobileOrdersTableProps) {
+function MobileTicketsTable({ isLoading, tickets }: IMobileTicketsTableProps) {
   const [searchParams] = useSearchParams();
-
-  const parsePaymentType = (order: order) => {
-    if (order.payment.offline_transaction)
-      return PAYMENT_TYPE["offline_transaction"];
-    if (order.payment.online_transaction)
-      return PAYMENT_TYPE["online_transaction"];
-    return PAYMENT_TYPE["wallet_transaction"];
-  };
 
   return (
     <div className="overflow-x-auto">
@@ -104,7 +96,7 @@ function MobileOrdersTable({ isLoading, orders }: IMobileOrdersTableProps) {
             </div>
           </Fragment>
         ) : (
-          orders?.map((item, index: number) => (
+          tickets?.map((item, index: number) => (
             <div className="flex-col p-3.5 text-sm">
               <strong className="flex items-center justify-between mb-4">
                 <span className="inline-block p-1.5 bg-grey-100 w-7 text-center text-grey-600 rounded-lg">
@@ -122,40 +114,46 @@ function MobileOrdersTable({ isLoading, orders }: IMobileOrdersTableProps) {
               </strong>
               <ul className="flex flex-col gap-y-4">
                 <li className="flex items-center justify-between">
-                  <span className="text-sm font-semibold">شماره سفارش‌</span>
+                  <span className="text-sm font-semibold">عنوان</span>
+                  <span className="font-light text-grey-600">{item.title}</span>
+                </li>
+                <li className="flex items-center justify-between">
+                  <span className="text-sm font-semibold">شماره تیکت‌</span>
                   <span className="font-light text-grey-600">{item.id}</span>
                 </li>
                 <li className="flex items-center justify-between">
-                  <span className="text-sm font-semibold">نوع پرداخت</span>
-                  <span className="font-light text-grey-600">
-                    {parsePaymentType(item)}
-                  </span>
-                </li>
-                <li className="flex items-center justify-between">
-                  <span className="text-sm font-semibold">مبلغ</span>
-                  <span className="font-light text-grey-600">
-                    {Number(item.payment?.amount).toLocaleString()} تومان
-                  </span>
-                </li>
-                <li className="flex items-center justify-between">
-                  <span className="text-sm font-semibold">زمان تراکنش</span>
+                  <span className="text-sm font-semibold">زمان</span>
                   <span className="font-light text-grey-600">
                     {new Intl.DateTimeFormat("fa-IR", {
                       dateStyle: "short",
                       timeStyle: "short",
-                    }).format(new Date(item.created_date))}
+                    }).format(new Date(item.created_at))}
+                  </span>
+                </li>
+                <li className="flex items-center justify-between">
+                  <span className="text-sm font-semibold">پیام جدید</span>
+                  <span
+                    className={clsx(
+                      "badge font-light inline-block ms-auto px-1 text-sm",
+                      item.new_massage > 0 && "badge-warning text-grey-800",
+                      item.new_massage === 0 && "badge-accent text-grey-400"
+                    )}
+                  >
+                    {item.new_massage}
                   </span>
                 </li>
                 <li className="flex items-center justify-between">
                   <span className="text-sm font-semibold">وضعیت</span>
                   <span
                     className={clsx(
-                      "font-light",
-                      item.status === "completed" && " text-success",
-                      item.status === "canceled" && " text-danger"
+                      "badge font-light inline-block px-1 text-xs",
+                      item.status === "new" && "badge-success text-white",
+                      item.status === "processing" &&
+                        "badge-secondary text-secondary",
+                      item.status === "closed" && "badge-accent text-grey-400"
                     )}
                   >
-                    {ORDER_TYPES[item.status]}
+                    {TICKET_STATUS_TYPE[item.status]}
                   </span>
                 </li>
               </ul>
@@ -167,4 +165,4 @@ function MobileOrdersTable({ isLoading, orders }: IMobileOrdersTableProps) {
   );
 }
 
-export { MobileOrdersTable };
+export { MobileTicketsTable };

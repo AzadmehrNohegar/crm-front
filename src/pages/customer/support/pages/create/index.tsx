@@ -60,10 +60,10 @@ function SupportCreate() {
   };
 
   return (
-    <div className="h-innerContainer flex items-stretch gap-x-4">
+    <div className="min-h-innerContainer flex flex-col sm:flex-row items-stretch gap-4">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="w-7/12 flex flex-col gap-y-4"
+        className="w-full sm:w-7/12 flex flex-col gap-y-4"
       >
         <Input
           type="text"
@@ -127,19 +127,22 @@ function SupportCreate() {
             <Attach />
           </label>
         </div>
-        <div className="flex items-center justify-end gap-x-3">
-          <Link to=".." className="btn btn-outline btn-primary w-40">
+        <div className="flex items-center justify-between sm:justify-end gap-x-3">
+          <Link
+            to=".."
+            className="btn btn-outline btn-primary basis-modified sm:basis-auto w-40"
+          >
             انصراف
           </Link>
           <button
-            className="btn btn-primary w-40"
+            className="btn btn-primary basis-modified w-40 sm:basis-auto"
             disabled={!isDirty || !isValid || createTicket.isLoading}
           >
             ایجاد تیکت پشتیبانی
           </button>
         </div>
       </form>
-      <div className="w-5/12 flex flex-col justify-start gap-y-4">
+      <div className="w-full sm:w-5/12 flex flex-col justify-start gap-y-4">
         <img src="/images/support-bg.png" className="w-full" alt="support bg" />
         <div className="flex flex-col gap-y-4 p-5 w-full bg-grey-50 rounded-custom">
           <h2 className="text-base sm:text-xl">با ما در ارتباط باشید</h2>

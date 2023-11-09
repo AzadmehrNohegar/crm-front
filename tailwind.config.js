@@ -13,6 +13,7 @@ export default {
       height: {
         container: "calc(100vh - 89px)",
         innerContainer: "calc(100vh - 129px)",
+        innerContainerMobile: "calc(100vh - 124.5px)",
         extended: "calc(16px + 1.6rem)",
       },
       minHeight: {

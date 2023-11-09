@@ -33,7 +33,7 @@ function Account() {
 
   return (
     <Fragment>
-      <div className="min-h-innerContainer flex flex-col gap-y-4">
+      <div className="flex flex-col gap-y-4">
         <div className="flex items-center gap-x-2">
           <strong className="inline-flex flex-col gap-y-2">
             {isUserProfileLoading ? (

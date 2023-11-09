@@ -44,7 +44,6 @@ const Input = forwardRef(
             id={id || inputId}
             ref={ref}
             className={clsx(
-              "h-10 sm:h-12",
               className,
               error && "border-danger focus:outline-danger-100"
             )}

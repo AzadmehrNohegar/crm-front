@@ -46,6 +46,9 @@ function AuthLoginPassword({ changeStep, phone }: IAuthLoginPasswordProps) {
         role: user_roles;
       };
       loginUser(access_token, refresh_token, role);
+      toast("خوش آمدید!", {
+        type: "success",
+      });
       navigate("/");
     },
     onError: () => {

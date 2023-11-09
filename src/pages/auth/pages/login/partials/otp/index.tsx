@@ -52,6 +52,9 @@ function AuthLoginOtp({ resetFlow, phone }: IAuthLoginOtpProps) {
         role: user_roles;
       };
       loginUser(access_token, refresh_token, role);
+      toast("خوش آمدید!", {
+        type: "success",
+      });
       navigate("/");
     },
     onError: () => {

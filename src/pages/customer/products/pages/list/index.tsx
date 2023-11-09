@@ -92,10 +92,10 @@ function ProductsList() {
         {isLoading ? (
           <Skeleton
             count={6}
-            height={281}
-            inline
-            containerClassName="flex items-center w-full justify-between flex-wrap gap-4"
-            className="basis-modified3"
+            height={matches ? 168 : 281}
+            inline={!matches}
+            containerClassName="flex items-center w-full justify-between flex-col sm:flex-row flex-nowrap sm:flex-wrap sm:gap-4"
+            className="sm:basis-modified3"
           />
         ) : null}
         {productsPagination?.data.results.map((item: product) => {

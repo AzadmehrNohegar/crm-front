@@ -94,8 +94,8 @@ function SupportDetails() {
 
   return (
     <Fragment>
-      <div className="h-innerContainer flex items-stretch gap-x-4">
-        <div className="w-7/12 h-full flex flex-col border border-grey-200 rounded-custom">
+      <div className="h-full sm:h-innerContainer flex items-stretch gap-x-4">
+        <div className="w-full sm:w-7/12 h-full flex flex-col border border-grey-200 rounded-custom">
           <div className="py-3 px-5 flex items-center bg-grey-50 rounded-t-custom gap-x-2">
             <span className="bg-secondary-50 rounded-lg">
               <SupportIcon />
@@ -109,6 +109,314 @@ function SupportDetails() {
             </button>
           </div>
           <div className="h-full flex flex-col gap-y-4 overflow-auto p-5">
+            {ticketsReply?.data.results.map((item: ticket_reply) => {
+              if (item.is_admin_response)
+                return (
+                  <div
+                    className="w-full p-3.5 bg-grey-50 rounded-custom rounded-tr-none flex flex-col gap-y-2"
+                    key={item.id}
+                  >
+                    <span>{item.message}</span>
+                    {item.file ? (
+                      <a
+                        href={item.file}
+                        download
+                        target="_blank"
+                        rel="noreferrer noopener"
+                        className="w-full border-t border-t-grey-200 pt-2 flex justify-between items-center"
+                      >
+                        <span className="inline-flex flex-col gap-y-2">
+                          <span className="text-sm text-grey-600 font-light">
+                            فایل ضمیمه شده
+                          </span>
+                          <span className="text-grey-500 font-light inline-flex items-center gap-x-1 text-xs">
+                            <TimeCircle size="small" />
+                            {new Intl.DateTimeFormat("fa-IR", {
+                              timeStyle: "short",
+                            }).format(new Date(item.created_at))}
+                          </span>
+                        </span>
+                        <Download />
+                      </a>
+                    ) : (
+                      <span className="ms-auto text-grey-500 font-light inline-flex items-center gap-x-1 text-xs">
+                        <TimeCircle size="small" />
+                        {new Intl.DateTimeFormat("fa-IR", {
+                          timeStyle: "short",
+                        }).format(new Date(item.created_at))}
+                      </span>
+                    )}
+                  </div>
+                );
+              return (
+                <div
+                  className="w-full p-3.5 bg-success-50 rounded-custom rounded-tl-none flex flex-col gap-y-2"
+                  key={item.id}
+                >
+                  <span>{item.message}</span>
+                  {item.file ? (
+                    <a
+                      href={item.file}
+                      download
+                      target="_blank"
+                      rel="noreferrer noopener"
+                      className="w-full border-t border-t-grey-200 pt-2 flex justify-between items-center"
+                    >
+                      <span className="inline-flex flex-col gap-y-2">
+                        <span className="text-sm text-grey-600 font-light">
+                          فایل ضمیمه شده
+                        </span>
+                        <span className="text-grey-500 font-light inline-flex items-center gap-x-1 text-xs">
+                          <TimeCircle size="small" />
+                          {new Intl.DateTimeFormat("fa-IR", {
+                            timeStyle: "short",
+                          }).format(new Date(item.created_at))}
+                        </span>
+                      </span>
+                      <Download />
+                    </a>
+                  ) : (
+                    <span className="ms-auto text-grey-500 font-light inline-flex items-center gap-x-1 text-xs">
+                      <TimeCircle size="small" />
+                      {new Intl.DateTimeFormat("fa-IR", {
+                        timeStyle: "short",
+                      }).format(new Date(item.created_at))}
+                    </span>
+                  )}
+                </div>
+              );
+            })}
+            {ticketsReply?.data.results.map((item: ticket_reply) => {
+              if (item.is_admin_response)
+                return (
+                  <div
+                    className="w-full p-3.5 bg-grey-50 rounded-custom rounded-tr-none flex flex-col gap-y-2"
+                    key={item.id}
+                  >
+                    <span>{item.message}</span>
+                    {item.file ? (
+                      <a
+                        href={item.file}
+                        download
+                        target="_blank"
+                        rel="noreferrer noopener"
+                        className="w-full border-t border-t-grey-200 pt-2 flex justify-between items-center"
+                      >
+                        <span className="inline-flex flex-col gap-y-2">
+                          <span className="text-sm text-grey-600 font-light">
+                            فایل ضمیمه شده
+                          </span>
+                          <span className="text-grey-500 font-light inline-flex items-center gap-x-1 text-xs">
+                            <TimeCircle size="small" />
+                            {new Intl.DateTimeFormat("fa-IR", {
+                              timeStyle: "short",
+                            }).format(new Date(item.created_at))}
+                          </span>
+                        </span>
+                        <Download />
+                      </a>
+                    ) : (
+                      <span className="ms-auto text-grey-500 font-light inline-flex items-center gap-x-1 text-xs">
+                        <TimeCircle size="small" />
+                        {new Intl.DateTimeFormat("fa-IR", {
+                          timeStyle: "short",
+                        }).format(new Date(item.created_at))}
+                      </span>
+                    )}
+                  </div>
+                );
+              return (
+                <div
+                  className="w-full p-3.5 bg-success-50 rounded-custom rounded-tl-none flex flex-col gap-y-2"
+                  key={item.id}
+                >
+                  <span>{item.message}</span>
+                  {item.file ? (
+                    <a
+                      href={item.file}
+                      download
+                      target="_blank"
+                      rel="noreferrer noopener"
+                      className="w-full border-t border-t-grey-200 pt-2 flex justify-between items-center"
+                    >
+                      <span className="inline-flex flex-col gap-y-2">
+                        <span className="text-sm text-grey-600 font-light">
+                          فایل ضمیمه شده
+                        </span>
+                        <span className="text-grey-500 font-light inline-flex items-center gap-x-1 text-xs">
+                          <TimeCircle size="small" />
+                          {new Intl.DateTimeFormat("fa-IR", {
+                            timeStyle: "short",
+                          }).format(new Date(item.created_at))}
+                        </span>
+                      </span>
+                      <Download />
+                    </a>
+                  ) : (
+                    <span className="ms-auto text-grey-500 font-light inline-flex items-center gap-x-1 text-xs">
+                      <TimeCircle size="small" />
+                      {new Intl.DateTimeFormat("fa-IR", {
+                        timeStyle: "short",
+                      }).format(new Date(item.created_at))}
+                    </span>
+                  )}
+                </div>
+              );
+            })}
+            {ticketsReply?.data.results.map((item: ticket_reply) => {
+              if (item.is_admin_response)
+                return (
+                  <div
+                    className="w-full p-3.5 bg-grey-50 rounded-custom rounded-tr-none flex flex-col gap-y-2"
+                    key={item.id}
+                  >
+                    <span>{item.message}</span>
+                    {item.file ? (
+                      <a
+                        href={item.file}
+                        download
+                        target="_blank"
+                        rel="noreferrer noopener"
+                        className="w-full border-t border-t-grey-200 pt-2 flex justify-between items-center"
+                      >
+                        <span className="inline-flex flex-col gap-y-2">
+                          <span className="text-sm text-grey-600 font-light">
+                            فایل ضمیمه شده
+                          </span>
+                          <span className="text-grey-500 font-light inline-flex items-center gap-x-1 text-xs">
+                            <TimeCircle size="small" />
+                            {new Intl.DateTimeFormat("fa-IR", {
+                              timeStyle: "short",
+                            }).format(new Date(item.created_at))}
+                          </span>
+                        </span>
+                        <Download />
+                      </a>
+                    ) : (
+                      <span className="ms-auto text-grey-500 font-light inline-flex items-center gap-x-1 text-xs">
+                        <TimeCircle size="small" />
+                        {new Intl.DateTimeFormat("fa-IR", {
+                          timeStyle: "short",
+                        }).format(new Date(item.created_at))}
+                      </span>
+                    )}
+                  </div>
+                );
+              return (
+                <div
+                  className="w-full p-3.5 bg-success-50 rounded-custom rounded-tl-none flex flex-col gap-y-2"
+                  key={item.id}
+                >
+                  <span>{item.message}</span>
+                  {item.file ? (
+                    <a
+                      href={item.file}
+                      download
+                      target="_blank"
+                      rel="noreferrer noopener"
+                      className="w-full border-t border-t-grey-200 pt-2 flex justify-between items-center"
+                    >
+                      <span className="inline-flex flex-col gap-y-2">
+                        <span className="text-sm text-grey-600 font-light">
+                          فایل ضمیمه شده
+                        </span>
+                        <span className="text-grey-500 font-light inline-flex items-center gap-x-1 text-xs">
+                          <TimeCircle size="small" />
+                          {new Intl.DateTimeFormat("fa-IR", {
+                            timeStyle: "short",
+                          }).format(new Date(item.created_at))}
+                        </span>
+                      </span>
+                      <Download />
+                    </a>
+                  ) : (
+                    <span className="ms-auto text-grey-500 font-light inline-flex items-center gap-x-1 text-xs">
+                      <TimeCircle size="small" />
+                      {new Intl.DateTimeFormat("fa-IR", {
+                        timeStyle: "short",
+                      }).format(new Date(item.created_at))}
+                    </span>
+                  )}
+                </div>
+              );
+            })}
+            {ticketsReply?.data.results.map((item: ticket_reply) => {
+              if (item.is_admin_response)
+                return (
+                  <div
+                    className="w-full p-3.5 bg-grey-50 rounded-custom rounded-tr-none flex flex-col gap-y-2"
+                    key={item.id}
+                  >
+                    <span>{item.message}</span>
+                    {item.file ? (
+                      <a
+                        href={item.file}
+                        download
+                        target="_blank"
+                        rel="noreferrer noopener"
+                        className="w-full border-t border-t-grey-200 pt-2 flex justify-between items-center"
+                      >
+                        <span className="inline-flex flex-col gap-y-2">
+                          <span className="text-sm text-grey-600 font-light">
+                            فایل ضمیمه شده
+                          </span>
+                          <span className="text-grey-500 font-light inline-flex items-center gap-x-1 text-xs">
+                            <TimeCircle size="small" />
+                            {new Intl.DateTimeFormat("fa-IR", {
+                              timeStyle: "short",
+                            }).format(new Date(item.created_at))}
+                          </span>
+                        </span>
+                        <Download />
+                      </a>
+                    ) : (
+                      <span className="ms-auto text-grey-500 font-light inline-flex items-center gap-x-1 text-xs">
+                        <TimeCircle size="small" />
+                        {new Intl.DateTimeFormat("fa-IR", {
+                          timeStyle: "short",
+                        }).format(new Date(item.created_at))}
+                      </span>
+                    )}
+                  </div>
+                );
+              return (
+                <div
+                  className="w-full p-3.5 bg-success-50 rounded-custom rounded-tl-none flex flex-col gap-y-2"
+                  key={item.id}
+                >
+                  <span>{item.message}</span>
+                  {item.file ? (
+                    <a
+                      href={item.file}
+                      download
+                      target="_blank"
+                      rel="noreferrer noopener"
+                      className="w-full border-t border-t-grey-200 pt-2 flex justify-between items-center"
+                    >
+                      <span className="inline-flex flex-col gap-y-2">
+                        <span className="text-sm text-grey-600 font-light">
+                          فایل ضمیمه شده
+                        </span>
+                        <span className="text-grey-500 font-light inline-flex items-center gap-x-1 text-xs">
+                          <TimeCircle size="small" />
+                          {new Intl.DateTimeFormat("fa-IR", {
+                            timeStyle: "short",
+                          }).format(new Date(item.created_at))}
+                        </span>
+                      </span>
+                      <Download />
+                    </a>
+                  ) : (
+                    <span className="ms-auto text-grey-500 font-light inline-flex items-center gap-x-1 text-xs">
+                      <TimeCircle size="small" />
+                      {new Intl.DateTimeFormat("fa-IR", {
+                        timeStyle: "short",
+                      }).format(new Date(item.created_at))}
+                    </span>
+                  )}
+                </div>
+              );
+            })}
             {ticketsReply?.data.results.map((item: ticket_reply) => {
               if (item.is_admin_response)
                 return (
@@ -223,7 +531,7 @@ function SupportDetails() {
             </button>
           </form>
         </div>
-        <div className="w-5/12 flex flex-col justify-start gap-y-4">
+        <div className="hidden w-5/12 sm:flex flex-col justify-start gap-y-4">
           <img
             src="/images/support-bg.png"
             className="w-full"

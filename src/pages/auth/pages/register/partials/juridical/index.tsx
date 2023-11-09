@@ -108,7 +108,7 @@ function AuthRegisterJuridical() {
         type="text"
         placeholder="کد اقتصادی را وارد کنید"
         label="کد اقتصادی"
-        className="input input-bordered w-full input-sm"
+        className="input input-bordered w-full"
         error={errors.company_economic_code}
         iconEnd={
           dirtyFields.company_economic_code ? (

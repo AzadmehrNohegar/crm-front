@@ -72,7 +72,7 @@ function AccountRealEdit({ resetForm }: IAccountEditProps) {
 
   return (
     <form
-      className="flex flex-col justify-end h-innerContainer"
+      className="flex flex-col justify-end h-full pb-4"
       onSubmit={handleSubmit(onSubmit)}
     >
       <div className="flex flex-wrap gap-4">

@@ -7,14 +7,16 @@ import { useState } from "react";
 import { Filter2, Search } from "react-iconly";
 import { useQuery } from "react-query";
 import { Link, useLocation, useSearchParams } from "react-router-dom";
-import { useDebounce } from "usehooks-ts";
+import { useDebounce, useMediaQuery } from "usehooks-ts";
 import { TicketsTable } from "./partials/ticketsTable";
 import { Pagination } from "@/shared/pagination";
 import { DatePicker } from "@/components/datepicker";
+import { MobileTicketsTable } from "./partials/mobileTicketsTable";
 
 function SupportList() {
   const [searchParams, setSearchParams] = useSearchParams();
   const { search: locationSearch } = useLocation();
+  const matches = useMediaQuery("(max-width: 768px)");
 
   const [search, setSearch] = useState("");
   const debouncedSearch = useDebounce(search, 200);
@@ -67,7 +69,7 @@ function SupportList() {
           }
           className="w-full top-full rounded-lg shadow-ev3 inset-x-0"
         >
-          <div className="flex flex-wrap py-4 gap-x-4">
+          <div className="flex flex-wrap py-4 gap-4">
             <div className="flex flex-wrap items-start gap-x-2 gap-y-4 pe-4 border-e border-e-grey-200">
               <DatePicker
                 value={searchParams.get("created_at") || ""}
@@ -83,7 +85,10 @@ function SupportList() {
                 placeholder="تاریخ مورد نظر را انتخاب کنید."
               />
             </div>
-            <div className="flex items-center gap-x-4">
+            <div className="flex items-center gap-x-4 flex-wrap sm:flex-nowrap gap-y-2">
+              <span className="font-semibold basis-full sm:basis-auto">
+                وضعیت:
+              </span>
               <Checkbox
                 label="جدید"
                 containerClassName="w-fit"
@@ -140,9 +145,8 @@ function SupportList() {
           تیکت پشتیبانی جدید
         </Link>
       </div>
-      <div className="my-6">
-        <div className="flex items-center bg-grey-50 rounded-t-custom justify-between px-4">
-          <h3 className="text-base w-full">لیست تیکت پشتیبانی</h3>
+      {matches ? (
+        <div className="mt-6 mb-36">
           <Input
             className="input input-bordered h-10 ms-auto input-ghost max-w-full w-96"
             containerClassName="my-4"
@@ -150,17 +154,44 @@ function SupportList() {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             iconEnd={
-              <button className="btn btn-secondary btn-square btn-sm absolute end-2 inset-y-auto">
-                <Search />
+              <button className="btn btn-secondary btn-square btn-sm absolute end-1 inset-y-auto">
+                <Search size="small" />
               </button>
             }
           />
+          <div className="rounded-custom border border-grey-200">
+            <div className="flex items-center bg-grey-50 rounded-t-custom justify-between p-4 sm:py-0">
+              <h3 className="text-sm sm:text-base w-full">سفارشات</h3>
+            </div>
+            <MobileTicketsTable
+              tickets={ticketsPagination?.data.results}
+              isLoading={isLoading}
+            />
+          </div>
         </div>
-        <TicketsTable
-          tickets={ticketsPagination?.data.results}
-          isLoading={isLoading}
-        />
-      </div>
+      ) : (
+        <div className="mt-6 mb-36">
+          <div className="flex items-center bg-grey-50 rounded-t-custom justify-between px-4">
+            <h3 className="text-base w-full">لیست تیکت پشتیبانی</h3>
+            <Input
+              className="input input-bordered h-10 ms-auto input-ghost max-w-full w-96"
+              containerClassName="my-4"
+              placeholder="جست‌وجو"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              iconEnd={
+                <button className="btn btn-secondary btn-square btn-sm absolute end-2 inset-y-auto">
+                  <Search />
+                </button>
+              }
+            />
+          </div>
+          <TicketsTable
+            tickets={ticketsPagination?.data.results}
+            isLoading={isLoading}
+          />
+        </div>
+      )}
       <Pagination
         count={ticketsPagination?.data.count}
         next={ticketsPagination?.data.next}

@@ -32,7 +32,7 @@ function DashboardIntroProducts() {
           <Skeleton
             count={5}
             className="basis-modified5 h-[274px] w-1/5"
-            containerClassName="items-center justify-start gap-x-4 w-full flex"
+            containerClassName="items-center justify-start gap-x-4 w-full hidden sm:flex"
           />
         ) : null}
         {introProduct?.data.results.map((item: product) => (

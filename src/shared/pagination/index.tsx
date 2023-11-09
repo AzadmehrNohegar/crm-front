@@ -81,7 +81,6 @@ function Pagination({
       <div className="flex order-2 sm:order-none items-center gap-x-2 me-0 sm:me-auto">
         <span className="inline-block min-w-max">برو به</span>
         <Input
-          autoFocus
           name="page"
           className="input input-bordered max-w-[50px] text-sm"
           value={searchParams.get("page") || ""}
