@@ -117,7 +117,7 @@ function CustomerDashboardSidebar() {
         </li>
         <li className="mt-auto">
           <NavLink
-            to="/notifications"
+            to="/notification"
             end
             className={({ isActive }) =>
               clsx(
@@ -130,9 +130,6 @@ function CustomerDashboardSidebar() {
               <Fragment>
                 <Notification filled={isActive} />
                 پیام‌های سیستم
-                <span className="badge badge-warning inline-block ms-auto px-1 text-grey-800 text-[10px]">
-                  12
-                </span>
               </Fragment>
             )}
           </NavLink>

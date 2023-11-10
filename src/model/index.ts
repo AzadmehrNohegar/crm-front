@@ -25,6 +25,8 @@ export type contract_types = "REAL" | "JURIDICAL";
 
 export type status_types = "success" | "pending" | "failed";
 
+export type notification_types = "USER" | "ORDER" | "PRODUCT" | "NOTICE";
+
 export type card_types =
   | "primary"
   | "secondary"
@@ -163,6 +165,15 @@ export type order = {
   created_date: string;
 };
 
+export type notification = {
+  id: number;
+  title: string;
+  message: string;
+  file: string | null;
+  type: notification_types;
+  created_at: string;
+};
+
 export const ORDER_TYPES: IDictionary<string> = {
   completed: "موفق",
   pending: "درحال بررسی",
@@ -201,4 +212,11 @@ export const MEASURE_TYPES: IDictionary<string> = {
 export const CONTRACT_TYPES: IDictionary<string> = {
   REAL: "حقیقی",
   JURIDICAL: "حقوقی",
+};
+
+export const NOTIFICATION_VARIANT: IDictionary<string> = {
+  USER: "bg-warning text-grey-800",
+  ORDER: "bg-primary text-white",
+  NOTICE: "bg-danger text-white",
+  PRODUCT: "bg-secondary text-white",
 };

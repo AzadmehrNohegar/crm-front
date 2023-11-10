@@ -11,6 +11,7 @@ const WalletPage = lazy(() => import("./wallet"));
 const SupportPage = lazy(() => import("./support"));
 const AccountPage = lazy(() => import("./account"));
 const OrdersPage = lazy(() => import("./orders"));
+const NotificationPage = lazy(() => import("./notification"));
 
 function CustomerRoutes() {
   return (
@@ -24,6 +25,7 @@ function CustomerRoutes() {
           <Route path="wallet" element={<WalletPage />} />
           <Route path="account" element={<AccountPage />} />
           <Route path="checkout" element={<CheckoutPage />} />
+          <Route path="notification" element={<NotificationPage />} />
         </Route>
       </Route>
       <Route path="auth/*" element={<AuthPage />} />
