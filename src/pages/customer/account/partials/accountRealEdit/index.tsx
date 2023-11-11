@@ -2,6 +2,7 @@ import { getAccountMyProfile, putAccountUserUpdate } from "@/api/account";
 import { Close } from "@/assets/icons/Close";
 import { Input } from "@/components/input";
 import { MOBILE_FORMAT } from "@/constants";
+import { usePersianConvert } from "@/utils/usePersianConvert";
 import { AxiosError } from "axios";
 import { useForm } from "react-hook-form";
 import { useMutation, useQuery } from "react-query";
@@ -23,6 +24,8 @@ function AccountRealEdit({ resetForm }: IAccountEditProps) {
   const { data: userProfile } = useQuery("user-profile", () =>
     getAccountMyProfile()
   );
+
+  const { convertPersian2English } = usePersianConvert();
 
   const {
     register,
@@ -141,7 +144,8 @@ function AccountRealEdit({ resetForm }: IAccountEditProps) {
           {...register("phone_number", {
             required: "شماره موبایل خود را وارد کنید.",
             validate: (value) =>
-              (value.match(MOBILE_FORMAT) && value.length === 11) ||
+              (convertPersian2English(value).match(MOBILE_FORMAT) &&
+                value.length === 11) ||
               "شماره موبایل نادرست است.",
           })}
         />

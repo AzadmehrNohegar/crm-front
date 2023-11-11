@@ -8,7 +8,7 @@ interface IAuthStore {
   refresh: string;
   isAuthenticated: boolean;
   role: user_roles;
-  refreshUser: () => Promise<void>;
+  refreshUser: (resolve: () => void, reject: () => void) => Promise<void>;
   loginUser: (
     accessToken: string,
     refreshToken: string,
@@ -24,7 +24,7 @@ const useAuthStore = create<IAuthStore>()(
       refresh: "",
       isAuthenticated: false,
       role: "CUSTOMER",
-      refreshUser: () =>
+      refreshUser: (resolve, reject) =>
         postAccountAuthRefreshToken({
           body: {
             refresh: get().refresh,
@@ -33,9 +33,11 @@ const useAuthStore = create<IAuthStore>()(
           .then((res: unknown) => {
             const { access } = res as { access: string };
             set({ access, isAuthenticated: true });
+            resolve();
           })
           .catch(() => {
             set({ access: "", refresh: "", isAuthenticated: false });
+            reject();
           }),
 
       loginUser: (accessToken, refreshToken, role) => {

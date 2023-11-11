@@ -27,6 +27,7 @@ function AuthLogin() {
         {step === "otp" ? (
           <AuthLoginOtp
             resetFlow={() => setStep("credentials")}
+            changeStep={(step) => setStep(step)}
             phone={persistedPhone}
           />
         ) : null}

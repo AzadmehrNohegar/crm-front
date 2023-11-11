@@ -118,14 +118,20 @@ export class Http {
     return this.http.delete<T, R>(url, config);
   }
 
-  private handleUnauthorized = (error: AxiosError) => {
+  private handleUnauthorized = async (error: AxiosError) => {
     const { config } = error;
     if (useAuthStore.getState().refresh) {
-      useAuthStore
-        .getState()
-        .refreshUser()
-        .then(() => this.http.request(config as AxiosRequestConfig))
-        .catch(() => useAuthStore.getState().logoutUser());
+      await useAuthStore.getState().refreshUser(
+        () => {
+          this.http.request(config as AxiosRequestConfig);
+        },
+        () => {
+          toast("لطفا دوباره وارد شوید.", {
+            type: "info",
+          });
+          useAuthStore.getState().logoutUser();
+        }
+      );
     }
   };
 

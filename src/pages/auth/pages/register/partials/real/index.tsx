@@ -40,8 +40,12 @@ function AuthRegisterReal() {
       navigate("../result?status=success");
     },
     onError: (err: AxiosError) => {
-      if ((err?.response?.data as Record<string, string>).user_national_code)
+      if ((err?.response?.data as Record<string, string>).user_national_code) {
         toast("کد ملی قبلا ثبت شده است.", {
+          type: "error",
+        });
+      } else if ((err?.response?.data as Record<string, string>).phone_number)
+        toast("شماره تلفن قبلا ثبت شده است.", {
           type: "error",
         });
     },

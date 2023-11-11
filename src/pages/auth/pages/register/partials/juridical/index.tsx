@@ -40,8 +40,12 @@ function AuthRegisterJuridical() {
       navigate("../result?status=success");
     },
     onError: (err: AxiosError) => {
-      if ((err?.response?.data as Record<string, string>).company_national_id)
+      if ((err?.response?.data as Record<string, string>).company_national_id) {
         toast("کد ملی مجموعه قبلا ثبت شده است.", {
+          type: "error",
+        });
+      } else if ((err?.response?.data as Record<string, string>).phone_number)
+        toast("شماره تلفن قبلا ثبت شده است.", {
           type: "error",
         });
     },

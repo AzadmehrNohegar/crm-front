@@ -87,7 +87,8 @@ function AuthLoginCredentials({
         {...register("phone", {
           required: "شماره موبایل خود را وارد کنید.",
           validate: (value) =>
-            (value.match(MOBILE_FORMAT) && value.length === 11) ||
+            (convertPersian2English(value).match(MOBILE_FORMAT) &&
+              value.length === 11) ||
             "شماره موبایل نادرست است.",
         })}
       />

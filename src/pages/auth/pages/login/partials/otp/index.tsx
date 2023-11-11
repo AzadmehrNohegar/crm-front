@@ -3,12 +3,13 @@ import {
   postAccountAuthLoginOTP,
 } from "@/api/account";
 import { RadialProgress } from "@/components/radialProgress";
-import { user_roles } from "@/model";
+import { login_method, user_roles } from "@/model";
 import { OtpInput } from "@/shared/otpInput";
 import { useAuthStore } from "@/store/auth";
 import { usePersianConvert } from "@/utils/usePersianConvert";
+import { AxiosError } from "axios";
 import { FormEvent, useState } from "react";
-import { Edit } from "react-iconly";
+import { ArrowLeft, Edit } from "react-iconly";
 import { useMutation } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -16,10 +17,11 @@ import { useCountdown, useEffectOnce } from "usehooks-ts";
 
 interface IAuthLoginOtpProps {
   resetFlow: () => void;
+  changeStep: (step: login_method) => void;
   phone: string;
 }
 
-function AuthLoginOtp({ resetFlow, phone }: IAuthLoginOtpProps) {
+function AuthLoginOtp({ resetFlow, changeStep, phone }: IAuthLoginOtpProps) {
   const [otpValue, setOtpValue] = useState("");
   const [error, setError] = useState(false);
 
@@ -57,10 +59,16 @@ function AuthLoginOtp({ resetFlow, phone }: IAuthLoginOtpProps) {
       });
       navigate("/");
     },
-    onError: () => {
-      toast("کد اشتباه است.", {
-        type: "error",
-      });
+    onError: (err: AxiosError) => {
+      if ((err?.response?.data as Record<string, string>).non_field_errors) {
+        toast("حساب کاربری شما تایید نشده است.", {
+          type: "error",
+        });
+      } else {
+        toast("کد اشتباه است.", {
+          type: "error",
+        });
+      }
     },
   });
 
@@ -88,10 +96,18 @@ function AuthLoginOtp({ resetFlow, phone }: IAuthLoginOtpProps) {
   return (
     <form
       onSubmit={onSubmit}
-      className="w-full flex flex-col items-start justify-center gap-y-4 border border-grey-200 rounded-custom p-5 h-full"
+      className="w-full flex flex-col items-start justify-center gap-y-3 border border-grey-200 rounded-custom p-5 h-full"
     >
-      <h2 className="text-lg sm:text-xl font-bold text-grey-800">
-        کد فعالسازی رو وارد کنید.
+      <h2 className="text-base sm:text-xl font-bold text-grey-800 flex items-center justify-between w-full">
+        <span>کد فعالسازی رو وارد کنید.</span>
+        <button
+          type="button"
+          onClick={() => changeStep("password")}
+          className="btn btn-sm btn-link text-grey-800 decoration-transparent text-xs inline-flex sm:hidden"
+        >
+          ورود با رمز عبور
+          <ArrowLeft size="small" />
+        </button>
       </h2>
       <div className="flex items-center justify-between w-full">
         <span className="text-base sm:text-base text-grey-600">
@@ -139,6 +155,15 @@ function AuthLoginOtp({ resetFlow, phone }: IAuthLoginOtpProps) {
       <button className="btn btn-block btn-primary mt-auto sm:mt-10">
         ورود به حساب کاربری
       </button>
+      <div className="w-full hidden sm:flex items-center justify-center gap-x-8">
+        <span className="text-[13px] font-light text-grey-600">ورود با</span>
+        <button
+          className="text-[13px] btn btn-ghost text-grey-800 font-bold"
+          onClick={() => changeStep("password")}
+        >
+          ورود با رمز عبور
+        </button>
+      </div>
     </form>
   );
 }
