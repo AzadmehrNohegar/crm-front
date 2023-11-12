@@ -55,7 +55,7 @@ function CheckoutItem({ category_name, product_price, quantity }: cart_item) {
         </span>
       </div>
       <div className="flex flex-row-reverse xl:flex-col items-center xl:items-end gap-y-2 justify-between basis-full">
-        <strong className="text-sm">
+        <strong className="text-sm inline-flex items-center gap-x-1">
           <span
             className={clsx(
               product_price?.discount_price &&

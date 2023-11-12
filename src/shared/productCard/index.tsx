@@ -161,7 +161,7 @@ function ProductCard({
               }`}
         </span>
         <div className="w-full flex items-center justify-between">
-          <strong className="text-sm">
+          <strong className="text-sm inline-flex items-center gap-x-1">
             <span
               className={clsx(
                 (serverSelectedPrice?.discount_price ||

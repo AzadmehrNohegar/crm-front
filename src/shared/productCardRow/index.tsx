@@ -174,7 +174,7 @@ function ProductCardRow({
               </button>
             </div>
           )}{" "}
-          <strong className="text-sm">
+          <strong className="text-sm inline-flex items-center gap-x-1">
             <span
               className={clsx(
                 (serverSelectedPrice?.discount_price ||
@@ -186,7 +186,6 @@ function ProductCardRow({
                 ? serverSelectedPrice.price.toLocaleString()
                 : product_price?.[0].price.toLocaleString()}{" "}
             </span>
-            {"  "}
             {serverSelectedPrice
               ? serverSelectedPrice.discount_price?.toLocaleString() || ""
               : product_price?.[0].discount_price?.toLocaleString() === "0"

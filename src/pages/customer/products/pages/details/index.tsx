@@ -142,7 +142,7 @@ function ProductDetails() {
           <div className="flex items-end justify-between">
             <div className="flex flex-col gap-y-4">
               <span>قیمت محصول:</span>
-              <strong className="text-xl">
+              <strong className="text-xl inline-flex items-center gap-x-1">
                 <span
                   className={clsx(
                     (serverSelectedPrice?.discount_price ||

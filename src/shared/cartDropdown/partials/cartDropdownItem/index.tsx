@@ -101,7 +101,7 @@ function CartDropdownItem({
             {optimisticQuantity === 1 ? <Delete /> : <Minus />}
           </button>
         </div>
-        <strong className="text-sm">
+        <strong className="text-sm inline-flex items-center gap-x-1">
           <span
             className={clsx(
               product_price?.discount_price &&
