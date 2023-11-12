@@ -31,16 +31,19 @@ function DashboardCarouselProducts() {
     <Swiper init={isMounted} watchOverflow slidesPerView={1}>
       {dashboardCarousel?.data.results.map((item: carousel) => (
         <SwiperSlide key={item.id} className="px-px">
-          <Link to={item.url} className="relative">
+          <div className="relative">
             <img
               src={matches ? item.mobile_banner : item.desktop_banner}
               className="w-full"
               alt="banner temp"
             />
-            <span className="btn btn-circle btn-md xl:btn-lg btn-primary absolute left-2 bottom-2 xl:left-4 xl:bottom-4 rotate-45">
+            <Link
+              to={item.url}
+              className="btn btn-circle btn-md xl:btn-lg btn-primary absolute left-2 bottom-2 xl:left-4 xl:bottom-4 rotate-45"
+            >
               <ArrowLeft />
-            </span>
-          </Link>
+            </Link>
+          </div>
         </SwiperSlide>
       ))}
     </Swiper>
