@@ -60,10 +60,10 @@ function SupportCreate() {
   };
 
   return (
-    <div className="min-h-innerContainer flex flex-col sm:flex-row items-stretch gap-4">
+    <div className="min-h-innerContainer flex flex-col xl:flex-row items-stretch gap-4">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="w-full sm:w-7/12 flex flex-col gap-y-4"
+        className="w-full xl:w-7/12 flex flex-col gap-y-4"
       >
         <Input
           type="text"
@@ -127,25 +127,25 @@ function SupportCreate() {
             <Attach />
           </label>
         </div>
-        <div className="flex items-center justify-between sm:justify-end gap-x-3">
+        <div className="flex items-center justify-between xl:justify-end gap-x-3">
           <Link
             to=".."
-            className="btn btn-outline btn-primary basis-modified sm:basis-auto w-40"
+            className="btn btn-outline btn-primary basis-modified xl:basis-auto w-40"
           >
             انصراف
           </Link>
           <button
-            className="btn btn-primary basis-modified w-40 sm:basis-auto"
+            className="btn btn-primary basis-modified w-40 xl:basis-auto"
             disabled={!isDirty || !isValid || createTicket.isLoading}
           >
             ایجاد تیکت پشتیبانی
           </button>
         </div>
       </form>
-      <div className="w-full sm:w-5/12 flex flex-col justify-start gap-y-4">
+      <div className="w-full xl:w-5/12 flex flex-col justify-start gap-y-4">
         <img src="/images/support-bg.png" className="w-full" alt="support bg" />
         <div className="flex flex-col gap-y-4 p-5 w-full bg-grey-50 rounded-custom">
-          <h2 className="text-base sm:text-xl">با ما در ارتباط باشید</h2>
+          <h2 className="text-base xl:text-xl">با ما در ارتباط باشید</h2>
           <p className="text-grey-600 font-light">
             برای ارتباط با ما کافی است فرم را تکمیل کنید تا در اسرع وقت
             کارشناسان با شما تماس بگیرند و یا از طریق راه‌های ارتباطی می‌توانید

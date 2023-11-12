@@ -1,4 +1,5 @@
 import {
+  getTicketTicketsById,
   // getTicketTicketsById,
   getTicketTicketsReplyById,
   postTicketTicketsReplyById,
@@ -39,6 +40,12 @@ function SupportDetails() {
 
   const queryClient = useQueryClient();
 
+  const { data: ticket } = useQuery(`ticket-${ticket_id}`, () =>
+    getTicketTicketsById({
+      id: ticket_id,
+    })
+  );
+
   const { data: ticketsReply } = useQuery(
     `ticket-reply-${ticket_id}`,
     () =>
@@ -53,6 +60,7 @@ function SupportDetails() {
         scrollRef.current?.scrollIntoView({ behavior: "smooth" }),
     }
   );
+
   const { data: userProfile } = useQuery("user-profile", () =>
     getAccountMyProfile()
   );
@@ -94,8 +102,8 @@ function SupportDetails() {
 
   return (
     <Fragment>
-      <div className="h-full sm:h-innerContainer flex items-stretch gap-x-4">
-        <div className="w-full sm:w-7/12 h-full flex flex-col border border-grey-200 rounded-custom">
+      <div className="h-full xl:h-innerContainer flex items-stretch gap-x-4">
+        <div className="w-full xl:w-7/12 h-full flex flex-col border border-grey-200 rounded-custom">
           <div className="py-3 px-5 flex items-center bg-grey-50 rounded-t-custom gap-x-2">
             <span className="bg-secondary-50 rounded-lg">
               <SupportIcon />
@@ -204,6 +212,7 @@ function SupportDetails() {
               placeholder="پیام خود را وارد کنید"
               className="input input-bordered w-full"
               error={errors.message}
+              disabled={ticket?.data.status === "closed"}
               iconEnd={
                 <label
                   htmlFor="file"
@@ -218,20 +227,22 @@ function SupportDetails() {
             />
             <button
               className="btn btn-secondary btn-square"
-              disabled={!isDirty || !isValid}
+              disabled={
+                !isDirty || !isValid || ticket?.data.status === "closed"
+              }
             >
               <Send />
             </button>
           </form>
         </div>
-        <div className="hidden w-5/12 sm:flex flex-col justify-start gap-y-4">
+        <div className="hidden w-5/12 xl:flex flex-col justify-start gap-y-4">
           <img
             src="/images/support-bg.png"
             className="w-full"
             alt="support bg"
           />
           <div className="flex flex-col gap-y-4 p-5 w-full bg-grey-50 rounded-custom">
-            <h2 className="text-base sm:text-xl">با ما در ارتباط باشید</h2>
+            <h2 className="text-base xl:text-xl">با ما در ارتباط باشید</h2>
             <p className="text-grey-600 font-light">
               برای ارتباط با ما کافی است فرم را تکمیل کنید تا در اسرع وقت
               کارشناسان با شما تماس بگیرند و یا از طریق راه‌های ارتباطی

@@ -98,19 +98,19 @@ function AuthLoginOtp({ resetFlow, changeStep, phone }: IAuthLoginOtpProps) {
       onSubmit={onSubmit}
       className="w-full flex flex-col items-start justify-center gap-y-3 border border-grey-200 rounded-custom p-5 h-full"
     >
-      <h2 className="text-base sm:text-xl font-bold text-grey-800 flex items-center justify-between w-full">
+      <h2 className="text-base xl:text-xl font-bold text-grey-800 flex items-center justify-between w-full">
         <span>کد فعالسازی رو وارد کنید.</span>
         <button
           type="button"
           onClick={() => changeStep("password")}
-          className="btn btn-sm btn-link text-grey-800 decoration-transparent text-xs inline-flex sm:hidden"
+          className="btn btn-sm btn-link text-grey-800 decoration-transparent text-xs inline-flex xl:hidden"
         >
           ورود با رمز عبور
           <ArrowLeft size="small" />
         </button>
       </h2>
       <div className="flex items-center justify-between w-full">
-        <span className="text-base sm:text-base text-grey-600">
+        <span className="text-base xl:text-base text-grey-600">
           کد ۵ رقمی به شماره <span className="bidi-override ltr">{phone}</span>{" "}
           ارسال شد.
         </span>
@@ -152,10 +152,10 @@ function AuthLoginOtp({ resetFlow, changeStep, phone }: IAuthLoginOtpProps) {
         </div>
         <RadialProgress max={60} progress={count} />
       </div>
-      <button className="btn btn-block btn-primary mt-auto sm:mt-10">
+      <button className="btn btn-block btn-primary mt-auto xl:mt-10">
         ورود به حساب کاربری
       </button>
-      <div className="w-full hidden sm:flex items-center justify-center gap-x-8">
+      <div className="w-full hidden xl:flex items-center justify-center gap-x-8">
         <span className="text-[13px] font-light text-grey-600">ورود با</span>
         <button
           className="text-[13px] btn btn-ghost text-grey-800 font-bold"

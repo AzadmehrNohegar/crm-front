@@ -104,11 +104,13 @@ function CartDropdownItem({
         <strong className="text-sm">
           <span
             className={clsx(
-              product_price?.discount_price && "text-danger line-through"
+              product_price?.discount_price &&
+                "text-danger relative before:absolute before:w-full before:h-px before:bg-danger before:inset-y-1/2 before:-rotate-[15deg]"
             )}
           >
             {product_price?.price.toLocaleString()}{" "}
-          </span>{" "}
+          </span>
+          {"  "}
           {product_price?.discount_price !== 0
             ? product_price?.discount_price?.toLocaleString()
             : ""}{" "}

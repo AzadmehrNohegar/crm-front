@@ -67,8 +67,8 @@ function CheckoutOfflineFileUploadDialog({
 
   return (
     <Dialog isOpen={isOpen} closeModal={closeModal} placement="center">
-      <Dialog.Title as="div" className="p-3.5 sm:p-5 text-start shadow-header">
-        <h2 className="text-base sm:text-xl">افزایش موجودی</h2>
+      <Dialog.Title as="div" className="p-3.5 xl:p-5 text-start shadow-header">
+        <h2 className="text-base xl:text-xl">افزایش موجودی</h2>
       </Dialog.Title>
       <Dialog.Panel
         as="form"

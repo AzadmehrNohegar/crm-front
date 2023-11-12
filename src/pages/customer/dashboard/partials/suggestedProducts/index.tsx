@@ -30,14 +30,14 @@ function DashboardSuggestedProducts() {
   if (isLoading) return <Skeleton height={358} containerClassName="my-5" />;
 
   return (
-    <div className="my-5 flex flex-col sm:flex-row items-center py-8 px-5 bg-danger rounded-custom gap-4 overflow-x-hidden">
-      <div className="flex flex-row sm:flex-col items-center justify-between sm:justify-evenly h-full min-w-[150px] w-full sm:w-auto">
-        <h1 className="text-base sm:text-2xl text-white text-center">
+    <div className="my-5 flex flex-col xl:flex-row items-center py-8 px-5 bg-danger rounded-custom gap-4 overflow-x-hidden">
+      <div className="flex flex-row xl:flex-col items-center justify-between xl:justify-evenly h-full min-w-[150px] w-full xl:w-auto">
+        <h1 className="text-base xl:text-2xl text-white text-center">
           پیشنهاد ویژه ما
         </h1>
         <img
           src="/images/confetti.png"
-          className="w-7 h-7 sm:w-auto sm:h-auto"
+          className="w-7 h-7 xl:w-auto xl:h-auto"
           alt="confetti"
         />
       </div>
@@ -47,7 +47,7 @@ function DashboardSuggestedProducts() {
         width={340}
         watchOverflow
         breakpoints={{
-          768: {
+          1280: {
             slidesPerView: 4,
             spaceBetween: 20,
             centeredSlides: false,

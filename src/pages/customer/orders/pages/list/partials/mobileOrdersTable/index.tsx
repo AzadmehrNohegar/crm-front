@@ -107,12 +107,24 @@ function MobileOrdersTable({ isLoading, orders }: IMobileOrdersTableProps) {
           orders?.map((item, index: number) => (
             <div className="flex-col p-3.5 text-sm">
               <strong className="flex items-center justify-between mb-4">
-                <span className="inline-block p-1.5 bg-grey-100 w-7 text-center text-grey-600 rounded-lg">
-                  {((+searchParams.get("page")! || 1) - 1) *
-                    (+searchParams.get("page_size")! || 10) +
-                    index +
-                    1}
-                </span>
+                <strong className="inline-flex items-center">
+                  <span className="inline-block p-1.5 bg-grey-100 w-7 text-center text-grey-600 rounded-lg me-2">
+                    {((+searchParams.get("page")! || 1) - 1) *
+                      (+searchParams.get("page_size")! || 10) +
+                      index +
+                      1}
+                  </span>
+                  {item.order_item
+                    .slice(0, 2)
+                    .map((entry) => entry.name)
+                    .map((str) => (
+                      <Fragment>
+                        {str}
+                        <span className="last-of-type:hidden">/</span>
+                      </Fragment>
+                    ))}
+                </strong>
+
                 <Link
                   to={`./${item.id}`}
                   className="btn btn-ghost btn-sm text-grey-800 px-0"

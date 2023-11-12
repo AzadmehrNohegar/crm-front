@@ -16,7 +16,7 @@ import { MobileTicketsTable } from "./partials/mobileTicketsTable";
 function SupportList() {
   const [searchParams, setSearchParams] = useSearchParams();
   const { search: locationSearch } = useLocation();
-  const matches = useMediaQuery("(max-width: 768px)");
+  const matches = useMediaQuery("(max-width: 1280px)");
 
   const [search, setSearch] = useState("");
   const debouncedSearch = useDebounce(search, 200);
@@ -35,8 +35,8 @@ function SupportList() {
           ...(searchParams.get("ordering")
             ? { ordering: searchParams.get("ordering") || "" }
             : {}),
-          ...(searchParams.get("created_at")
-            ? { created_at: searchParams.get("created_at") || "" }
+          ...(searchParams.get("date")
+            ? { date: searchParams.get("date") || "" }
             : {}),
         },
       })
@@ -72,11 +72,17 @@ function SupportList() {
           <div className="flex flex-wrap py-4 gap-4">
             <div className="flex flex-wrap items-start gap-x-2 gap-y-4 pe-4 border-e border-e-grey-200">
               <DatePicker
-                value={searchParams.get("created_at") || ""}
+                value={new Date(searchParams.get("date") || "")}
                 onChange={(val) => {
                   searchParams.set(
-                    "created_at",
-                    new Date((val?.valueOf() as number) || "").toISOString()
+                    "date",
+                    new Intl.DateTimeFormat("fa-IR", {
+                      dateStyle: "short",
+                      calendar: "gregory",
+                      numberingSystem: "latn",
+                    })
+                      .format(new Date((val?.valueOf() as number) || ""))
+                      .replace(/\//g, "-")
                   );
                   setSearchParams(searchParams);
                 }}
@@ -85,8 +91,8 @@ function SupportList() {
                 placeholder="تاریخ مورد نظر را انتخاب کنید."
               />
             </div>
-            <div className="flex items-center gap-x-4 flex-wrap sm:flex-nowrap gap-y-2">
-              <span className="font-semibold basis-full sm:basis-auto">
+            <div className="flex items-center gap-x-4 flex-wrap xl:flex-nowrap gap-y-2">
+              <span className="font-semibold basis-full xl:basis-auto">
                 وضعیت:
               </span>
               <Checkbox
@@ -146,7 +152,7 @@ function SupportList() {
         </Link>
       </div>
       {matches ? (
-        <div className="mt-6 mb-36">
+        <div className="mt-6 mb-36 xl:mb-28">
           <Input
             className="input input-bordered h-10 ms-auto input-ghost max-w-full w-96"
             containerClassName="my-4"
@@ -160,8 +166,8 @@ function SupportList() {
             }
           />
           <div className="rounded-custom border border-grey-200">
-            <div className="flex items-center bg-grey-50 rounded-t-custom justify-between p-4 sm:py-0">
-              <h3 className="text-sm sm:text-base w-full">سفارشات</h3>
+            <div className="flex items-center bg-grey-50 rounded-t-custom justify-between p-4 xl:py-0">
+              <h3 className="text-sm xl:text-base w-full">سفارشات</h3>
             </div>
             <MobileTicketsTable
               tickets={ticketsPagination?.data.results}
@@ -170,7 +176,7 @@ function SupportList() {
           </div>
         </div>
       ) : (
-        <div className="mt-6 mb-36">
+        <div className="mt-6 mb-36 xl:mb-28">
           <div className="flex items-center bg-grey-50 rounded-t-custom justify-between px-4">
             <h3 className="text-base w-full">لیست تیکت پشتیبانی</h3>
             <Input
@@ -180,7 +186,7 @@ function SupportList() {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               iconEnd={
-                <button className="btn btn-secondary btn-square btn-sm absolute end-2 inset-y-auto">
+                <button className="btn btn-secondary btn-square btn-sm absolute end-1 inset-y-auto">
                   <Search />
                 </button>
               }

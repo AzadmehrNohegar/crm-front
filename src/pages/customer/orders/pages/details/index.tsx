@@ -140,11 +140,13 @@ function OrderDetails() {
                 <strong className="text-sm inline-flex items-center gap-x-1">
                   <span
                     className={clsx(
-                      item?.discount_amount && "text-danger line-through"
+                      item?.discount_amount &&
+                        "text-danger relative before:absolute before:w-full before:h-px before:bg-danger before:inset-y-1/2 before:-rotate-[15deg]"
                     )}
                   >
                     {item?.unit_price.toLocaleString()}{" "}
-                  </span>{" "}
+                  </span>
+                  {"  "}
                   {item?.discount_amount === 0
                     ? ""
                     : item?.discount_amount?.toLocaleString() || ""}{" "}

@@ -30,8 +30,8 @@ function NotificationDetails({
   const [searchParams, setSearchParams] = useSearchParams();
 
   return (
-    <div className="rounded-[10px] sm:p-5 flex flex-col gap-y-3">
-      <h6 className="flex items-center gap-x-3 sm:text-xl font-semibold">
+    <div className="rounded-[10px] xl:p-5 flex flex-col gap-y-3">
+      <h6 className="flex items-center gap-x-3 xl:text-xl font-semibold">
         <span className={clsx("rounded-lg p-1.5", NOTIFICATION_VARIANT[type])}>
           {NOTIFICATION_ICON[type]}
         </span>

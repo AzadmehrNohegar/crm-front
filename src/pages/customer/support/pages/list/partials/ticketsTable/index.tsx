@@ -24,7 +24,7 @@ function TicketsTable({ isLoading, tickets }: ITicketsTableProps) {
   };
 
   return (
-    <div className="overflow-x-auto pb-24">
+    <div className="overflow-x-auto">
       <table className="table table-auto text-start">
         <thead className="bg-grey-50">
           <tr>

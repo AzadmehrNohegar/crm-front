@@ -27,7 +27,7 @@ interface IMobileSlideoverProps {
 
 function MobileSlideover({ isOpen, setIsOpen }: IMobileSlideoverProps) {
   const { pathname } = useLocation();
-  const matches = useMediaQuery("(max-width: 768px)");
+  const matches = useMediaQuery("(max-width: 1280px)");
 
   const { data: userProfile } = useQuery("user-profile", () =>
     getAccountMyProfile()
@@ -69,10 +69,10 @@ function MobileSlideover({ isOpen, setIsOpen }: IMobileSlideoverProps) {
       <div className="fixed z-50 inset-0 overflow-hidden">
         <Transition.Child
           as={Fragment}
-          enter="transform transition ease-in-out duration-500 sm:duration-700"
+          enter="transform transition ease-in-out duration-500 xl:duration-700"
           enterFrom="-translate-x-full"
           enterTo="translate-x-0"
-          leave="transform transition ease-in-out duration-500 sm:duration-700"
+          leave="transform transition ease-in-out duration-500 xl:duration-700"
           leaveFrom="translate-x-0"
           leaveTo="-translate-x-full"
         >
@@ -84,7 +84,7 @@ function MobileSlideover({ isOpen, setIsOpen }: IMobileSlideoverProps) {
               >
                 <Wallet />
                 موجودی کیف پول
-                <span className="inline-flex items-center gap-x-2 ms-auto sm:ms-10">
+                <span className="inline-flex items-center gap-x-2 ms-auto xl:ms-10">
                   <strong className="text-grey-800">
                     {Number(
                       userProfile?.data.customer?.wallet
@@ -109,7 +109,7 @@ function MobileSlideover({ isOpen, setIsOpen }: IMobileSlideoverProps) {
                 iconEnd={
                   <button
                     type="button"
-                    className="absolute end-1 inset-y-auto btn btn-secondary btn-sm"
+                    className="absolute end-2 inset-y-auto btn btn-secondary btn-sm"
                   >
                     پیدا کن
                     <Search />

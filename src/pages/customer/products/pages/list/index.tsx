@@ -17,7 +17,7 @@ function ProductsList() {
   const [isFiltersSlideoverOpen, setIsFiltersSlideoverOpen] = useState(false);
 
   const { search } = useLocation();
-  const matches = useMediaQuery("(max-width: 768px)");
+  const matches = useMediaQuery("(max-width: 1280px)");
 
   const { data: productsPagination, isLoading } = useQuery(
     ["products-pagination", search],
@@ -29,17 +29,23 @@ function ProductsList() {
           brand__id: searchParams.get("brand__id"),
           category__id: searchParams.get("category__id"),
           ordering: searchParams.get("ordering"),
+          product_price__price__gt: searchParams.get(
+            "product_price__price__gt"
+          ),
+          product_price__price__lt: searchParams.get(
+            "product_price__price__lt"
+          ),
         },
       })
   );
 
   return (
-    <div className="flex items-stretch relative gap-x-4">
+    <div className="flex items-stretch gap-x-4">
       {!matches ? <ProductListFilters /> : null}
-      <div className="w-full sm:w-3/4 flex justify-start flex-wrap gap-4 h-fit mb-36">
+      <div className="w-full xl:w-3/4 flex justify-start flex-wrap gap-4 h-fit mb-36 xl:mb-28 relative">
         <div className="basis-full flex justify-end w-full">
           <button
-            className="btn btn-ghost btn-link decoration-transparent text-grey-800 me-auto btn-sm px-0 inline-flex sm:hidden"
+            className="btn btn-ghost btn-link decoration-transparent text-grey-800 me-auto btn-sm px-0 inline-flex xl:hidden"
             onClick={() => setIsFiltersSlideoverOpen(true)}
           >
             <Filter2 />
@@ -94,8 +100,8 @@ function ProductsList() {
             count={6}
             height={matches ? 168 : 281}
             inline={!matches}
-            containerClassName="flex items-center w-full justify-between flex-col sm:flex-row flex-nowrap sm:flex-wrap sm:gap-4"
-            className="sm:basis-modified3"
+            containerClassName="flex items-center w-full justify-between flex-col xl:flex-row flex-nowrap xl:flex-wrap xl:gap-4"
+            className="xl:basis-modified3"
           />
         ) : null}
         {productsPagination?.data.results.map((item: product) => {
@@ -117,23 +123,25 @@ function ProductsList() {
             />
           );
         })}
+        <Pagination
+          count={productsPagination?.data.count}
+          next={productsPagination?.data.next}
+          page={+searchParams.get("page")! || 1}
+          perPage={+searchParams.get("page_size")! || 9}
+          prev={productsPagination?.data.prev}
+          setPage={(val) => {
+            searchParams.set("page", String(val));
+            setSearchParams(searchParams);
+          }}
+          setPerPage={(val) => {
+            searchParams.set("page_size", String(val));
+            setSearchParams(searchParams);
+          }}
+          containerClassName="xl:w-container-sm"
+          isEven
+        />
       </div>
-      <Pagination
-        count={productsPagination?.data.count}
-        next={productsPagination?.data.next}
-        page={+searchParams.get("page")! || 1}
-        perPage={+searchParams.get("page_size")! || 9}
-        prev={productsPagination?.data.prev}
-        setPage={(val) => {
-          searchParams.set("page", String(val));
-          setSearchParams(searchParams);
-        }}
-        setPerPage={(val) => {
-          searchParams.set("page_size", String(val));
-          setSearchParams(searchParams);
-        }}
-        isEven
-      />
+
       {matches ? (
         <FiltersSlideover
           isOpen={isFiltersSlideoverOpen}

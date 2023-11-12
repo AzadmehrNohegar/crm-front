@@ -159,7 +159,10 @@ function ProductCardRow({
               )}
 
               <button
-                className={clsx("btn btn-ghost btn-square")}
+                className={clsx(
+                  "btn btn-ghost btn-square",
+                  cumulativeQuantity === 0 && "text-danger"
+                )}
                 onClick={(e) => {
                   e.preventDefault();
                   e.stopPropagation();
@@ -176,13 +179,14 @@ function ProductCardRow({
               className={clsx(
                 (serverSelectedPrice?.discount_price ||
                   product_price?.[0].discount_price) &&
-                  "text-danger line-through"
+                  "text-danger relative before:absolute before:w-full before:h-px before:bg-danger before:inset-y-1/2 before:-rotate-[15deg]"
               )}
             >
               {serverSelectedPrice
                 ? serverSelectedPrice.price.toLocaleString()
                 : product_price?.[0].price.toLocaleString()}{" "}
-            </span>{" "}
+            </span>
+            {"  "}
             {serverSelectedPrice
               ? serverSelectedPrice.discount_price?.toLocaleString() || ""
               : product_price?.[0].discount_price?.toLocaleString() === "0"

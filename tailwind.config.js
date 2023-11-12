@@ -27,6 +27,7 @@ export default {
       },
       width: {
         container: "calc(5/6 * 100% - 2.5rem)",
+        "container-sm": "calc(100vw * 5/6 * 3/4 - 2.25rem)",
         extended: "calc(100% + 16px)",
       },
       borderRadius: {

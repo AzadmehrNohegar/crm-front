@@ -16,6 +16,7 @@ function DashboardBrandProducts() {
     () =>
       getProductBrand({
         params: {
+          return_parents: true,
           page_size: 10,
         },
       }),
@@ -33,7 +34,7 @@ function DashboardBrandProducts() {
         slidesPerView={1.5}
         width={340}
         breakpoints={{
-          768: {
+          1280: {
             slidesPerView: 6,
             spaceBetween: 20,
             width: null,
@@ -43,12 +44,12 @@ function DashboardBrandProducts() {
         modules={[Navigation]}
         className="w-full"
       >
-        <div className="flex items-center justify-between w-full absolute -top-4 z-20">
-          <h2 className="text-base sm:text-xl">دسته بندی محصولات</h2>
-          <SwiperControls />
+        <div className="flex items-center justify-between w-full absolute -top-3 z-20">
+          <h2 className="text-base xl:text-xl">برند‌های موجود در فروشگاه</h2>
+          <SwiperControls count={brands?.data.count} />
         </div>
         {brands?.data.results.map((item: brand) => (
-          <SwiperSlide className="pt-10 pb-2 px-2" key={item.id}>
+          <SwiperSlide className="pt-12 pb-2 px-2" key={item.id}>
             <Link
               to={`products?brand__id=${item.id}`}
               key={item.id}

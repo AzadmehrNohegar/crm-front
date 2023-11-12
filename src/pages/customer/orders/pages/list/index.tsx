@@ -19,7 +19,7 @@ function OrdersList() {
   const [search, setSearch] = useState("");
   const debouncedSearch = useDebounce(search, 200);
 
-  const matches = useMediaQuery("(max-width: 768px)");
+  const matches = useMediaQuery("(max-width: 1280px)");
 
   const { data: ordersPagination, isLoading } = useQuery(
     ["orders-transactions", debouncedSearch, locationSearch],
@@ -35,10 +35,9 @@ function OrdersList() {
           ...(searchParams.get("ordering")
             ? { ordering: searchParams.get("ordering") || "" }
             : {}),
-          ...(searchParams.get("payment__created_date")
+          ...(searchParams.get("date")
             ? {
-                payment__created_date:
-                  searchParams.get("payment__created_date") || "",
+                date: searchParams.get("date") || "",
               }
             : {}),
         },
@@ -62,11 +61,17 @@ function OrdersList() {
           <div className="flex flex-wrap py-4 gap-4">
             <div className="flex flex-wrap items-start gap-x-2 gap-y-4 pe-4 border-e border-e-grey-200">
               <DatePicker
-                value={searchParams.get("payment__created_date") || ""}
+                value={new Date(searchParams.get("date") || "")}
                 onChange={(val) => {
                   searchParams.set(
-                    "payment__created_date",
-                    new Date((val?.valueOf() as number) || "").toISOString()
+                    "date",
+                    new Intl.DateTimeFormat("fa-IR", {
+                      dateStyle: "short",
+                      calendar: "gregory",
+                      numberingSystem: "latn",
+                    })
+                      .format(new Date((val?.valueOf() as number) || ""))
+                      .replace(/\//g, "-")
                   );
                   setSearchParams(searchParams);
                 }}
@@ -75,8 +80,8 @@ function OrdersList() {
                 placeholder="تاریخ مورد نظر را انتخاب کنید."
               />
             </div>
-            <div className="flex items-center gap-x-4 flex-wrap sm:flex-nowrap gap-y-2">
-              <span className="font-semibold basis-full sm:basis-auto">
+            <div className="flex items-center gap-x-4 flex-wrap xl:flex-nowrap gap-y-2">
+              <span className="font-semibold basis-full xl:basis-auto">
                 وضعیت:
               </span>
               <Checkbox
@@ -100,6 +105,20 @@ function OrdersList() {
                 onChange={(e) => {
                   if (e.currentTarget.checked) {
                     searchParams.set("status", "pending");
+                    setSearchParams(searchParams);
+                  } else {
+                    searchParams.delete("status");
+                    setSearchParams(searchParams);
+                  }
+                }}
+              />
+              <Checkbox
+                label="نیاز به پرداخت"
+                containerClassName="w-fit"
+                checked={searchParams.get("status") === "need_payment"}
+                onChange={(e) => {
+                  if (e.currentTarget.checked) {
+                    searchParams.set("status", "need_payment");
                     setSearchParams(searchParams);
                   } else {
                     searchParams.delete("status");
@@ -132,7 +151,7 @@ function OrdersList() {
         </Popover>
       </div>
       {matches ? (
-        <div className="mt-6 mb-36">
+        <div className="mt-6 mb-36 xl:mb-28">
           <Input
             className="input input-bordered h-10 ms-auto input-ghost max-w-full w-96"
             containerClassName="my-4"
@@ -146,8 +165,8 @@ function OrdersList() {
             }
           />
           <div className="rounded-custom border border-grey-200">
-            <div className="flex items-center bg-grey-50 rounded-t-custom justify-between p-4 sm:py-0">
-              <h3 className="text-sm sm:text-base w-full">سفارشات</h3>
+            <div className="flex items-center bg-grey-50 rounded-t-custom justify-between p-4 xl:py-0">
+              <h3 className="text-sm xl:text-base w-full">سفارشات</h3>
             </div>
             <MobileOrdersTable
               orders={ordersPagination?.data.results}
@@ -156,7 +175,7 @@ function OrdersList() {
           </div>
         </div>
       ) : (
-        <div className="mt-6 mb-36">
+        <div className="mt-6 mb-36 xl:mb-28">
           <div className="flex items-center bg-grey-50 rounded-t-custom justify-between px-4">
             <h3 className="text-base w-full">سفارشات</h3>
             <Input
@@ -166,7 +185,7 @@ function OrdersList() {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               iconEnd={
-                <button className="btn btn-secondary btn-square btn-sm absolute end-2 inset-y-auto">
+                <button className="btn btn-secondary btn-square btn-sm absolute end-1 inset-y-auto">
                   <Search />
                 </button>
               }

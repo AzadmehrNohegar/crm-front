@@ -1,6 +1,7 @@
 import { getAccountSetting } from "@/api/account";
 import { carousel } from "@/model";
 import { useState } from "react";
+import { ArrowLeft } from "react-iconly";
 import Skeleton from "react-loading-skeleton";
 import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
@@ -9,7 +10,7 @@ import { useMediaQuery } from "usehooks-ts";
 
 function DashboardCarouselProducts() {
   const [isMounted, setIsMounted] = useState(false);
-  const matches = useMediaQuery("(max-width: 768px)");
+  const matches = useMediaQuery("(max-width: 1280px)");
 
   const { data: dashboardCarousel, isLoading } = useQuery(
     "dashboard-carousel",
@@ -30,12 +31,15 @@ function DashboardCarouselProducts() {
     <Swiper init={isMounted} watchOverflow slidesPerView={1}>
       {dashboardCarousel?.data.results.map((item: carousel) => (
         <SwiperSlide key={item.id} className="px-px">
-          <Link to={item.url}>
+          <Link to={item.url} className="relative">
             <img
               src={matches ? item.mobile_banner : item.desktop_banner}
               className="w-full"
               alt="banner temp"
             />
+            <span className="btn btn-circle btn-md xl:btn-lg btn-primary absolute left-2 bottom-2 xl:left-4 xl:bottom-4 rotate-45">
+              <ArrowLeft />
+            </span>
           </Link>
         </SwiperSlide>
       ))}

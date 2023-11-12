@@ -23,7 +23,7 @@ function Checkout() {
     setIsCheckoutOfflineFileUploadDialogOpen,
   ] = useState(false);
 
-  const matches = useMediaQuery("(max-width: 768px)");
+  const matches = useMediaQuery("(max-width: 1280px)");
 
   const [isCheckoutFinalDialogOpen, setIsCheckoutFinalDialogOpen] =
     useState(false);
@@ -80,7 +80,7 @@ function Checkout() {
 
   if (cartData?.data.results[0]?.cart_item?.length === 0)
     return (
-      <div className="h-max sm:h-innerContainer flex flex-col items-center justify-center gap-y-4 max-w-3xl mx-auto">
+      <div className="h-max xl:h-innerContainer flex flex-col items-center justify-center gap-y-4 max-w-3xl mx-auto">
         <img src="/images/cart-empty-1.png" alt="cart empty" />
         <span className="text-xl">سبد خرید شما خالی است.</span>
       </div>
@@ -89,16 +89,16 @@ function Checkout() {
   return (
     <Fragment>
       <div className="flex items-start gap-x-4">
-        <div className="w-full sm:w-8/12 h-max sm:h-innerContainer flex flex-col gap-y-4">
+        <div className="w-full xl:w-8/12 h-max xl:h-innerContainer flex flex-col gap-y-4">
           <h4 className="font-bold">محصولات انتخابی شما:</h4>
-          <div className="w-full flex flex-col divide-y gap-y-4 h-full max-h-full sm:max-h-1/2 overflow-y-auto">
+          <div className="w-full flex flex-col divide-y gap-y-4 h-full max-h-full xl:max-h-1/2 overflow-y-auto">
             {cartData?.data.results[0]?.cart_item?.map((item: cart_item) => (
               <CheckoutItem key={item.id} {...item} />
             ))}
           </div>
-          <div className="flex flex-col gap-y-4 bg-grey-50 sm:bg-white rounded-custom p-5">
+          <div className="flex flex-col gap-y-4 bg-grey-50 xl:bg-white rounded-custom p-5">
             <h4 className="font-bold mb-4 mt-auto flex items-center gap-x-2">
-              <span className="p-1.5 bg-secondary text-white rounded-lg inline sm:hidden">
+              <span className="p-1.5 bg-secondary text-white rounded-lg inline xl:hidden">
                 <Discount size="small" />
               </span>
               <span>کد تخفیف</span>
@@ -113,7 +113,7 @@ function Checkout() {
                   searchParams.set("code", e.target.value);
                   setSearchParams(searchParams);
                 }}
-                className="input input-bordered input-ghost sm:input-accent ltr text-end w-full"
+                className="input input-bordered input-ghost xl:input-accent ltr text-end w-full"
               />
               <button
                 className="btn btn-primary"
@@ -124,9 +124,9 @@ function Checkout() {
             </div>
           </div>
 
-          <div className="bg-white sm:bg-grey-50 shadow-ev3 sm:shadow-none p-5 rounded-custom flex flex-col gap-y-5">
+          <div className="bg-white xl:bg-grey-50 shadow-ev3 xl:shadow-none p-5 rounded-custom flex flex-col gap-y-5">
             <h5 className="text-base font-semibold flex items-center gap-x-2">
-              <span className="bg-grey-50 sm:bg-secondary p-1.5 rounded-lg text-grey-600 sm:text-white">
+              <span className="bg-grey-50 xl:bg-secondary p-1.5 rounded-lg text-grey-600 xl:text-white">
                 <Bookmark size="small" />
               </span>
               فاکتور رسمی
@@ -152,15 +152,15 @@ function Checkout() {
             />
           </div>
           <button
-            className="block sm:hidden btn btn-primary btn-block"
+            className="block xl:hidden btn btn-primary btn-block"
             onClick={() => setIsCheckoutFinalDialogOpen(true)}
           >
             تسویه حساب
           </button>
         </div>
 
-        <div className="hidden sm:flex w-4/12 border border-grey-200 rounded-custom p-5 flex-col gap-y-4">
-          <h2 className="text-base sm:text-xl">انتخاب نحوه پرداخت</h2>
+        <div className="hidden xl:flex w-4/12 border border-grey-200 rounded-custom p-5 flex-col gap-y-4">
+          <h2 className="text-base xl:text-xl">انتخاب نحوه پرداخت</h2>
           <div className="flex items-center justify-between">
             <span>پرداخت از کیف پول</span>
             <input
@@ -257,7 +257,7 @@ function Checkout() {
             />
             <label htmlFor="offline">پرداخت آفلاین</label>
           </div>
-          <h2 className="text-base sm:text-xl">جزئیات پرداخت</h2>
+          <h2 className="text-base xl:text-xl">جزئیات پرداخت</h2>
           <ul className="flex flex-col gap-y-4 py-4">
             <li className="flex items-center justify-between">
               <span className="text-sm text-grey-600">

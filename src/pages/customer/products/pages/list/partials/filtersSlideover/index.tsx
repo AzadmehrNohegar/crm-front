@@ -9,7 +9,9 @@ import { Search } from "react-iconly";
 import Skeleton from "react-loading-skeleton";
 import { useQuery } from "react-query";
 import { useSearchParams } from "react-router-dom";
-import { useDebounce } from "usehooks-ts";
+import { useDebounce, useUpdateEffect } from "usehooks-ts";
+import RangeSlider from "react-range-slider-input";
+import "react-range-slider-input/dist/style.css";
 
 interface IFiltersSlideoverProps {
   isOpen: boolean;
@@ -20,8 +22,20 @@ function FiltersSlideover({ isOpen, setIsOpen }: IFiltersSlideoverProps) {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const [brandSearch, setBrandSearch] = useState("");
+  const [value, setValue] = useState(() => {
+    if (
+      searchParams.get("product_price__price__gt") &&
+      searchParams.get("product_price__price__lt")
+    )
+      return [
+        searchParams.get("product_price__price__gt") || 0,
+        searchParams.get("product_price__price__lt") || 100000000,
+      ];
+    return [0, 100000000];
+  });
 
   const brandSearchDebouced = useDebounce(brandSearch, 200);
+  const valueDebounced = useDebounce(value, 200);
 
   const { data: categories, isLoading: isCategoriesLoading } = useQuery(
     "product-categories",
@@ -44,16 +58,22 @@ function FiltersSlideover({ isOpen, setIsOpen }: IFiltersSlideoverProps) {
       })
   );
 
+  useUpdateEffect(() => {
+    searchParams.set("product_price__price__gt", valueDebounced[0].toString());
+    searchParams.set("product_price__price__lt", valueDebounced[1].toString());
+    setSearchParams(searchParams);
+  }, [valueDebounced]);
+
   return (
     <Transition.Root show={isOpen} as={Fragment}>
-      <div className="fixed z-50 inset-0 overflow-hidden">
+      <div className="fixed z-[100] inset-0 overflow-hidden">
         <Transition.Child
           as="div"
           className="bg-white h-screen p-5 flex flex-col"
-          enter="transform transition ease-in-out duration-500 sm:duration-700"
+          enter="transform transition ease-in-out duration-500 xl:duration-700"
           enterFrom="translate-x-full"
           enterTo="translate-x-0"
-          leave="transform transition ease-in-out duration-500 sm:duration-700"
+          leave="transform transition ease-in-out duration-500 xl:duration-700"
           leaveFrom="translate-x-0"
           leaveTo="translate-x-full"
         >
@@ -67,7 +87,10 @@ function FiltersSlideover({ isOpen, setIsOpen }: IFiltersSlideoverProps) {
               </button>
               فیلترها
             </h4>
-            <button className="btn btn-ghost text-danger px-0 btn-link decoration-transparent">
+            <button
+              className="btn btn-ghost text-danger px-0 btn-link decoration-transparent"
+              onClick={() => setSearchParams("")}
+            >
               پاکسازی فیلتر
             </button>
           </div>
@@ -108,6 +131,23 @@ function FiltersSlideover({ isOpen, setIsOpen }: IFiltersSlideoverProps) {
                   />
                 ))
               )}
+            </div>
+            <div className="flex flex-col">
+              <h5 className="text-sm font-bold text-primary mb-2 bg-clip-content relative after:absolute after:w-[70%] after:h-px after:inset-y-1/2 after:left-0 after:bg-primary">
+                محدوده قیمت
+              </h5>
+              <RangeSlider
+                min={0}
+                max={100000000}
+                step={10000}
+                value={value}
+                onInput={setValue}
+                className="mt-4 mb-3"
+              />
+              <div className="flex items-center justify-between text-sm font-light text-grey-600">
+                <span>ارزان‌ترین</span>
+                <span>گرانترین</span>
+              </div>
             </div>
             <div className="flex flex-col">
               <h5 className="text-sm font-bold text-primary mb-2 bg-clip-content relative after:absolute after:w-3/4 after:h-px after:inset-y-1/2 after:left-0 after:bg-primary">

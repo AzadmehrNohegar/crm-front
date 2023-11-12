@@ -18,7 +18,7 @@ function DashboardIntroProducts() {
   return (
     <div className="my-8">
       <div className="flex items-center justify-between mb-6">
-        <h2 className="text-base sm:text-xl">معرفی محصولات</h2>
+        <h2 className="text-base xl:text-xl">معرفی محصولات</h2>
         <Link
           to="products"
           className="btn btn-ghost text-danger btn-link decoration-transparent"
@@ -27,12 +27,12 @@ function DashboardIntroProducts() {
           <ArrowLeft />
         </Link>
       </div>
-      <div className="flex items-center justify-evenly gap-x-4 flex-nowrap sm:flex-wrap overflow-x-auto ps-40 pe-2 py-4 sm:p-0">
+      <div className="flex items-center justify-evenly gap-x-4 flex-nowrap xl:flex-wrap overflow-x-auto ps-40 pe-2 py-4 xl:p-0 xl:pt-2">
         {isLoading ? (
           <Skeleton
             count={5}
             className="basis-modified5 h-[274px] w-1/5"
-            containerClassName="items-center justify-start gap-x-4 w-full hidden sm:flex"
+            containerClassName="items-center justify-start gap-x-4 w-full hidden xl:flex"
           />
         ) : null}
         {introProduct?.data.results.map((item: product) => (

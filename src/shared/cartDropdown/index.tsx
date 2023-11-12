@@ -11,13 +11,13 @@ import { useMediaQuery } from "usehooks-ts";
 function CartDropdown() {
   const { data: cartData } = useQuery("cart-cart", () => getCartCart());
 
-  const matches = useMediaQuery("(max-width: 768px)");
+  const matches = useMediaQuery("(max-width: 1280px)");
 
   if (matches) return null;
 
   return (
     <Popover
-      className="w-full sm:w-[430px] max-w-screen top-full shadow-card rounded-custom shadow-ev3 z-30"
+      className="w-full xl:w-[430px] max-w-screen top-full shadow-card rounded-custom shadow-ev3 z-30"
       orientation="left"
       popoverBtn={
         <PopoverButton className="btn btn-square btn-accent hover:bg-white decoration-transparent text-grey-800">

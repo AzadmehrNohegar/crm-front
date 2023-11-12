@@ -97,7 +97,7 @@ function MobileTicketsTable({ isLoading, tickets }: IMobileTicketsTableProps) {
           </Fragment>
         ) : (
           tickets?.map((item, index: number) => (
-            <div className="flex-col p-3.5 text-sm">
+            <div className="flex-col p-3.5 text-sm" key={item.id}>
               <strong className="flex items-center justify-between mb-4">
                 <span className="inline-block p-1.5 bg-grey-100 w-7 text-center text-grey-600 rounded-lg">
                   {((+searchParams.get("page")! || 1) - 1) *

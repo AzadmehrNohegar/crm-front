@@ -9,12 +9,14 @@ import clsx from "clsx";
 import { postCartCartItem } from "@/api/cart";
 import { Minus } from "@/assets/icons/Minus";
 import { Plus } from "@/assets/icons/Plus";
+import Skeleton from "react-loading-skeleton";
 
 function ProductDetails() {
   const { productId } = useParams();
 
-  const { data: productDetails } = useQuery(`product-${productId}`, () =>
-    getProductProductById({ id: productId })
+  const { data: productDetails, isLoading } = useQuery(
+    `product-${productId}`,
+    () => getProductProductById({ id: productId })
   );
 
   const [selectedPrice, setSelectedPrice] = useState<listOption | null>(null);
@@ -83,6 +85,16 @@ function ProductDetails() {
 
   if (!productId) return <Navigate to=".." />;
 
+  if (isLoading)
+    return (
+      <Skeleton
+        inline
+        count={2}
+        className="h-full"
+        containerClassName="flex items-stretch gap-x-2 h-full pb-5"
+      />
+    );
+
   return (
     <Fragment>
       <ul className="flex items-center gap-x-2 bg-grey-50 w-fit px-4 py-1 rounded-lg">
@@ -135,13 +147,14 @@ function ProductDetails() {
                   className={clsx(
                     (serverSelectedPrice?.discount_price ||
                       productDetails?.data.product_price?.[0].discount_price) &&
-                      "text-danger line-through"
+                      "text-danger relative before:absolute before:w-full before:h-px before:bg-danger before:inset-y-1/2 before:-rotate-[15deg]"
                   )}
                 >
                   {serverSelectedPrice
                     ? serverSelectedPrice.price.toLocaleString()
                     : productDetails?.data.product_price?.[0].price.toLocaleString()}{" "}
-                </span>{" "}
+                </span>
+                {"  "}
                 {serverSelectedPrice
                   ? serverSelectedPrice.discount_price === 0
                     ? ""
@@ -159,7 +172,7 @@ function ProductDetails() {
               {optimisticQuantity === 0 ? (
                 <div className="border border-transparent w-full">
                   <button
-                    className="btn btn-primary btn-block"
+                    className="btn btn-primary disabled:bg-grey-200 min-w-[164px]"
                     onClick={() => {
                       if (selectedPrice) {
                         handleIncrementSelectedPrice(selectedPrice);

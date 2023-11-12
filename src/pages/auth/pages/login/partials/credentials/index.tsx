@@ -68,10 +68,10 @@ function AuthLoginCredentials({
       onSubmit={handleSubmit(onSubmit)}
       className="w-full flex flex-col items-start justify-center gap-y-4 border border-grey-200 rounded-custom p-5 h-full"
     >
-      <h2 className="text-lg sm:text-xl font-bold text-grey-800">
+      <h2 className="text-lg xl:text-xl font-bold text-grey-800">
         ورود به حساب کاربری
       </h2>
-      <span className="text-base sm:text-base text-grey-600">
+      <span className="text-base xl:text-base text-grey-600">
         لطفا اطلاعات حساب کاربری خود را وارد کنید
       </span>
       <Input
@@ -92,7 +92,7 @@ function AuthLoginCredentials({
             "شماره موبایل نادرست است.",
         })}
       />
-      <div className="flex items-center mt-auto sm:mt-28 justify-between w-full gap-x-4">
+      <div className="flex items-center mt-auto xl:mt-28 justify-between w-full gap-x-4">
         <button
           type="button"
           className="btn btn-primary btn-outline basis-modified"
@@ -103,7 +103,7 @@ function AuthLoginCredentials({
         </button>
         <button
           type="submit"
-          className="btn btn-primary basis-modified text-[13px] sm:text-base disabled:bg-grey-200"
+          className="btn btn-primary basis-modified text-[13px] xl:text-base disabled:bg-grey-200"
           disabled={sendOtp.isLoading || !isValid || !isDirty}
         >
           دریافت کد فعالسازی

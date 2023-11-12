@@ -102,19 +102,19 @@ function AuthLoginPassword({ changeStep, phone }: IAuthLoginPasswordProps) {
       onSubmit={handleSubmit(onSubmit)}
       className="w-full flex flex-col items-start justify-center gap-y-4 border border-grey-200 rounded-custom p-5 h-full"
     >
-      <h2 className="text-base sm:text-xl font-bold text-grey-800 flex items-center justify-between w-full">
+      <h2 className="text-base xl:text-xl font-bold text-grey-800 flex items-center justify-between w-full">
         <span>ورود با رمز عبور</span>
         <button
           type="button"
           onClick={handleSendOtp}
           disabled={sendOtp.isLoading}
-          className="btn btn-sm btn-link text-grey-800 decoration-transparent text-xs inline-flex sm:hidden"
+          className="btn btn-sm btn-link text-grey-800 decoration-transparent text-xs inline-flex xl:hidden"
         >
           دریافت کد فعالسازی
           <ArrowLeft size="small" />
         </button>
       </h2>
-      <span className="text-sm sm:text-base text-grey-600">
+      <span className="text-sm xl:text-base text-grey-600">
         لطفا رمز عبور خود را وارد کنید
       </span>
       <Input
@@ -140,11 +140,11 @@ function AuthLoginPassword({ changeStep, phone }: IAuthLoginPasswordProps) {
           },
         })}
       />
-      <button className="btn btn-primary btn-block mt-auto sm:mt-5">
+      <button className="btn btn-primary btn-block mt-auto xl:mt-5">
         ورود با رمز عبور
       </button>
 
-      <div className="w-full items-center justify-center gap-x-8 hidden sm:flex">
+      <div className="w-full items-center justify-center gap-x-8 hidden xl:flex">
         <span className="text-[13px] font-light text-grey-600">ورود با</span>
         <button
           className="text-[13px] btn btn-ghost text-grey-800 font-bold"

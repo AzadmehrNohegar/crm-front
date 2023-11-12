@@ -77,19 +77,19 @@ function CheckoutFinalDialog({
     <Dialog isOpen={isOpen} closeModal={closeModal} placement="center">
       <Dialog.Title
         as="div"
-        className="p-3.5 sm:p-5 text-start shadow-header flex items-center justify-between"
+        className="p-3.5 xl:p-5 text-start shadow-header flex items-center justify-between"
       >
-        <h2 className="text-base sm:text-xl">جزئیات</h2>
+        <h2 className="text-base xl:text-xl">جزئیات</h2>
         <button
-          className="btn btn-ghost btn-sm sm:btn-md btn-link btn-square text-grey-800 decoration-transparent"
+          className="btn btn-ghost btn-sm xl:btn-md btn-link btn-square text-grey-800 decoration-transparent"
           onClick={closeModal}
         >
-          <Close className="sclae-100 sm:scale-125" />
+          <Close className="sclae-100 xl:scale-125" />
         </button>
       </Dialog.Title>
       <Dialog.Panel>
         <div className="flex w-full p-5 flex-col gap-y-4">
-          <h2 className="text-base sm:text-xl">انتخاب نحوه پرداخت</h2>
+          <h2 className="text-base xl:text-xl">انتخاب نحوه پرداخت</h2>
           <div className="flex items-center justify-between">
             <span>پرداخت از کیف پول</span>
             <input
@@ -186,7 +186,7 @@ function CheckoutFinalDialog({
             />
             <label htmlFor="offline">پرداخت آفلاین</label>
           </div>
-          <h2 className="text-base sm:text-xl">جزئیات پرداخت</h2>
+          <h2 className="text-base xl:text-xl">جزئیات پرداخت</h2>
           <ul className="flex flex-col gap-y-4 py-4">
             <li className="flex items-center justify-between">
               <span className="text-sm text-grey-600">

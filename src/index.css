@@ -69,3 +69,17 @@
     display: flex !important;
   }
 }
+
+.range-slider .range-slider__range {
+  background: #004bcc !important;
+}
+
+.range-slider .range-slider__thumb {
+  background: #004bcc !important;
+  width: 18px !important;
+  height: 18px !important;
+}
+
+.range-slider {
+  height: 5px;
+}

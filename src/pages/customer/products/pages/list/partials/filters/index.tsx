@@ -7,14 +7,28 @@ import { Search } from "react-iconly";
 import Skeleton from "react-loading-skeleton";
 import { useQuery } from "react-query";
 import { useSearchParams } from "react-router-dom";
-import { useDebounce } from "usehooks-ts";
+import { useDebounce, useUpdateEffect } from "usehooks-ts";
+import RangeSlider from "react-range-slider-input";
+import "react-range-slider-input/dist/style.css";
 
 function ProductListFilters() {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const [brandSearch, setBrandSearch] = useState("");
+  const [value, setValue] = useState(() => {
+    if (
+      searchParams.get("product_price__price__gt") &&
+      searchParams.get("product_price__price__lt")
+    )
+      return [
+        searchParams.get("product_price__price__gt") || 0,
+        searchParams.get("product_price__price__lt") || 100000000,
+      ];
+    return [0, 100000000];
+  });
 
   const brandSearchDebouced = useDebounce(brandSearch, 200);
+  const valueDebounced = useDebounce(value, 200);
 
   const { data: categories, isLoading: isCategoriesLoading } = useQuery(
     "product-categories",
@@ -33,18 +47,30 @@ function ProductListFilters() {
         params: {
           page_size: 10,
           search: brandSearchDebouced,
+          product_price__price__gte: valueDebounced[0],
+          product_price__price__lte: valueDebounced[1],
         },
       })
   );
+
+  useUpdateEffect(() => {
+    searchParams.set("product_price__price__gt", valueDebounced[0].toString());
+    searchParams.set("product_price__price__lt", valueDebounced[1].toString());
+    setSearchParams(searchParams);
+  }, [valueDebounced]);
 
   return (
     <div className="w-1/4 flex flex-col gap-y-4 border rounded-custom py-5 px-4 h-fit overflow-y-auto sticky top-0">
       <div className="flex items-center justify-between">
         <h4 className="text-base font-bold">فیلترها</h4>
-        <button className="btn btn-ghost text-danger px-0 btn-link decoration-transparent">
+        <button
+          className="btn btn-ghost text-danger px-0 btn-link decoration-transparent"
+          onClick={() => setSearchParams("")}
+        >
           پاکسازی فیلتر
         </button>
       </div>
+
       <div className="flex flex-col">
         <h5 className="text-sm font-bold text-primary mb-2 bg-clip-content relative after:absolute after:w-3/4 after:h-px after:inset-y-1/2 after:left-0 after:bg-primary">
           دسته‌بندی‌ها
@@ -81,7 +107,24 @@ function ProductListFilters() {
         )}
       </div>
       <div className="flex flex-col">
-        <h5 className="text-sm font-bold text-primary mb-2 bg-clip-content relative after:absolute after:w-3/4 after:h-px after:inset-y-1/2 after:left-0 after:bg-primary">
+        <h5 className="text-sm font-bold text-primary mb-2 bg-clip-content relative after:absolute after:w-[70%] after:h-px after:inset-y-1/2 after:left-0 after:bg-primary">
+          محدوده قیمت
+        </h5>
+        <RangeSlider
+          min={0}
+          max={100000000}
+          step={10000}
+          value={value}
+          onInput={setValue}
+          className="mt-4 mb-3"
+        />
+        <div className="flex items-center justify-between text-sm font-light text-grey-600">
+          <span>ارزان‌ترین</span>
+          <span>گرانترین</span>
+        </div>
+      </div>
+      <div className="flex flex-col">
+        <h5 className="text-sm font-bold text-primary mb-2 bg-clip-content relative after:absolute after:w-[85%] after:h-px after:inset-y-1/2 after:left-0 after:bg-primary">
           برند ها
         </h5>
         <Input

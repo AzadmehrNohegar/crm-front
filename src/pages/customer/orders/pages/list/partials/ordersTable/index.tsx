@@ -32,7 +32,7 @@ function OrdersTable({ isLoading, orders }: IOrdersTableProps) {
   };
 
   return (
-    <div className="overflow-x-auto pb-24">
+    <div className="overflow-x-auto">
       <table className="table table-auto text-start">
         <thead className="bg-grey-50">
           <tr>
@@ -50,6 +50,9 @@ function OrdersTable({ isLoading, orders }: IOrdersTableProps) {
                   <Swap />
                 </button>
               </span>
+            </th>
+            <th align="right">
+              <span className="text-sm text-grey-800">عناوین محصول</span>
             </th>
             <th align="right">
               <span className="text-sm text-grey-800">نوع پرداخت‌</span>
@@ -113,6 +116,9 @@ function OrdersTable({ isLoading, orders }: IOrdersTableProps) {
                   <Skeleton height={51} />
                 </td>
                 <td>
+                  <Skeleton height={51} />
+                </td>
+                <td>
                   <Skeleton height={51} width={44} />
                 </td>
                 <td>
@@ -120,6 +126,9 @@ function OrdersTable({ isLoading, orders }: IOrdersTableProps) {
                 </td>
               </tr>
               <tr>
+                <td>
+                  <Skeleton height={51} />
+                </td>
                 <td>
                   <Skeleton height={51} />
                 </td>
@@ -153,8 +162,19 @@ function OrdersTable({ isLoading, orders }: IOrdersTableProps) {
                   1}
               </td>
               <td>{item.id}</td>
+              <td>
+                {item.order_item
+                  .slice(0, 2)
+                  .map((entry) => entry.name)
+                  .map((str) => (
+                    <Fragment>
+                      {str}
+                      <span className="last-of-type:hidden">/</span>
+                    </Fragment>
+                  ))}
+              </td>
               <td>{parsePaymentType(item)}</td>
-              <td>{item.payment.amount}</td>
+              <td>{item.payment.amount.toLocaleString()} تومان</td>
               <td>
                 {new Intl.DateTimeFormat("fa-IR", {
                   dateStyle: "short",

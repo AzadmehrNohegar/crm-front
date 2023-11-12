@@ -20,7 +20,7 @@ function Wallet() {
   const [searchParams, setSearchParams] = useSearchParams();
   const { search: locationSearch } = useLocation();
 
-  const matches = useMediaQuery("(max-width: 768px)");
+  const matches = useMediaQuery("(max-width: 1280px)");
 
   const { data: userProfile, isLoading: isUserProfileLoading } = useQuery(
     "user-profile",
@@ -46,8 +46,8 @@ function Wallet() {
           ...(searchParams.get("ordering")
             ? { ordering: searchParams.get("ordering") || "" }
             : {}),
-          ...(searchParams.get("created_date")
-            ? { created_date: searchParams.get("created_date") || "" }
+          ...(searchParams.get("date")
+            ? { date: searchParams.get("date") || "" }
             : {}),
         },
       })
@@ -56,11 +56,11 @@ function Wallet() {
   return (
     <Fragment>
       <div className="relative">
-        <div className="flex flex-wrap sm:flex-nowrap items-center w-full gap-4 relative">
-          <span className="text-sm basis-full sm:basis-auto inline-flex bg-secondary-100 items-center py-3 px-4 rounded-xl text-grey-600 gap-x-2 me-auto">
+        <div className="flex flex-wrap xl:flex-nowrap items-center w-full gap-4 relative">
+          <span className="text-sm basis-full xl:basis-auto inline-flex bg-secondary-100 items-center py-3 px-4 rounded-xl text-grey-600 gap-x-2 me-auto">
             <WalletIcon />
             موجودی کیف پول
-            <span className="inline-flex items-center gap-x-2 ms-auto sm:ms-10">
+            <span className="inline-flex items-center gap-x-2 ms-auto xl:ms-10">
               <strong className="text-grey-800">
                 {isUserProfileLoading ? (
                   <Skeleton height={16} width={56} inline />
@@ -82,11 +82,17 @@ function Wallet() {
             <div className="flex flex-wrap py-4 gap-4">
               <div className="flex flex-wrap items-start gap-x-2 gap-y-4 pe-4 border-e border-e-grey-200">
                 <DatePicker
-                  value={searchParams.get("created_date") || ""}
+                  value={new Date(searchParams.get("date") || "")}
                   onChange={(val) => {
                     searchParams.set(
-                      "created_date",
-                      new Date((val?.valueOf() as number) || "").toISOString()
+                      "date",
+                      new Intl.DateTimeFormat("fa-IR", {
+                        dateStyle: "short",
+                        calendar: "gregory",
+                        numberingSystem: "latn",
+                      })
+                        .format(new Date((val?.valueOf() as number) || ""))
+                        .replace(/\//g, "-")
                     );
                     setSearchParams(searchParams);
                   }}
@@ -95,8 +101,8 @@ function Wallet() {
                   placeholder="تاریخ مورد نظر را انتخاب کنید."
                 />
               </div>
-              <div className="flex items-center gap-x-4 flex-wrap sm:flex-nowrap gap-y-2">
-                <span className="font-semibold basis-full sm:basis-auto">
+              <div className="flex items-center gap-x-4 flex-wrap xl:flex-nowrap gap-y-2">
+                <span className="font-semibold basis-full xl:basis-auto">
                   وضعیت:
                 </span>
                 <Checkbox
@@ -151,7 +157,7 @@ function Wallet() {
             </div>
           </Popover>
           <button
-            className="ms-auto sm:ms-0 btn btn-primary"
+            className="ms-auto xl:ms-0 btn btn-primary"
             onClick={() => setIsCreateWalletTransactionDialogOpen(true)}
           >
             <Plus />
@@ -159,7 +165,7 @@ function Wallet() {
           </button>
         </div>
         {matches ? (
-          <div className="mt-6 mb-36">
+          <div className="mt-6 mb-36 xl:mb-28">
             <Input
               className="input input-bordered h-10 ms-auto input-ghost max-w-full w-96"
               containerClassName="my-4"
@@ -173,8 +179,8 @@ function Wallet() {
               }
             />
             <div className="rounded-custom border border-grey-200">
-              <div className="flex items-center bg-grey-50 rounded-t-custom justify-between p-4 sm:py-0">
-                <h3 className="text-sm sm:text-base w-full">سوابق کیف پول</h3>
+              <div className="flex items-center bg-grey-50 rounded-t-custom justify-between p-4 xl:py-0">
+                <h3 className="text-sm xl:text-base w-full">سوابق کیف پول</h3>
               </div>
               <MobileWalletTable
                 wallet_transactions={walletTransactions?.data.results}
@@ -183,9 +189,9 @@ function Wallet() {
             </div>
           </div>
         ) : (
-          <div className="mt-6 mb-36">
-            <div className="flex items-center bg-grey-50 rounded-t-custom justify-between p-4 sm:py-0">
-              <h3 className="text-sm sm:text-base w-full">سوابق کیف پول</h3>
+          <div className="mt-6 mb-36 xl:mb-28">
+            <div className="flex items-center bg-grey-50 rounded-t-custom justify-between p-4 xl:py-0">
+              <h3 className="text-sm xl:text-base w-full">سوابق کیف پول</h3>
               <Input
                 className="input input-bordered h-10 ms-auto input-ghost max-w-full w-96"
                 containerClassName="my-4"
@@ -193,7 +199,7 @@ function Wallet() {
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 iconEnd={
-                  <button className="btn btn-secondary btn-square btn-sm absolute end-2 inset-y-auto">
+                  <button className="btn btn-secondary btn-square btn-sm absolute end-1 inset-y-auto">
                     <Search />
                   </button>
                 }

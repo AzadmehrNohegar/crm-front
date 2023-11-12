@@ -15,7 +15,7 @@ import { useMediaQuery } from "usehooks-ts";
 
 function Notification() {
   const [searchParams] = useSearchParams();
-  const matches = useMediaQuery("(max-width: 768px)");
+  const matches = useMediaQuery("(max-width: 1280px)");
 
   const loadMoreRef = useRef(null);
   const {
@@ -63,7 +63,7 @@ function Notification() {
   );
 
   return (
-    <div className="h-full sm:h-innerContainer flex items-stretch gap-x-4">
+    <div className="h-full xl:h-innerContainer flex items-stretch gap-x-4">
       <div
         className={clsx(
           "flex flex-col h-full gap-y-4 overflow-y-auto w-full pe-2",
@@ -83,7 +83,7 @@ function Notification() {
       </div>
       <div
         className={clsx(
-          "w-full sm:shadow-ev3 rounded-custom",
+          "w-full xl:shadow-ev3 rounded-custom",
           matches && !searchParams.get("notification") && "hidden"
         )}
       >

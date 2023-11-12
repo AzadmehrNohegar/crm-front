@@ -134,7 +134,10 @@ function ProductCard({
               )}
 
               <button
-                className={clsx("btn btn-ghost btn-square")}
+                className={clsx(
+                  "btn btn-ghost btn-square",
+                  cumulativeQuantity === 1 && "text-danger"
+                )}
                 onClick={(e) => {
                   e.preventDefault();
                   e.stopPropagation();
@@ -163,16 +166,19 @@ function ProductCard({
               className={clsx(
                 (serverSelectedPrice?.discount_price ||
                   product_price?.[0].discount_price) &&
-                  "text-danger line-through"
+                  "text-danger relative before:absolute before:w-full before:h-px before:bg-danger before:inset-y-1/2 before:-rotate-[15deg]"
               )}
             >
               {serverSelectedPrice
                 ? serverSelectedPrice.price.toLocaleString()
                 : product_price?.[0].price.toLocaleString()}{" "}
-            </span>{" "}
+            </span>
+            {"  "}
             {serverSelectedPrice
-              ? serverSelectedPrice.discount_price?.toLocaleString() || ""
-              : product_price?.[0].discount_price?.toLocaleString() === "0"
+              ? serverSelectedPrice.discount_price === 0
+                ? ""
+                : serverSelectedPrice.discount_price?.toLocaleString()
+              : product_price?.[0].discount_price === 0
               ? ""
               : product_price?.[0].discount_price?.toLocaleString()}{" "}
             <span className="text-xs font-light text-grey-500">تومان</span>

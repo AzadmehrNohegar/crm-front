@@ -24,12 +24,12 @@ function DetailsTicketsDialog({ closeModal, isOpen }: IExtendedDialogProps) {
         as="div"
         className="p-5 text-start shadow-header flex items-center justify-between"
       >
-        <h2 className="text-base sm:text-xl">جزئیات تیکت پشتیبانی</h2>
+        <h2 className="text-base xl:text-xl">جزئیات تیکت پشتیبانی</h2>
         <button
-          className="btn btn-ghost btn-sm sm:btn-md btn-link btn-square text-grey-800 decoration-transparent"
+          className="btn btn-ghost btn-sm xl:btn-md btn-link btn-square text-grey-800 decoration-transparent"
           onClick={closeModal}
         >
-          <Close className="sclae-100 sm:scale-125" />
+          <Close className="sclae-100 xl:scale-125" />
         </button>
       </Dialog.Title>
       <Dialog.Panel as="ul" className="p-5 flex flex-col divide-y">
