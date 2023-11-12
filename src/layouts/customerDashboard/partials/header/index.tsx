@@ -88,13 +88,13 @@ function CustomerDashboardHeader() {
                 <Input
                   name="search"
                   placeholder="جست و جو..."
-                  containerClassName="w-fit ms-auto relative"
-                  className="input input-bordered w-96"
+                  containerClassName="w-full ms-auto relative"
+                  className="input input-bordered w-full"
                   block
                   iconEnd={
                     <button
                       type="button"
-                      className="absolute end-3.5 inset-y-auto btn btn-secondary btn-sm"
+                      className="absolute end-2 inset-y-auto btn btn-secondary btn-sm"
                     >
                       پیدا کن
                       <Search />
