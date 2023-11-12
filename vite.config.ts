@@ -9,7 +9,7 @@ export default defineConfig({
     exclude: ["chart.js", "react-loading-skeleton", "react-range-slider-input"],
     esbuildOptions: {
       define: {
-        global: "globalThis",
+        global: "window",
       },
     },
   },
