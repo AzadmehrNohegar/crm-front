@@ -7,12 +7,5 @@ export default defineConfig({
   plugins: [react(), tsconfigPaths()],
   optimizeDeps: {
     exclude: ["chart.js", "react-loading-skeleton", "react-range-slider-input"],
-    esbuildOptions: {
-      define: {
-        global: "window",
-      },
-    },
   },
-
-  define: { global: "window" },
 });
