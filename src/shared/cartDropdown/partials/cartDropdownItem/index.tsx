@@ -75,7 +75,10 @@ function CartDropdownItem({
               handleIncrementCartItem();
               setOptimisticQuantity((prevState) => prevState + 1);
             }}
-            disabled={createCartItem.isLoading}
+            disabled={
+              createCartItem.isLoading ||
+              product_price.inventory === optimisticQuantity
+            }
           >
             <Plus />
           </button>

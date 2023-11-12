@@ -79,7 +79,10 @@ function CheckoutItem({ category_name, product_price, quantity }: cart_item) {
               handleIncrementCartItem();
               setOptimisticQuantity((prevState) => prevState + 1);
             }}
-            disabled={createCartItem.isLoading}
+            disabled={
+              createCartItem.isLoading ||
+              product_price.inventory === product_price.quantity
+            }
           >
             <Plus />
           </button>

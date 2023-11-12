@@ -1,7 +1,7 @@
 import { getProductProductById } from "@/api/product";
 import { RadioSelect } from "@/components/radioSelect";
 import { MEASURE_TYPES, listOption, product_price } from "@/model";
-import { Fragment, useEffect, useMemo, useState } from "react";
+import { Fragment, useMemo, useState } from "react";
 import { Bag, ChevronLeft, Delete } from "react-iconly";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { Link, Navigate, useParams } from "react-router-dom";
@@ -28,22 +28,6 @@ function ProductDetails() {
       queryClient.invalidateQueries();
     },
   });
-
-  const [optimisticQuantity, setOptimisticQuantity] = useState<number>(
-    productDetails?.data.product_price?.reduce(
-      (prev: number, curr: product_price) => prev + curr.quantity,
-      0
-    ) || 0
-  );
-
-  useEffect(() => {
-    setOptimisticQuantity(
-      productDetails?.data.product_price?.reduce(
-        (prev: number, curr: product_price) => prev + curr.quantity,
-        0
-      )
-    );
-  }, [productDetails]);
 
   const serverSelectedPrice = useMemo(() => {
     return productDetails?.data.product_price?.filter(
@@ -72,16 +56,21 @@ function ProductDetails() {
     });
 
   const handleIncrementSelectedPrice = (price: listOption) =>
-    createCartItem
-      .mutateAsync({
-        body: {
-          product_price: price.id,
-          quantity: 1,
-        },
-      })
-      .then(() => {
-        setOptimisticQuantity((prevState) => prevState + 1);
-      });
+    createCartItem.mutateAsync({
+      body: {
+        product_price: price.id,
+        quantity: 1,
+      },
+    });
+
+  const cumulativeQuantity = useMemo(() => {
+    return (
+      productDetails?.data.product_price?.reduce(
+        (prev: number, curr: product_price) => prev + curr.quantity,
+        0
+      ) || 0
+    );
+  }, [productDetails]);
 
   if (!productId) return <Navigate to=".." />;
 
@@ -169,7 +158,7 @@ function ProductDetails() {
               </strong>
             </div>
             <div>
-              {optimisticQuantity === 0 ? (
+              {cumulativeQuantity === 0 ? (
                 <div className="border border-transparent w-full">
                   <button
                     className="btn btn-primary disabled:bg-grey-200 min-w-[164px]"
@@ -178,15 +167,21 @@ function ProductDetails() {
                         handleIncrementSelectedPrice(selectedPrice);
                       } else {
                         handleIncrementCartItem();
-                        setOptimisticQuantity((prevState) => prevState + 1);
                       }
                     }}
                     disabled={
-                      productDetails?.data.inventory === 0 ||
-                      createCartItem.isLoading
+                      productDetails?.data.product_price?.reduce(
+                        (prev: number, curr: product_price) =>
+                          prev + curr.inventory,
+                        0
+                      ) === 0 || createCartItem.isLoading
                     }
                   >
-                    {productDetails?.data.inventory === 0
+                    {productDetails?.data.product_price?.reduce(
+                      (prev: number, curr: product_price) =>
+                        prev + curr.inventory,
+                      0
+                    ) === 0
                       ? "ناموجود"
                       : "افزودن به سبد خرید"}
                   </button>
@@ -197,9 +192,14 @@ function ProductDetails() {
                     className="btn btn-ghost btn-square"
                     onClick={() => {
                       handleIncrementCartItem();
-                      setOptimisticQuantity((prevState) => prevState + 1);
                     }}
-                    disabled={createCartItem.isLoading}
+                    disabled={
+                      createCartItem.isLoading ||
+                      (serverSelectedPrice
+                        ? serverSelectedPrice.inventory === cumulativeQuantity
+                        : productDetails?.data.product_price?.[0].inventory ===
+                          cumulativeQuantity)
+                    }
                   >
                     <Plus />
                   </button>
@@ -207,24 +207,23 @@ function ProductDetails() {
                     <span className="loading loading-spinner loading-md inline-block h-7 text-primary"></span>
                   ) : (
                     <span className="text-lg font-bold">
-                      {optimisticQuantity}
+                      {cumulativeQuantity}
                     </span>
                   )}
 
                   <button
                     className={clsx(
                       "btn btn-ghost btn-square",
-                      optimisticQuantity === 1 && "text-danger"
+                      cumulativeQuantity === 1 && "text-danger"
                     )}
                     onClick={(e) => {
                       e.preventDefault();
                       e.stopPropagation();
                       handleDecrementCartItem();
-                      setOptimisticQuantity((prevState) => prevState - 1);
                     }}
                     disabled={createCartItem.isLoading}
                   >
-                    {optimisticQuantity === 1 ? <Delete /> : <Minus />}
+                    {cumulativeQuantity === 1 ? <Delete /> : <Minus />}
                   </button>
                 </div>
               )}

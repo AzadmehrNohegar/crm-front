@@ -56,6 +56,7 @@ export type product_price = {
   tax: number;
   weight: number;
   quantity: number;
+  inventory: number;
 };
 
 export type listOption = {
@@ -88,6 +89,7 @@ export type cart_item = {
     price: number;
     discount_price: number;
     tax: number;
+    inventory: number;
     product: {
       id: number;
       name: string;

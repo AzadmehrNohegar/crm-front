@@ -11,14 +11,12 @@ import {
   Logout,
   Notification,
   Wallet,
-  Search,
 } from "react-iconly";
 import { useMutation, useQuery } from "react-query";
 import { getAccountMyProfile, postAccountAuthLogout } from "@/api/account";
 import { useAuthStore } from "@/store/auth";
 import { toast } from "react-toastify";
 import { Close } from "@/assets/icons/Close";
-import { Input } from "@/components/input";
 
 interface IMobileSlideoverProps {
   isOpen: boolean;
@@ -99,23 +97,6 @@ function MobileSlideover({ isOpen, setIsOpen }: IMobileSlideoverProps) {
               >
                 <Close />
               </button>
-
-              <Input
-                name="search"
-                placeholder="جست و جو..."
-                containerClassName="w-full relative basis-auto"
-                className="input input-bordered input-ghost w-96"
-                block={false}
-                iconEnd={
-                  <button
-                    type="button"
-                    className="absolute end-2 inset-y-auto btn btn-secondary btn-sm"
-                  >
-                    پیدا کن
-                    <Search />
-                  </button>
-                }
-              />
             </div>
             <ul className="w-full h-full py-8 flex flex-col gap-y-5">
               <li>

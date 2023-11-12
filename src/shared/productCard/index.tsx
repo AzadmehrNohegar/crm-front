@@ -23,7 +23,6 @@ function ProductCard({
   id,
   product_price,
   containerClassName,
-  inventory,
 }: IProductCardProps) {
   const queryClient = useQueryClient();
 
@@ -105,10 +104,20 @@ function ProductCard({
                       handleIncrementCartItem();
                     }
                   }}
-                  disabled={inventory === 0 || createCartItem.isLoading}
+                  disabled={
+                    product_price?.reduce(
+                      (prev: number, curr) => prev + curr.inventory,
+                      0
+                    ) === 0 || createCartItem.isLoading
+                  }
                 >
                   <Plus />
-                  {inventory === 0 ? <span>ناموجود</span> : null}
+                  {product_price?.reduce(
+                    (prev: number, curr) => prev + curr.inventory,
+                    0
+                  ) === 0 || createCartItem.isLoading ? (
+                    <span>ناموجود</span>
+                  ) : null}
                 </button>
               ) : (
                 <span className="inline-block w-12 h-12"></span>
@@ -123,7 +132,12 @@ function ProductCard({
                   e.stopPropagation();
                   handleIncrementCartItem();
                 }}
-                disabled={createCartItem.isLoading}
+                disabled={
+                  createCartItem.isLoading ||
+                  (serverSelectedPrice
+                    ? serverSelectedPrice.inventory === cumulativeQuantity
+                    : product_price?.[0].inventory === cumulativeQuantity)
+                }
               >
                 <Plus />
               </button>
