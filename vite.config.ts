@@ -6,7 +6,13 @@ import tsconfigPaths from "vite-tsconfig-paths";
 export default defineConfig({
   plugins: [react(), tsconfigPaths()],
   optimizeDeps: {
-    exclude: ["chart.js", "react-loading-skeleton"],
+    exclude: ["chart.js", "react-loading-skeleton", "react-range-slider-input"],
+    esbuildOptions: {
+      define: {
+        global: "globalThis",
+      },
+    },
   },
+
   define: { global: "window" },
 });
