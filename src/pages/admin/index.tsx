@@ -5,6 +5,8 @@ import { Route, Routes } from "react-router-dom";
 
 const AuthPage = lazy(() => import("../auth"));
 const DashboardPage = lazy(() => import("./dashboard"));
+const AccountPage = lazy(() => import("./account"));
+const SettingsPage = lazy(() => import("./settings"));
 
 function AdminRoutes() {
   return (
@@ -12,6 +14,8 @@ function AdminRoutes() {
       <Route element={<PrivateRoute />}>
         <Route element={<AdminDashboardLayout />}>
           <Route index element={<DashboardPage />} />
+          <Route path="account" element={<AccountPage />} />
+          <Route path="settings" element={<SettingsPage />} />
           <Route path="products/*" element={<>products</>} />
           <Route path="orders/*" element={<>orders</>} />
           <Route path="users/*" element={<>users</>} />

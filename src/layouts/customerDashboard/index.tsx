@@ -1,10 +1,11 @@
 import { Outlet } from "react-router-dom";
 import { CustomerDashboardHeader } from "./partials/header";
 import { CustomerDashboardSidebar } from "./partials/sidebar";
-import { Fragment } from "react";
+import { Fragment, Suspense } from "react";
 import { Helmet } from "react-helmet-async";
 import { CustomerDashboardNavigation } from "./partials/nav";
 import { useMediaQuery } from "usehooks-ts";
+import { MovasaghLoading } from "@/shared/movasaghLoading";
 
 function CustomerDashboardLayout() {
   const matches = useMediaQuery("(max-width: 1280px)");
@@ -19,7 +20,9 @@ function CustomerDashboardLayout() {
         <main className="w-full xl:w-5/6 h-screen">
           <CustomerDashboardHeader />
           <section className="p-5 h-container overflow-y-auto pb-16 xl:pb-0">
-            <Outlet />
+            <Suspense fallback={<MovasaghLoading />}>
+              <Outlet />
+            </Suspense>
           </section>
           {matches ? <CustomerDashboardNavigation /> : null}
         </main>

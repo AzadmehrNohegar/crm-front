@@ -86,10 +86,14 @@ function AuthLoginCredentials({
         error={errors.phone}
         {...register("phone", {
           required: "شماره موبایل خود را وارد کنید.",
-          validate: (value) =>
-            (convertPersian2English(value).match(MOBILE_FORMAT) &&
-              value.length === 11) ||
-            "شماره موبایل نادرست است.",
+          validate: (value) => {
+            if (
+              convertPersian2English(value).match(MOBILE_FORMAT) &&
+              value.length === 11
+            )
+              return;
+            return "شماره موبایل نادرست است.";
+          },
         })}
       />
       <div className="flex items-center mt-auto xl:mt-28 justify-between w-full gap-x-4">

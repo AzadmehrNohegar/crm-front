@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
 import "./index.css";
@@ -9,7 +9,6 @@ import { HelmetProvider } from "react-helmet-async";
 
 import "react-loading-skeleton/dist/skeleton.css";
 import "react-toastify/dist/ReactToastify.css";
-import { MovasaghLoading } from "./shared/movasaghLoading/index.tsx";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -21,15 +20,13 @@ const queryClient = new QueryClient({
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <Suspense fallback={<MovasaghLoading />}>
-      <BrowserRouter>
-        <QueryClientProvider client={queryClient}>
-          <HelmetProvider>
-            <App />
-            <ScrollToTop />
-          </HelmetProvider>
-        </QueryClientProvider>
-      </BrowserRouter>
-    </Suspense>
+    <BrowserRouter>
+      <QueryClientProvider client={queryClient}>
+        <HelmetProvider>
+          <App />
+          <ScrollToTop />
+        </HelmetProvider>
+      </QueryClientProvider>
+    </BrowserRouter>
   </React.StrictMode>
 );

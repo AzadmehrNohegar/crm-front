@@ -1,7 +1,8 @@
 import {
   AddUser,
   Buy,
-  ChevronLeft,
+  Calling,
+  ArrowLeft,
   Show,
   Swap,
   TwoUsers,
@@ -47,15 +48,15 @@ function Dashboard() {
           value={16}
         />
       </div>
-      <div className="border border-grey-200 rounded-t-custom">
+      <div className="border border-grey-200 rounded-custom">
         <div className="bg-secondary-50 rounded-t-custom px-5 py-4 flex items-center justify-between">
           <h4 className="text-base font-semibold">لیست سفارش</h4>
           <Link
             to="/orders"
-            className="btn btn-link btn-ghost decoration-transparent text-grey-800"
+            className="btn btn-link btn-sm btn-ghost decoration-transparent text-grey-800"
           >
             مشاهده همه
-            <ChevronLeft />
+            <ArrowLeft />
           </Link>
         </div>
         <div className="overflow-x-auto">
@@ -304,6 +305,293 @@ function Dashboard() {
               </tr>
             </tbody>
           </table>
+        </div>
+      </div>
+      <div className="flex items-start gap-x-4 w-full">
+        <div className="border border-grey-200 rounded-custom w-2/3">
+          <div className="bg-grey-50 rounded-t-custom px-5 py-4 flex items-center justify-between">
+            <h4 className="text-base font-semibold flex items-center gap-x-2">
+              <Calling />
+              <span>پشتیبانی</span>
+            </h4>
+            <Link
+              to="/orders"
+              className="btn btn-link btn-sm btn-ghost decoration-transparent text-grey-800"
+            >
+              مشاهده همه
+              <ArrowLeft />
+            </Link>
+          </div>
+          <Link to="/" className="py-2.5 px-5 flex flex-col gap-y-2.5">
+            <div className="flex items-ceter justify-between">
+              <span className="font-semibold text-sm">سارا احمدی</span>
+              <span className="font-light text-sm text-grey-600">
+                {new Intl.DateTimeFormat("fa-IR", {
+                  dateStyle: "short",
+                  timeStyle: "short",
+                }).format(new Date())}
+              </span>
+            </div>
+            <div className="flex items-ceter justify-between">
+              <span className="text-xs text-secondary">درحال بررسی</span>
+              <span className="font-light text-xs inline-block w-5 py-0.5 rounded-full bg-warning text-center">
+                2
+              </span>
+            </div>
+          </Link>
+          <Link to="/" className="py-2.5 px-5 flex flex-col gap-y-2.5">
+            <div className="flex items-ceter justify-between">
+              <span className="font-semibold text-sm">سارا احمدی</span>
+              <span className="font-light text-sm text-grey-600">
+                {new Intl.DateTimeFormat("fa-IR", {
+                  dateStyle: "short",
+                  timeStyle: "short",
+                }).format(new Date())}
+              </span>
+            </div>
+            <div className="flex items-ceter justify-between">
+              <span className="text-xs text-secondary">درحال بررسی</span>
+              <span className="font-light text-xs inline-block w-5 py-0.5 rounded-full bg-warning text-center">
+                2
+              </span>
+            </div>
+          </Link>
+          <Link to="/" className="py-2.5 px-5 flex flex-col gap-y-2.5">
+            <div className="flex items-ceter justify-between">
+              <span className="font-semibold text-sm">سارا احمدی</span>
+              <span className="font-light text-sm text-grey-600">
+                {new Intl.DateTimeFormat("fa-IR", {
+                  dateStyle: "short",
+                  timeStyle: "short",
+                }).format(new Date())}
+              </span>
+            </div>
+            <div className="flex items-ceter justify-between">
+              <span className="text-xs text-secondary">درحال بررسی</span>
+              <span className="font-light text-xs inline-block w-5 py-0.5 rounded-full bg-warning text-center">
+                2
+              </span>
+            </div>
+          </Link>
+          <Link to="/" className="py-2.5 px-5 flex flex-col gap-y-2.5">
+            <div className="flex items-ceter justify-between">
+              <span className="font-semibold text-sm">سارا احمدی</span>
+              <span className="font-light text-sm text-grey-600">
+                {new Intl.DateTimeFormat("fa-IR", {
+                  dateStyle: "short",
+                  timeStyle: "short",
+                }).format(new Date())}
+              </span>
+            </div>
+            <div className="flex items-ceter justify-between">
+              <span className="text-xs text-secondary">درحال بررسی</span>
+              <span className="font-light text-xs inline-block w-5 py-0.5 rounded-full bg-warning text-center">
+                2
+              </span>
+            </div>
+          </Link>
+        </div>
+        <div className="border border-grey-200 rounded-custom w-full">
+          <div className="bg-secondary-50 rounded-t-custom px-5 py-4 flex items-center justify-between">
+            <h4 className="text-base font-semibold">درخواست‌های ثبت نام</h4>
+            <Link
+              to="/orders"
+              className="btn btn-link btn-sm btn-ghost decoration-transparent text-grey-800"
+            >
+              مشاهده همه
+              <ArrowLeft />
+            </Link>
+          </div>
+          <div className="overflow-x-auto">
+            <table className="table table-auto text-start">
+              <thead className="bg-secondary-50">
+                <tr>
+                  <th align="right">
+                    <span className="inline-flex items-center text-sm text-grey-800">
+                      نام کاربر
+                      <button className="btn btn-ghost btn-square btn-sm">
+                        <Swap />
+                      </button>
+                    </span>
+                  </th>
+
+                  <th align="right">
+                    <span className="inline-flex items-center text-sm text-grey-800">
+                      نوع کاربر
+                      <button className="btn btn-ghost btn-square btn-sm">
+                        <Swap />
+                      </button>
+                    </span>
+                  </th>
+                  <th align="right">
+                    <span className="inline-flex items-center text-sm text-grey-800">
+                      زمان درخواست
+                      <button className="btn btn-ghost btn-square btn-sm">
+                        <Swap />
+                      </button>
+                    </span>
+                  </th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>سارا احمدی</td>
+                  <td>
+                    <span className="badge bg-success-50 text-success-700">
+                      حقیقی
+                    </span>
+                  </td>
+                  <td>
+                    {new Intl.DateTimeFormat("fa-IR", {
+                      dateStyle: "short",
+                      timeStyle: "short",
+                    }).format(new Date())}
+                  </td>
+                  <td align="left">
+                    <Link
+                      to="/orders/2"
+                      className="btn btn-ghost text-grey-800"
+                    >
+                      <Show />
+                    </Link>
+                  </td>
+                </tr>
+                <tr>
+                  <td>سارا احمدی</td>
+                  <td>
+                    <span className="badge bg-success-50 text-success-700">
+                      حقیقی
+                    </span>
+                  </td>
+                  <td>
+                    {new Intl.DateTimeFormat("fa-IR", {
+                      dateStyle: "short",
+                      timeStyle: "short",
+                    }).format(new Date())}
+                  </td>
+                  <td align="left">
+                    <Link
+                      to="/orders/2"
+                      className="btn btn-ghost text-grey-800"
+                    >
+                      <Show />
+                    </Link>
+                  </td>
+                </tr>
+                <tr>
+                  <td>سارا احمدی</td>
+                  <td>
+                    <span className="badge bg-success-50 text-success-700">
+                      حقیقی
+                    </span>
+                  </td>
+                  <td>
+                    {new Intl.DateTimeFormat("fa-IR", {
+                      dateStyle: "short",
+                      timeStyle: "short",
+                    }).format(new Date())}
+                  </td>
+                  <td align="left">
+                    <Link
+                      to="/orders/2"
+                      className="btn btn-ghost text-grey-800"
+                    >
+                      <Show />
+                    </Link>
+                  </td>
+                </tr>
+                <tr>
+                  <td>سارا احمدی</td>
+                  <td>
+                    <span className="badge bg-success-50 text-success-700">
+                      حقیقی
+                    </span>
+                  </td>
+                  <td>
+                    {new Intl.DateTimeFormat("fa-IR", {
+                      dateStyle: "short",
+                      timeStyle: "short",
+                    }).format(new Date())}
+                  </td>
+                  <td align="left">
+                    <Link
+                      to="/orders/2"
+                      className="btn btn-ghost text-grey-800"
+                    >
+                      <Show />
+                    </Link>
+                  </td>
+                </tr>
+                <tr>
+                  <td>سارا احمدی</td>
+                  <td>
+                    <span className="badge bg-success-50 text-success-700">
+                      حقیقی
+                    </span>
+                  </td>
+                  <td>
+                    {new Intl.DateTimeFormat("fa-IR", {
+                      dateStyle: "short",
+                      timeStyle: "short",
+                    }).format(new Date())}
+                  </td>
+                  <td align="left">
+                    <Link
+                      to="/orders/2"
+                      className="btn btn-ghost text-grey-800"
+                    >
+                      <Show />
+                    </Link>
+                  </td>
+                </tr>
+                <tr>
+                  <td>سارا احمدی</td>
+                  <td>
+                    <span className="badge bg-success-50 text-success-700">
+                      حقیقی
+                    </span>
+                  </td>
+                  <td>
+                    {new Intl.DateTimeFormat("fa-IR", {
+                      dateStyle: "short",
+                      timeStyle: "short",
+                    }).format(new Date())}
+                  </td>
+                  <td align="left">
+                    <Link
+                      to="/orders/2"
+                      className="btn btn-ghost text-grey-800"
+                    >
+                      <Show />
+                    </Link>
+                  </td>
+                </tr>
+                <tr>
+                  <td>سارا احمدی</td>
+                  <td>
+                    <span className="badge bg-success-50 text-success-700">
+                      حقیقی
+                    </span>
+                  </td>
+                  <td>
+                    {new Intl.DateTimeFormat("fa-IR", {
+                      dateStyle: "short",
+                      timeStyle: "short",
+                    }).format(new Date())}
+                  </td>
+                  <td align="left">
+                    <Link
+                      to="/orders/2"
+                      className="btn btn-ghost text-grey-800"
+                    >
+                      <Show />
+                    </Link>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>

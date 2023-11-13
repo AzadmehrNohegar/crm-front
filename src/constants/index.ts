@@ -1,6 +1,4 @@
-export const MOBILE_FORMAT = new RegExp(
-  /09(1[0-9]|3[1-9]|2[1-9])-?[0-9]{3}-?[0-9]{4}/
-);
+export const MOBILE_FORMAT = new RegExp(/((0?9)|(\+?989))\d{9}/g);
 
 export const RE_DIGIT = new RegExp(/^\d+$/);
 

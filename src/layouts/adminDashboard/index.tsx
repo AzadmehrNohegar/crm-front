@@ -1,8 +1,9 @@
 import { Outlet } from "react-router-dom";
 import { AdminDashboardHeader } from "./partials/header";
 import { AdminDashboardSidebar } from "./partials/sidebar";
-import { Fragment } from "react";
+import { Fragment, Suspense } from "react";
 import { Helmet } from "react-helmet-async";
+import { MovasaghLoading } from "@/shared/movasaghLoading";
 
 function AdminDashboardLayout() {
   return (
@@ -15,7 +16,9 @@ function AdminDashboardLayout() {
         <main className="w-5/6 h-screen">
           <AdminDashboardHeader />
           <section className="p-5 h-container overflow-y-auto">
-            <Outlet />
+            <Suspense fallback={<MovasaghLoading />}>
+              <Outlet />
+            </Suspense>
           </section>
         </main>
       </section>

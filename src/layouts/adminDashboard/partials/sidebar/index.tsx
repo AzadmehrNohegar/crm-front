@@ -1,4 +1,4 @@
-import { Fragment } from "react";
+import { Fragment, useRef } from "react";
 import {
   Calling,
   Home,
@@ -13,9 +13,12 @@ import { useMutation } from "react-query";
 import { postAccountAuthLogout } from "@/api/account";
 import { useAuthStore } from "@/store/auth";
 import { toast } from "react-toastify";
+import { useOnClickOutside } from "usehooks-ts";
 
 function AdminDashboardSidebar() {
   const navigate = useNavigate();
+
+  const dropdownRef = useRef<HTMLDetailsElement>(null);
 
   const { refresh, logoutUser } = useAuthStore();
 
@@ -40,7 +43,9 @@ function AdminDashboardSidebar() {
       },
     });
 
-  console.log(isCurrentEndpoint("products"));
+  useOnClickOutside(dropdownRef, () =>
+    dropdownRef.current?.removeAttribute("open")
+  );
 
   return (
     <aside className="w-1/6 bg-white relative z-20 h-full shadow-ev3">
@@ -71,6 +76,7 @@ function AdminDashboardSidebar() {
               "collapse rounded-lg transition-colors flex",
               !isCurrentEndpoint("/products") && "hover:bg-secondary-100"
             )}
+            ref={dropdownRef}
           >
             <summary
               className={clsx(

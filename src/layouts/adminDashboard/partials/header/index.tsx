@@ -32,9 +32,12 @@ function AdminDashboardHeader() {
         )}
       </Link>
 
-      <button className="btn btn-ghost bg-secondary-50 btn-square ms-auto">
+      <Link
+        to="/settings"
+        className="btn btn-ghost bg-secondary-50 btn-square ms-auto"
+      >
         <Setting />
-      </button>
+      </Link>
       <button className="btn btn-ghost bg-secondary-50 btn-square">
         <Notification />
       </button>
