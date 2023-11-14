@@ -6,6 +6,7 @@ import {
   ChevronDown,
   Paper,
   TwoUsers,
+  Bag,
 } from "react-iconly";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import clsx from "clsx";
@@ -72,20 +73,22 @@ function AdminDashboardSidebar() {
         </li>
         <li className="px-5">
           <details
-            className={clsx(
-              "collapse rounded-lg transition-colors flex",
-              !isCurrentEndpoint("/products") && "hover:bg-secondary-100"
-            )}
+            className={clsx("collapse rounded-lg transition-colors flex")}
             ref={dropdownRef}
           >
             <summary
               className={clsx(
-                "items-center justify-between w-full px-5 py-4 max-w-full cursor-pointer rounded-lg",
-                isCurrentEndpoint("/products") && "bg-secondary text-white"
+                "items-center w-full px-5 py-4 max-w-full cursor-pointer rounded-lg gap-x-2 transition-colors",
+                isCurrentEndpoint("/products") &&
+                  "bg-secondary text-white hover:bg-secondary-800",
+                !isCurrentEndpoint("/products") && "hover:bg-secondary-100"
               )}
             >
+              <Bag filled={isCurrentEndpoint("/products")} />
               محصول
-              <ChevronDown />
+              <span className="inline-block ms-auto">
+                <ChevronDown />
+              </span>
             </summary>
             <div className="collapse-content transition-colors">
               <ul
@@ -95,7 +98,7 @@ function AdminDashboardSidebar() {
                 <li className="relative before:absolute before:w-5 before:h-full before:border-r-2 before:border-r-grey-300 last-of-type:before:border-r-0">
                   <NavLink
                     end
-                    to="/products"
+                    to="/products/management"
                     className={({ isActive }) =>
                       clsx(
                         "py-4 focus:bg-secondary-50 rounded-lg relative before:absolute before:w-5 before:h-full before:top-0 before:border-r-2 before:border-r-grey-300 before:rounded-br-xl",

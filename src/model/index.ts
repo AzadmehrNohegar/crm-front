@@ -39,6 +39,9 @@ export type category = {
   id: number;
   name: string;
   image: string;
+  is_active: boolean;
+  parent_category: number | null;
+  categories?: category[];
 };
 
 export type brand = {
@@ -221,4 +224,9 @@ export const NOTIFICATION_VARIANT: IDictionary<string> = {
   ORDER: "bg-primary text-white",
   NOTICE: "bg-danger text-white",
   PRODUCT: "bg-secondary text-white",
+};
+
+export const IS_ACTIVE: IDictionary<string> = {
+  true: "فعال",
+  false: "غیرفعال",
 };

@@ -133,7 +133,9 @@ function Dashboard() {
                 </td>
                 <td>
                   <span className="text-success-400">
-                    <span className="badge badge-secondary">در حال تامین</span>
+                    <span className="badge bg-secondary-50 text-secondary">
+                      در حال تامین
+                    </span>
                   </span>
                 </td>
                 <td align="left">
@@ -156,7 +158,9 @@ function Dashboard() {
                 </td>
                 <td>
                   <span className="text-success-400">
-                    <span className="badge badge-secondary">در حال تامین</span>
+                    <span className="badge bg-secondary-50 text-secondary">
+                      در حال تامین
+                    </span>
                   </span>
                 </td>
                 <td align="left">
@@ -179,7 +183,9 @@ function Dashboard() {
                 </td>
                 <td>
                   <span className="text-success-400">
-                    <span className="badge badge-secondary">در حال تامین</span>
+                    <span className="badge bg-secondary-50 text-secondary">
+                      در حال تامین
+                    </span>
                   </span>
                 </td>
                 <td align="left">
@@ -202,7 +208,9 @@ function Dashboard() {
                 </td>
                 <td>
                   <span className="text-success-400">
-                    <span className="badge badge-secondary">در حال تامین</span>
+                    <span className="badge bg-secondary-50 text-secondary">
+                      در حال تامین
+                    </span>
                   </span>
                 </td>
                 <td align="left">
@@ -225,7 +233,9 @@ function Dashboard() {
                 </td>
                 <td>
                   <span className="text-success-400">
-                    <span className="badge badge-secondary">در حال تامین</span>
+                    <span className="badge bg-secondary-50 text-secondary">
+                      در حال تامین
+                    </span>
                   </span>
                 </td>
                 <td align="left">
@@ -248,7 +258,9 @@ function Dashboard() {
                 </td>
                 <td>
                   <span className="text-success-400">
-                    <span className="badge badge-secondary">در حال تامین</span>
+                    <span className="badge bg-secondary-50 text-secondary">
+                      در حال تامین
+                    </span>
                   </span>
                 </td>
                 <td align="left">
@@ -271,7 +283,9 @@ function Dashboard() {
                 </td>
                 <td>
                   <span className="text-success-400">
-                    <span className="badge badge-secondary">در حال تامین</span>
+                    <span className="badge bg-secondary-50 text-secondary">
+                      در حال تامین
+                    </span>
                   </span>
                 </td>
                 <td align="left">
@@ -294,7 +308,9 @@ function Dashboard() {
                 </td>
                 <td>
                   <span className="text-success-400">
-                    <span className="badge badge-secondary">در حال تامین</span>
+                    <span className="badge bg-secondary-50 text-secondary">
+                      در حال تامین
+                    </span>
                   </span>
                 </td>
                 <td align="left">

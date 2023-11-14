@@ -16,7 +16,6 @@ function DashboardBrandProducts() {
     () =>
       getProductBrand({
         params: {
-          return_parents: true,
           page_size: 10,
         },
       }),

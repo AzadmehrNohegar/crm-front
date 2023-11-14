@@ -24,6 +24,12 @@ export const getProductCategory = async ({
   return await http.get("/product/category/", { params });
 };
 
+export const deleteProductCategoryById = async ({
+  id,
+}: AxiosCustomRequestConfig) => {
+  return await http.delete(`/product/category/${id}/`);
+};
+
 export const getProductBrand = async ({ params }: AxiosCustomRequestConfig) => {
   return await http.get("/product/brand/", { params });
 };

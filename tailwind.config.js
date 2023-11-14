@@ -145,7 +145,7 @@ export default {
           primary: "#d12e36",
           "primary-focus": "#922026",
           "primary-content": "#F7F7F8",
-          secondary: "#004bcc",
+          secondary: "#005eff",
           "secondary-focus": "#002f80",
           "secondary-content": "#F7F7F8",
           accent: "#f2f2f2",

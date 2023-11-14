@@ -9,6 +9,7 @@ function DashboardCategoryProducts() {
     getProductCategory({
       params: {
         page_size: 10,
+        return_parents: true,
       },
     })
   );
