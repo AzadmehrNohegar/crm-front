@@ -118,7 +118,6 @@ function CategoriesTableRow({
 
 function CategoriesTable({ isLoading, categories }: ICategoriesTableProps) {
   const [searchParams, setSearchParams] = useSearchParams();
-  console.log(categories);
   const handleSort = (val: string) => {
     if (searchParams.get("ordering") === val) {
       searchParams.set("ordering", `-${val}`);
@@ -171,10 +170,7 @@ function CategoriesTable({ isLoading, categories }: ICategoriesTableProps) {
               <td>
                 <Skeleton />
               </td>
-              <td>
-                <Skeleton />
-              </td>
-              <td>
+              <td className="w-full">
                 <Skeleton />
               </td>
               <td>

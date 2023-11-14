@@ -1,8 +1,8 @@
 import { Minus } from "@/assets/icons/Minus";
+import { Plus } from "@/assets/icons/Plus";
 import { Transition } from "@headlessui/react";
 import clsx from "clsx";
 import React, { useState } from "react";
-import { Plus } from "react-iconly";
 
 interface ICollapseWrapperProps {
   title: string;
@@ -20,7 +20,7 @@ function CollapseWrapper({
   const [isOpen, setIsOpen] = useState(true);
 
   return (
-    <div className={clsx("overflow-y-hidden", containerClassName)}>
+    <div className={containerClassName}>
       <button
         type="button"
         onClick={() => setIsOpen((prevState) => !prevState)}

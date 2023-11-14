@@ -1,13 +1,15 @@
 import { lazy } from "react";
 import { Route, Routes } from "react-router-dom";
 
-const ProductsCategoriesList = lazy(() => import("./pages/list"));
+const ProductsCategoriesListPage = lazy(() => import("./pages/list"));
+const ProductsCategoriesCreatePage = lazy(() => import("./pages/create"));
 
 function ProductsCategories() {
   return (
     <Routes>
-      <Route index element={<ProductsCategoriesList />} />
-      <Route path="create" element={<>crteate</>} />
+      <Route index element={<ProductsCategoriesListPage />} />
+      <Route path="create" element={<ProductsCategoriesCreatePage />} />
+      <Route path=":category" element={<ProductsCategoriesCreatePage />} />
     </Routes>
   );
 }

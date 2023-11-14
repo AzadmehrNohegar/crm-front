@@ -74,13 +74,13 @@ function ProductCard({
   return (
     <div
       className={clsx(
-        "relative w-fit min-w-[250px] min-h-[281px]",
+        "relative w-fit min-w-[250px] min-h-[281px] shadow-ev2 hover:shadow-ev3",
         containerClassName
       )}
     >
       <Link
         to={`/products/${id}`}
-        className="shadow-ev2 w-full h-full rounded-custom py-5 px-4 flex flex-col gap-y-5 bg-white"
+        className="w-full h-full rounded-custom py-5 px-4 flex flex-col gap-y-5 bg-white"
       >
         <div className="flex items-center gap-x-4 justify-between">
           <img

@@ -24,6 +24,29 @@ export const getProductCategory = async ({
   return await http.get("/product/category/", { params });
 };
 
+export const getProductCategoryById = async ({
+  id,
+}: AxiosCustomRequestConfig) => {
+  return await http.get(`/product/category/${id}/`);
+};
+
+export const postProductCategory = async ({
+  body,
+}: AxiosCustomRequestConfig) => {
+  return await http.post("/product/category/", body, {
+    headers: { "Content-Type": "multipart/form-data" },
+  });
+};
+
+export const putProductCategoryById = async ({
+  body,
+  id,
+}: AxiosCustomRequestConfig) => {
+  return await http.put(`/product/category/${id}/`, body, {
+    headers: { "Content-Type": "multipart/form-data" },
+  });
+};
+
 export const deleteProductCategoryById = async ({
   id,
 }: AxiosCustomRequestConfig) => {

@@ -52,7 +52,7 @@ function DashboardBrandProducts() {
             <Link
               to={`products?brand__id=${item.id}`}
               key={item.id}
-              className="p-5 flex flex-col gap-y-2 shadow-ev2 basis-modified6 w-full aspect-square justify-evenly rounded-custom"
+              className="p-5 flex flex-col gap-y-2 shadow-ev2 hover:shadow-ev3 basis-modified6 w-full aspect-square justify-evenly rounded-custom"
             >
               <img
                 src={item.image}

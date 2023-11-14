@@ -59,7 +59,6 @@ function AccountEdit({ resetForm }: IAccountEditProps) {
   });
 
   const onSubmit = (values: IAccountEditForm) => {
-    console.log(dirtyFields);
     updateUser.mutate({
       body: {
         ...values,

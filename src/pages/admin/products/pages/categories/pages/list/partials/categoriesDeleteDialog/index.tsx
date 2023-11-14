@@ -40,13 +40,13 @@ function CategoriesDeleteDialog({
         </span>
         <div className="flex justify-end gap-x-4 mt-auto">
           <button
-            type="button"
             onClick={closeModal}
             className="btn btn-link decoration-transparent btn-ghost min-w-[160px]"
           >
             انصراف
           </button>
           <button
+            type="button"
             className="btn btn-error min-w-[160px]"
             onClick={handleDeleteCategory}
           >

@@ -46,8 +46,6 @@ function CustomerDashboardHeader() {
 
   const { pathname } = useLocation();
 
-  console.log(search);
-
   return (
     <header className="px-5 sticky top-0 bg-white w-full gap-x-3 z-40">
       <div className="flex bg-white w-full py-5 items-center border-b border-b-grey-200 gap-x-3">

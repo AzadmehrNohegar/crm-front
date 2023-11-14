@@ -8,7 +8,7 @@ function Products() {
   return (
     <Routes>
       <Route index element={<Navigate to="management" />} />
-      <Route path="categories" element={<ProductsCategoriesPage />} />
+      <Route path="categories/*" element={<ProductsCategoriesPage />} />
       <Route path="management/*" element={<ProductsManagementPage />} />
     </Routes>
   );
