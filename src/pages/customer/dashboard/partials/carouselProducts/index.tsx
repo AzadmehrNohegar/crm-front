@@ -5,6 +5,7 @@ import { ArrowLeft } from "react-iconly";
 import Skeleton from "react-loading-skeleton";
 import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
+import { Autoplay } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { useMediaQuery } from "usehooks-ts";
 
@@ -28,7 +29,17 @@ function DashboardCarouselProducts() {
   if (isLoading) return <Skeleton height={278} />;
 
   return (
-    <Swiper init={isMounted} watchOverflow slidesPerView={1}>
+    <Swiper
+      init={isMounted}
+      watchOverflow
+      slidesPerView={1}
+      autoplay={{
+        delay: 5000,
+        disableOnInteraction: true,
+        pauseOnMouseEnter: true,
+      }}
+      modules={[Autoplay]}
+    >
       {dashboardCarousel?.data.results.map((item: carousel) => (
         <SwiperSlide key={item.id} className="px-px">
           <div className="relative">
