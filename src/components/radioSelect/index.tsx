@@ -5,6 +5,7 @@ import { Fragment } from "react";
 import clsx from "clsx";
 
 interface IListProps {
+  variant?: "primary" | "secondary";
   containerClassName?: string;
   options: listOption[];
   selected: listOption | null;
@@ -18,6 +19,7 @@ function RadioSelect({
   selected,
   setSelected,
   label,
+  variant = "primary",
 }: IListProps) {
   return (
     <Listbox value={selected} by="id" onChange={setSelected}>
@@ -55,7 +57,11 @@ function RadioSelect({
                 key={option.id}
                 className={({ active }) =>
                   `relative flex items-center gap-x-4 cursor-default select-none py-2 pl-10 pr-4 ${
-                    active ? "bg-primary-100 text-primary-900" : "text-grey-900"
+                    active
+                      ? variant === "secondary"
+                        ? "bg-secondary-100 text-secondary-900"
+                        : "bg-primary-100 text-primary-900"
+                      : "text-grey-900"
                   }`
                 }
                 value={option}
@@ -66,6 +72,10 @@ function RadioSelect({
                       className={clsx(
                         "w-4 h-4 rounded-full border relative",
                         selected &&
+                          variant === "secondary" &&
+                          "border-secondary before:absolute before:w-[80%] before:h-[80%] before:inset-[10%] before:bg-secondary before:rounded-full",
+                        selected &&
+                          variant === "primary" &&
                           "border-primary before:absolute before:w-[80%] before:h-[80%] before:inset-[10%] before:bg-primary before:rounded-full",
                         !selected && "border-grey-200"
                       )}

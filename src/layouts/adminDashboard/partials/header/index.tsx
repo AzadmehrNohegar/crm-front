@@ -38,9 +38,12 @@ function AdminDashboardHeader() {
       >
         <Setting />
       </Link>
-      <button className="btn btn-ghost bg-secondary-50 btn-square">
+      <Link
+        to="/notification"
+        className="btn btn-ghost bg-secondary-50 btn-square"
+      >
         <Notification />
-      </button>
+      </Link>
     </header>
   );
 }

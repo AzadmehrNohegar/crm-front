@@ -8,6 +8,7 @@ const DashboardPage = lazy(() => import("./dashboard"));
 const AccountPage = lazy(() => import("./account"));
 const SettingsPage = lazy(() => import("./settings"));
 const ProductsPage = lazy(() => import("./products"));
+const NotificationPage = lazy(() => import("./notification"));
 
 function AdminRoutes() {
   return (
@@ -18,6 +19,7 @@ function AdminRoutes() {
           <Route path="account" element={<AccountPage />} />
           <Route path="settings" element={<SettingsPage />} />
           <Route path="products/*" element={<ProductsPage />} />
+          <Route path="notification/*" element={<NotificationPage />} />
           <Route path="orders/*" element={<>orders</>} />
           <Route path="users/*" element={<>users</>} />
           <Route path="support/*" element={<>support</>} />

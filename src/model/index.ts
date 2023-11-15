@@ -27,6 +27,8 @@ export type status_types = "success" | "pending" | "failed";
 
 export type notification_types = "USER" | "ORDER" | "PRODUCT" | "NOTICE";
 
+export type user_type = "ALL" | "JURIDICAL" | "REAL";
+
 export type card_types =
   | "primary"
   | "secondary"
@@ -177,6 +179,7 @@ export type notification = {
   file: string | null;
   type: notification_types;
   created_at: string;
+  user_type: user_type;
 };
 
 export const ORDER_TYPES: IDictionary<string> = {
@@ -229,4 +232,17 @@ export const NOTIFICATION_VARIANT: IDictionary<string> = {
 export const IS_ACTIVE: IDictionary<string> = {
   true: "فعال",
   false: "غیرفعال",
+};
+
+export const USER_TYPES: IDictionary<string> = {
+  ALL: "همه",
+  REAL: "حقیقی",
+  JURIDICAL: "حقوقی",
+};
+
+export const NOTIFICATION_TYPE_DB: IDictionary<string> = {
+  USER: "فعالیت کاربر",
+  ORDER: "فرایند سفارش",
+  PRODUCT: "اطلاعات محصول",
+  NOTICE: "اعلانات کاربر",
 };

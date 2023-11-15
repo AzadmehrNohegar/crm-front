@@ -229,6 +229,7 @@ function ProductsCategoriesCreate() {
             name="is_active"
             render={({ field: { onChange, value } }) => (
               <RadioSelect
+                variant="secondary"
                 containerClassName="w-full"
                 options={IS_ACTIVE_OPTIONS}
                 selected={{
@@ -247,6 +248,7 @@ function ProductsCategoriesCreate() {
             name="parent_category"
             render={({ field: { onChange, value } }) => (
               <RadioSelect
+                variant="secondary"
                 containerClassName="w-full"
                 options={[
                   {
