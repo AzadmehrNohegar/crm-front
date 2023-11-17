@@ -152,7 +152,7 @@ function SupportList() {
         </Link>
       </div>
       {matches ? (
-        <div className="mt-6 mb-36 xl:mb-28">
+        <div className="mt-6 mb-36 xl:mb-24">
           <Input
             className="input input-bordered h-10 ms-auto input-ghost max-w-full w-96"
             containerClassName="my-4"
@@ -176,7 +176,7 @@ function SupportList() {
           </div>
         </div>
       ) : (
-        <div className="mt-6 mb-36 xl:mb-28">
+        <div className="mt-6 mb-36 xl:mb-24">
           <div className="flex items-center bg-grey-50 rounded-t-custom justify-between px-4">
             <h3 className="text-base w-full">لیست تیکت پشتیبانی</h3>
             <Input

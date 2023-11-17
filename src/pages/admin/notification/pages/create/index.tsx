@@ -158,8 +158,6 @@ function NotificationCreate() {
     });
   };
 
-  console.log(errors);
-
   return (
     <Fragment>
       <form
@@ -313,21 +311,21 @@ function NotificationCreate() {
             </button>
           )}
         </div>
-        <NotificationCreateConfirmDialog
-          isOpen={isNotificationCreateConfirmDialogOpen}
-          closeModal={() => setIsNotificationCreateConfirmDialogOpen(false)}
-          title={watch("title")}
-          onConfirm={onSubmit}
-          isLoading={createNotification.isLoading}
-        />
-        <NotificationEditConfirmDialog
-          isOpen={isNotificationEditConfirmDialogOpen}
-          closeModal={() => setIsNotificationEditConfirmDialogOpen(false)}
-          title={watch("title")}
-          onConfirm={onSubmitEdit}
-          isLoading={editNotification.isLoading}
-        />
       </form>
+      <NotificationCreateConfirmDialog
+        isOpen={isNotificationCreateConfirmDialogOpen}
+        closeModal={() => setIsNotificationCreateConfirmDialogOpen(false)}
+        title={watch("title")}
+        onConfirm={onSubmit}
+        isLoading={createNotification.isLoading}
+      />
+      <NotificationEditConfirmDialog
+        isOpen={isNotificationEditConfirmDialogOpen}
+        closeModal={() => setIsNotificationEditConfirmDialogOpen(false)}
+        title={watch("title")}
+        onConfirm={onSubmitEdit}
+        isLoading={editNotification.isLoading}
+      />
     </Fragment>
   );
 }

@@ -1,5 +1,6 @@
 import { postAccountAuthRefreshToken } from "@/api/account";
 import { user_roles } from "@/model";
+import { AxiosResponse } from "axios";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
@@ -30,8 +31,8 @@ const useAuthStore = create<IAuthStore>()(
             refresh: get().refresh,
           },
         })
-          .then((res: unknown) => {
-            const { access } = res as { access: string };
+          .then((res: AxiosResponse) => {
+            const { access } = res?.data as { access: string };
             set({ access, isAuthenticated: true });
             resolve();
           })

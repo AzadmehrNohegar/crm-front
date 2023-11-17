@@ -158,7 +158,7 @@ function NotificationList() {
           </Link>
         </div>
         {matches ? (
-          <div className="mt-6 mb-36 xl:mb-28">
+          <div className="mt-6 mb-36 xl:mb-24">
             <div className="rounded-custom border border-grey-200">
               <div className="flex items-center bg-secondary-50 rounded-t-custom justify-between p-4 xl:py-0">
                 <h3 className="text-sm xl:text-base w-full py-5">
@@ -172,7 +172,7 @@ function NotificationList() {
             </div>
           </div>
         ) : (
-          <div className="mt-6 mb-36 xl:mb-28">
+          <div className="mt-6 mb-36 xl:mb-24">
             <div className="flex items-center bg-secondary-50 rounded-t-custom justify-between p-4 xl:py-0">
               <h3 className="text-sm xl:text-base w-full py-5">
                 لیست پیام سیستم

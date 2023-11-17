@@ -4,7 +4,7 @@ import { Fragment, useState } from "react";
 import { Filter2, Plus, Search } from "react-iconly";
 import { useQuery } from "react-query";
 import { Link, useSearchParams } from "react-router-dom";
-import { useMediaQuery } from "usehooks-ts";
+import { useDebounce, useMediaQuery } from "usehooks-ts";
 import { CategoriesTable } from "./partials/categoriesTable";
 import { Popover, PopoverButton } from "@/components/popover";
 import { Checkbox } from "@/components/checkbox";
@@ -13,16 +13,20 @@ function ProductsCategoriesList() {
   const matches = useMediaQuery("(max-width: 1280px)");
 
   const [search, setSearch] = useState("");
+  const debouncedSearch = useDebounce(search, 200);
 
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const { data: categories, isLoading } = useQuery("product-categories", () =>
-    getProductCategory({
-      params: {
-        page_size: 20,
-        return_parents: true,
-      },
-    })
+  const { data: categories, isLoading } = useQuery(
+    ["product-categories", debouncedSearch],
+    () =>
+      getProductCategory({
+        params: {
+          page_size: 20,
+          return_parents: true,
+          search: debouncedSearch,
+        },
+      })
   );
 
   return (
@@ -106,7 +110,7 @@ function ProductsCategoriesList() {
           </Link>
         </div>
         {matches ? (
-          <div className="mt-6 mb-36 xl:mb-28">
+          <div className="mt-6 mb-36 xl:mb-24">
             <div className="rounded-custom border border-grey-200">
               <div className="flex items-center bg-secondary-50 rounded-t-custom justify-between p-4 xl:py-0">
                 <h3 className="text-sm xl:text-base w-full py-5">

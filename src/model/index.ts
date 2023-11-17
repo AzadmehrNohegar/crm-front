@@ -9,7 +9,7 @@ export interface IExtendedDialogProps {
 
 export type placement = "center" | "top";
 
-export type size = "standard" | "fit";
+export type size = "standard" | "fit" | "large";
 
 export type login_method = "otp" | "password";
 
@@ -28,6 +28,8 @@ export type status_types = "success" | "pending" | "failed";
 export type notification_types = "USER" | "ORDER" | "PRODUCT" | "NOTICE";
 
 export type user_type = "ALL" | "JURIDICAL" | "REAL";
+
+export type product_type = "PACKING" | "WHOLESALE";
 
 export type card_types =
   | "primary"
@@ -75,11 +77,12 @@ export type product = {
   inventory: number;
   name: string;
   description: string;
-  type: string;
+  type: product_type;
   image: string;
   is_suggested: boolean;
   category: category;
   brand: number;
+  total_inventory: number;
 };
 
 export type cart_item = {
@@ -182,6 +185,40 @@ export type notification = {
   user_type: user_type;
 };
 
+export type customer = {
+  id: number;
+  wallet: number;
+  contract_type: contract_types;
+  user_national_code: string;
+  company_name: string | null;
+  company_national_id: string | null;
+  company_economic_code: string | null;
+  address: string | null;
+  postal_code: string | null;
+  province: string | null;
+  city: string | null;
+  account: number;
+};
+
+export type account = {
+  id: number;
+  customer: customer;
+  password: string;
+  last_login: string | null;
+  first_name: string;
+  last_name: string;
+  email: string;
+  is_staff: boolean;
+  is_active: boolean;
+  date_joined: string;
+  username: string;
+  phone_number: string;
+  role: user_roles;
+  is_verified: boolean;
+  created_at: string;
+  updated_at: string;
+};
+
 export const ORDER_TYPES: IDictionary<string> = {
   completed: "موفق",
   pending: "درحال بررسی",
@@ -245,4 +282,9 @@ export const NOTIFICATION_TYPE_DB: IDictionary<string> = {
   ORDER: "فرایند سفارش",
   PRODUCT: "اطلاعات محصول",
   NOTICE: "اعلانات کاربر",
+};
+
+export const PRODUCT_TYPE: IDictionary<string> = {
+  WHOLESALE: "محصول عمده",
+  PACKING: "محصول بسته‌ای",
 };

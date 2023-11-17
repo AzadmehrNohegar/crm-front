@@ -1,48 +1,37 @@
-import { getPaymentWalletTransaction } from "@/api/payment";
+import { getTicketTickets } from "@/api/ticket";
 import { Plus } from "@/assets/icons/Plus";
 import { Checkbox } from "@/components/checkbox";
-import { DatePicker } from "@/components/datepicker";
 import { Input } from "@/components/input";
 import { Popover, PopoverButton } from "@/components/popover";
-import { Pagination } from "@/shared/pagination";
 import { Fragment, useState } from "react";
-import { Filter2, Search, Wallet as WalletIcon } from "react-iconly";
+import { Filter2, Search } from "react-iconly";
 import { useQuery } from "react-query";
-import { useLocation, useSearchParams } from "react-router-dom";
+import { Link, useLocation, useSearchParams } from "react-router-dom";
 import { useDebounce, useMediaQuery } from "usehooks-ts";
-import { CreateWalletTransactionDialog } from "./partials/createWalletTransactionDialog";
-import { getAccountMyProfile } from "@/api/account";
-import { WalletTable } from "./partials/walletTable";
-import Skeleton from "react-loading-skeleton";
-import { MobileWalletTable } from "./partials/mobileWalletTable";
+import { TicketsTable } from "./partials/ticketsTable";
+import { Pagination } from "@/shared/pagination";
+import { DatePicker } from "@/components/datepicker";
+import { MobileTicketsTable } from "./partials/mobileTicketsTable";
 
-function Wallet() {
+function SupportList() {
   const [searchParams, setSearchParams] = useSearchParams();
   const { search: locationSearch } = useLocation();
-
   const matches = useMediaQuery("(max-width: 1280px)");
-
-  const { data: userProfile, isLoading: isUserProfileLoading } = useQuery(
-    "user-profile",
-    () => getAccountMyProfile()
-  );
-
-  const [
-    isCreateWalletTransactionDialogOpen,
-    setIsCreateWalletTransactionDialogOpen,
-  ] = useState(false);
 
   const [search, setSearch] = useState("");
   const debouncedSearch = useDebounce(search, 200);
 
-  const { data: walletTransactions, isLoading } = useQuery(
-    ["wallet-transactions", debouncedSearch, locationSearch],
+  const { data: ticketsPagination, isLoading } = useQuery(
+    ["tickets-transactions", debouncedSearch, locationSearch],
     () =>
-      getPaymentWalletTransaction({
+      getTicketTickets({
         params: {
           search: debouncedSearch,
           page: searchParams.get("page") || 1,
           page_size: searchParams.get("page_size") || 10,
+          ...(searchParams.get("status")
+            ? { status: searchParams.get("status") || "" }
+            : {}),
           ...(searchParams.get("ordering")
             ? { ordering: searchParams.get("ordering") || "" }
             : {}),
@@ -53,24 +42,45 @@ function Wallet() {
       })
   );
 
+  if (
+    !isLoading &&
+    ticketsPagination?.data.results.length === 0 &&
+    searchParams.toString() === ""
+  )
+    return (
+      <div className="h-innerContainer flex flex-col items-center justify-center gap-y-4 max-w-3xl mx-auto">
+        <img src="/images/support-empty-1.png" alt="support empty" />
+        <span className="text-xl">هنوز تیکت پشتیبانی‌ای ثبت نشده است.</span>
+        <Link to="./create" className="btn btn-secondary btn-block">
+          <Plus />
+          تیکت پشتیبانی جدید
+        </Link>
+      </div>
+    );
+
   return (
     <Fragment>
       <div className="relative">
-        <div className="flex flex-wrap xl:flex-nowrap items-center w-full gap-4 relative">
-          <span className="text-sm basis-full xl:basis-auto inline-flex bg-secondary-100 items-center py-3 px-4 rounded-xl text-grey-600 gap-x-2 me-auto">
-            <WalletIcon />
-            موجودی کیف پول
-            <span className="inline-flex items-center gap-x-2 ms-auto xl:ms-10">
-              <strong className="text-grey-800">
-                {isUserProfileLoading ? (
-                  <Skeleton height={16} width={56} inline />
-                ) : (
-                  Number(userProfile?.data.customer?.wallet).toLocaleString()
-                )}{" "}
-              </strong>
-              تومان
-            </span>
-          </span>
+        <div className="flex items-center w-full gap-x-4 relative justify-between">
+          <Input
+            name="search"
+            placeholder="جست و جو..."
+            containerClassName="w-fit relative hidden xl:block me-auto"
+            className="input input-bordered w-96"
+            block={false}
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            onFocus={() => setSearch("")}
+            iconEnd={
+              <button
+                type="button"
+                className="absolute end-2 inset-y-auto btn btn-secondary btn-sm"
+              >
+                پیدا کن
+                <Search />
+              </button>
+            }
+          />
           <Popover
             popoverBtn={
               <PopoverButton className="btn btn-warning btn-square text-grey-800">
@@ -106,12 +116,13 @@ function Wallet() {
                   وضعیت:
                 </span>
                 <Checkbox
-                  label="موفق"
+                  label="جدید"
+                  className="checkbox-accent"
                   containerClassName="w-fit"
-                  checked={searchParams.get("status") === "success"}
+                  checked={searchParams.get("status") === "new"}
                   onChange={(e) => {
                     if (e.currentTarget.checked) {
-                      searchParams.set("status", "success");
+                      searchParams.set("status", "new");
                       setSearchParams(searchParams);
                     } else {
                       searchParams.delete("status");
@@ -121,11 +132,12 @@ function Wallet() {
                 />
                 <Checkbox
                   label="درحال بررسی"
+                  className="checkbox-accent"
                   containerClassName="w-fit"
-                  checked={searchParams.get("status") === "pending"}
+                  checked={searchParams.get("status") === "processing"}
                   onChange={(e) => {
                     if (e.currentTarget.checked) {
-                      searchParams.set("status", "pending");
+                      searchParams.set("status", "processing");
                       setSearchParams(searchParams);
                     } else {
                       searchParams.delete("status");
@@ -134,12 +146,13 @@ function Wallet() {
                   }}
                 />
                 <Checkbox
-                  label="ناموفق"
+                  label="بسته شده"
+                  className="checkbox-accent"
                   containerClassName="w-fit"
-                  checked={searchParams.get("status") === "failed"}
+                  checked={searchParams.get("status") === "closed"}
                   onChange={(e) => {
                     if (e.currentTarget.checked) {
-                      searchParams.set("status", "failed");
+                      searchParams.set("status", "closed");
                       setSearchParams(searchParams);
                     } else {
                       searchParams.delete("status");
@@ -156,68 +169,43 @@ function Wallet() {
               </button>
             </div>
           </Popover>
-          <button
-            className="ms-auto xl:ms-0 btn btn-primary"
-            onClick={() => setIsCreateWalletTransactionDialogOpen(true)}
-          >
+          <Link to="./create" className="btn btn-secondary">
             <Plus />
-            افزایش موجودی
-          </button>
+            تیکت پشتیبانی جدید
+          </Link>
         </div>
         {matches ? (
           <div className="mt-6 mb-36 xl:mb-24">
-            <Input
-              className="input input-bordered h-10 ms-auto input-ghost max-w-full w-96"
-              containerClassName="my-4"
-              placeholder="جست‌وجو"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              iconEnd={
-                <button className="btn btn-secondary btn-square btn-sm absolute end-1 inset-y-auto">
-                  <Search size="small" />
-                </button>
-              }
-            />
             <div className="rounded-custom border border-grey-200">
               <div className="flex items-center bg-grey-50 rounded-t-custom justify-between p-4 xl:py-0">
-                <h3 className="text-sm xl:text-base w-full">سوابق کیف پول</h3>
+                <h3 className="text-sm xl:text-base w-full">سفارشات</h3>
               </div>
-              <MobileWalletTable
-                wallet_transactions={walletTransactions?.data.results}
+              <MobileTicketsTable
+                tickets={ticketsPagination?.data.results}
                 isLoading={isLoading}
               />
             </div>
           </div>
         ) : (
           <div className="mt-6 mb-36 xl:mb-24">
-            <div className="flex items-center bg-grey-50 rounded-t-custom justify-between p-4 xl:py-0">
-              <h3 className="text-sm xl:text-base w-full">سوابق کیف پول</h3>
-              <Input
-                className="input input-bordered h-10 ms-auto input-ghost max-w-full w-96"
-                containerClassName="my-4"
-                placeholder="جست‌وجو"
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                iconEnd={
-                  <button className="btn btn-secondary btn-square btn-sm absolute end-1 inset-y-auto">
-                    <Search />
-                  </button>
-                }
-              />
+            <div className="flex items-center bg-secondary-50 rounded-t-custom justify-between p-4 xl:py-0">
+              <h3 className="text-sm xl:text-base w-full py-5">
+                لیست تیکت پشتیبانی
+              </h3>
             </div>
-            <WalletTable
-              wallet_transactions={walletTransactions?.data.results}
+            <TicketsTable
+              tickets={ticketsPagination?.data.results}
               isLoading={isLoading}
             />
           </div>
         )}
       </div>
       <Pagination
-        count={walletTransactions?.data.count}
-        next={walletTransactions?.data.next}
+        count={ticketsPagination?.data.count}
+        next={ticketsPagination?.data.next}
         page={+searchParams.get("page")! || 1}
         perPage={+searchParams.get("page_size")! || 10}
-        prev={walletTransactions?.data.prev}
+        prev={ticketsPagination?.data.prev}
         setPage={(val) => {
           searchParams.set("page", String(val));
           setSearchParams(searchParams);
@@ -227,13 +215,8 @@ function Wallet() {
           setSearchParams(searchParams);
         }}
       />
-      <CreateWalletTransactionDialog
-        isOpen={isCreateWalletTransactionDialogOpen}
-        closeModal={() => setIsCreateWalletTransactionDialogOpen(false)}
-        customer={userProfile?.data.customer?.id}
-      />
     </Fragment>
   );
 }
 
-export default Wallet;
+export default SupportList;

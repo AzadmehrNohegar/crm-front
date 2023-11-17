@@ -52,6 +52,12 @@ export const getAccountSetting = async ({
   return await http.get("/account/setting/", { params });
 };
 
+export const getAccountAdminAccount = async ({
+  params,
+}: AxiosCustomRequestConfig) => {
+  return await http.get("/account/admin/account/", { params });
+};
+
 export const putAccountUserUpdate = async ({
   body,
 }: AxiosCustomRequestConfig) => {

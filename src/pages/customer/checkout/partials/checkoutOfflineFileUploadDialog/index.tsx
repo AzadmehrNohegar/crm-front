@@ -90,6 +90,7 @@ function CheckoutOfflineFileUploadDialog({
             render={({ field: { value } }) => (
               <Input
                 type="text"
+                readOnly
                 value={value?.[0]?.name || ""}
                 placeholder="فایل مورد نظر را وارد کنید."
                 label="افزودن فایل"

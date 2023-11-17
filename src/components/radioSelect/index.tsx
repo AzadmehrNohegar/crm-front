@@ -38,7 +38,7 @@ function RadioSelect({
               !selected && "text-grey-400"
             )}
           >
-            {!selected ? "یک گزینه را انتخاب کنید" : null}
+            {!selected ? "یک گزینه را انتخاب کنید." : null}
             {selected?.label}
           </span>
           <span className="pointer-events-none absolute inset-y-0 end-2 flex items-center pr-2 text-grey-600">

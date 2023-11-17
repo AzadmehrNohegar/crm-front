@@ -10,7 +10,7 @@ import Skeleton from "react-loading-skeleton";
 import { useMediaQuery } from "usehooks-ts";
 import { ProductCardRow } from "@/shared/productCardRow";
 import { FiltersSlideover } from "./partials/filtersSlideover";
-import { useState } from "react";
+import { Fragment, useState } from "react";
 
 function ProductsList() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -40,115 +40,117 @@ function ProductsList() {
   );
 
   return (
-    <div className="flex items-stretch gap-x-4">
-      {!matches ? <ProductListFilters /> : null}
-      <div className="w-full xl:w-3/4 flex justify-start flex-wrap gap-4 h-fit mb-36 xl:mb-28 relative">
-        <div className="basis-full flex justify-end w-full">
-          <button
-            className="btn btn-ghost btn-link decoration-transparent text-grey-800 me-auto btn-sm px-0 inline-flex xl:hidden"
-            onClick={() => setIsFiltersSlideoverOpen(true)}
-          >
-            <Filter2 />
-            فیلترها
-          </button>
-          <div className="dropdown">
-            <label
-              tabIndex={0}
-              className="btn btn-ghost btn-link decoration-transparent text-grey-800 btn-sm px-0"
+    <Fragment>
+      <div className="flex items-stretch gap-x-4">
+        {!matches ? <ProductListFilters /> : null}
+        <div className="w-full xl:w-3/4 flex justify-start flex-wrap gap-4 h-fit mb-36 xl:mb-24 relative">
+          <div className="basis-full flex justify-end w-full">
+            <button
+              className="btn btn-ghost btn-link decoration-transparent text-grey-800 me-auto btn-sm px-0 inline-flex xl:hidden"
+              onClick={() => setIsFiltersSlideoverOpen(true)}
             >
-              <Filter />
-              مرتب سازی
-              <ChevronDown />
-            </label>
-            <ul
-              tabIndex={0}
-              className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-full"
-            >
-              <li>
-                <button
-                  onClick={() => {
-                    searchParams.set("ordering", "-id");
-                    setSearchParams(searchParams);
-                  }}
-                >
-                  جدیدترین
-                </button>
-              </li>
-              <li>
-                <button
-                  onClick={() => {
-                    searchParams.set("ordering", "-product_price");
-                    setSearchParams(searchParams);
-                  }}
-                >
-                  گران‌ترین
-                </button>
-                <button
-                  onClick={() => {
-                    searchParams.set("ordering", "product_price");
-                    setSearchParams(searchParams);
-                  }}
-                >
-                  ارزان‌ترین
-                </button>
-              </li>
-            </ul>
+              <Filter2 />
+              فیلترها
+            </button>
+            <div className="dropdown">
+              <label
+                tabIndex={0}
+                className="btn btn-ghost btn-link decoration-transparent text-grey-800 btn-sm px-0"
+              >
+                <Filter />
+                مرتب سازی
+                <ChevronDown />
+              </label>
+              <ul
+                tabIndex={0}
+                className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-full"
+              >
+                <li>
+                  <button
+                    onClick={() => {
+                      searchParams.set("ordering", "-id");
+                      setSearchParams(searchParams);
+                    }}
+                  >
+                    جدیدترین
+                  </button>
+                </li>
+                <li>
+                  <button
+                    onClick={() => {
+                      searchParams.set("ordering", "-product_price");
+                      setSearchParams(searchParams);
+                    }}
+                  >
+                    گران‌ترین
+                  </button>
+                  <button
+                    onClick={() => {
+                      searchParams.set("ordering", "product_price");
+                      setSearchParams(searchParams);
+                    }}
+                  >
+                    ارزان‌ترین
+                  </button>
+                </li>
+              </ul>
+            </div>
           </div>
-        </div>
-        {isLoading ? (
-          <Skeleton
-            count={6}
-            height={matches ? 168 : 281}
-            inline={!matches}
-            containerClassName="flex items-center w-full justify-between flex-col xl:flex-row flex-nowrap xl:flex-wrap xl:gap-4"
-            className="xl:basis-modified3"
-          />
-        ) : null}
-        {productsPagination?.data.results.map((item: product) => {
-          if (!matches)
+          {isLoading ? (
+            <Skeleton
+              count={6}
+              height={matches ? 168 : 281}
+              inline={!matches}
+              containerClassName="flex items-center w-full justify-between flex-col xl:flex-row flex-nowrap xl:flex-wrap xl:gap-4"
+              className="xl:basis-modified3"
+            />
+          ) : null}
+          {productsPagination?.data.results.map((item: product) => {
+            if (!matches)
+              return (
+                <ProductCard
+                  containerClassName="basis-modified3"
+                  key={item.id}
+                  api_origin="products-pagination"
+                  {...item}
+                />
+              );
             return (
-              <ProductCard
-                containerClassName="basis-modified3"
+              <ProductCardRow
+                containerClassName=""
                 key={item.id}
                 api_origin="products-pagination"
                 {...item}
               />
             );
-          return (
-            <ProductCardRow
-              containerClassName=""
-              key={item.id}
-              api_origin="products-pagination"
-              {...item}
-            />
-          );
-        })}
-        <Pagination
-          count={productsPagination?.data.count}
-          next={productsPagination?.data.next}
-          page={+searchParams.get("page")! || 1}
-          perPage={+searchParams.get("page_size")! || 9}
-          prev={productsPagination?.data.prev}
-          setPage={(val) => {
-            searchParams.set("page", String(val));
-            setSearchParams(searchParams);
-          }}
-          setPerPage={(val) => {
-            searchParams.set("page_size", String(val));
-            setSearchParams(searchParams);
-          }}
-          containerClassName="xl:w-container-sm"
-          isEven
-        />
-      </div>
+          })}
+        </div>
 
-      {matches ? (
-        <FiltersSlideover
-          isOpen={isFiltersSlideoverOpen}
-          setIsOpen={setIsFiltersSlideoverOpen}
-        />
-      ) : null}
-    </div>
+        {matches ? (
+          <FiltersSlideover
+            isOpen={isFiltersSlideoverOpen}
+            setIsOpen={setIsFiltersSlideoverOpen}
+          />
+        ) : null}
+      </div>
+      <Pagination
+        count={productsPagination?.data.count}
+        next={productsPagination?.data.next}
+        page={+searchParams.get("page")! || 1}
+        perPage={+searchParams.get("page_size")! || 9}
+        prev={productsPagination?.data.prev}
+        setPage={(val) => {
+          searchParams.set("page", String(val));
+          setSearchParams(searchParams);
+        }}
+        setPerPage={(val) => {
+          searchParams.set("page_size", String(val));
+          setSearchParams(searchParams);
+        }}
+        containerClassName="xl:w-container-sm"
+        isEven
+      />
+    </Fragment>
   );
 }
 
