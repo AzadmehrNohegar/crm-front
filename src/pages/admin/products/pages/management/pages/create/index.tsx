@@ -5,7 +5,7 @@ import { Input } from "@/components/input";
 import { RadioSelect } from "@/components/radioSelect";
 import { PRODUCT_TYPE, brand, category, listOption } from "@/model";
 import { CollapseWrapper } from "@/shared/collapseWrapper";
-import { Fragment } from "react";
+// import { Fragment } from "react";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
 import { Delete, Edit } from "react-iconly";
 import { useQuery } from "react-query";
@@ -34,9 +34,9 @@ function ProductsManagementCreate() {
     control,
     watch,
     register,
-    handleSubmit,
+    // handleSubmit,
     setValue,
-    formState: { errors, isValid, isDirty, dirtyFields },
+    formState: { errors, dirtyFields },
   } = useForm<IProductsManagementCreateForm>({
     defaultValues: {
       brand: null,
@@ -51,7 +51,7 @@ function ProductsManagementCreate() {
   const {
     fields: inventoryFields,
     append,
-    remove,
+    // remove,
   } = useFieldArray({
     control,
     name: "inventory",
