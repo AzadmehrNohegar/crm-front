@@ -219,6 +219,44 @@ export type account = {
   updated_at: string;
 };
 
+export type admin = {
+  id: number;
+  first_name: string;
+  last_name: string;
+  phone_number: string;
+  role: user_roles;
+  is_verified: boolean;
+  created_at: string;
+  updated_at: string;
+};
+
+export type warehouse = {
+  id: number;
+  name: string;
+};
+
+export interface IProductsManagementCreateForm {
+  name: string;
+  description: string;
+  image: FileList | string | null;
+  is_suggested: boolean;
+  category: listOption | null;
+  brand: listOption | null;
+  weight: {
+    MEASURE_TYPE: listOption | null;
+    value: string;
+  };
+  inventory: {
+    warehouse: listOption | null;
+    stock: string;
+  }[];
+  product_price: {
+    weight: string;
+    price: string;
+    discount_price: string;
+  }[];
+}
+
 export const ORDER_TYPES: IDictionary<string> = {
   completed: "موفق",
   pending: "درحال بررسی",

@@ -11,6 +11,7 @@ interface IListProps {
   selected: listOption | null;
   setSelected: (option: listOption | null) => void;
   label?: string;
+  bordered?: boolean;
 }
 
 function RadioSelect({
@@ -20,6 +21,7 @@ function RadioSelect({
   setSelected,
   label,
   variant = "primary",
+  bordered = true,
 }: IListProps) {
   return (
     <Listbox value={selected} by="id" onChange={setSelected}>
@@ -31,7 +33,12 @@ function RadioSelect({
         )}
       >
         <Listbox.Label className="text-grey-500 text-xs">{label}</Listbox.Label>
-        <Listbox.Button className="relative w-full text-start cursor-default rounded-lg border border-grey-200 min-h-[46px] ps-4 pe-10 focus:outline-none text-sm overflow-x-auto">
+        <Listbox.Button
+          className={clsx(
+            "relative w-full text-start cursor-default rounded-lg min-h-[46px] ps-4 pe-10 focus:outline-none focus:border-secondary-100 text-sm overflow-x-auto",
+            bordered && "border border-grey-200 focus:border-secondary-100"
+          )}
+        >
           <span
             className={clsx(
               "inline-flex items-center gap-x-2 truncate",

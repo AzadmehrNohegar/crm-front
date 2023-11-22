@@ -18,6 +18,15 @@ export const getProductProduct = async ({
   return await http.get("/product/product/", { params });
 };
 
+export const putProductProductById = async ({
+  id,
+  body,
+}: AxiosCustomRequestConfig) => {
+  return await http.put(`/product/product/${id}/`, body, {
+    headers: { "Content-Type": "multipart/form-data" },
+  });
+};
+
 export const getProductCategory = async ({
   params,
 }: AxiosCustomRequestConfig) => {
@@ -57,8 +66,24 @@ export const getProductBrand = async ({ params }: AxiosCustomRequestConfig) => {
   return await http.get("/product/brand/", { params });
 };
 
+export const getProductWarehouse = async () => {
+  return await http.get("/product/warehouse/");
+};
+
 export const getProductProductById = async ({
   id,
 }: AxiosCustomRequestConfig) => {
   return await http.get(`/product/product/${id}/`);
+};
+
+export const postProductCreateWholeSale = async ({
+  body,
+}: AxiosCustomRequestConfig) => {
+  return await http.post("/product/create_wholesale_product/", body);
+};
+
+export const postProductCreatePacking = async ({
+  body,
+}: AxiosCustomRequestConfig) => {
+  return await http.post("/product/create_packing_product/", body);
 };

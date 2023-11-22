@@ -1,11 +1,15 @@
+import { postAccountAdminList } from "@/api/account";
 import { Close } from "@/assets/icons/Close";
 import { Dialog } from "@/components/dialog";
 import { Input } from "@/components/input";
 import { MOBILE_FORMAT } from "@/constants";
 import { IExtendedDialogProps } from "@/model";
 import { usePersianConvert } from "@/utils/usePersianConvert";
+import { AxiosError } from "axios";
 // import { AxiosError } from "axios";
 import { useForm } from "react-hook-form";
+import { useMutation, useQueryClient } from "react-query";
+import { toast } from "react-toastify";
 // import { useMutation } from "react-query";
 // import { toast } from "react-toastify";
 
@@ -21,6 +25,8 @@ function SettingsCreateAdminDialog({
   isOpen,
 }: IExtendedDialogProps) {
   const { convertPersian2English } = usePersianConvert();
+
+  const queryClient = useQueryClient();
 
   const {
     register,
@@ -38,31 +44,29 @@ function SettingsCreateAdminDialog({
     mode: "onChange",
   });
 
-  // const changePassword = useMutation(postAccountChangePassword, {
-  //   onSuccess: () => {
-  //     toast("رمز عبور با موفقیت تغییر یافت.", {
-  //       type: "success",
-  //     });
-  //     reset();
-  //     closeModal();
-  //   },
-  //   onError: (err: AxiosError) => {
-  //     if ((err?.response?.data as Record<string, string>).old_password)
-  //       toast("رمز عبور قبلی اشتباه است.", {
-  //         type: "error",
-  //       });
-  //   },
-  // });
+  const createAdmin = useMutation(postAccountAdminList, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(["admin-list-pagination"]);
+      toast("ادمین جدید اضافه شد.", {
+        type: "success",
+      });
+      closeModal();
+    },
+    onError: (err: AxiosError) => {
+      if ((err?.response?.data as Record<string, string>).phone_number)
+        toast("شماره تلفن قبلا ثبت شده است.", {
+          type: "error",
+        });
+    },
+  });
 
   const onSubmit = (values: IAccountChangePasswordDialogForm) =>
-    console.log(values);
-  // changePassword.mutate({
-  //   body: {
-  //     old_password: convertPersian2English(values.old_password),
-  //     new_password: convertPersian2English(values.new_password),
-  //     repeat_new_password: convertPersian2English(values.repeat_new_password),
-  //   },
-  // });
+    createAdmin.mutate({
+      body: {
+        ...values,
+        role: "ADMIN",
+      },
+    });
 
   return (
     <Dialog isOpen={isOpen} closeModal={closeModal} placement="center">
@@ -154,7 +158,10 @@ function SettingsCreateAdminDialog({
               </button>
             ) : null
           }
-          {...register("password")}
+          {...register("password", {
+            required: "این فیلد اجباری است.",
+            minLength: 6,
+          })}
         />
 
         <div className="flex justify-end mt-6 gap-x-4">

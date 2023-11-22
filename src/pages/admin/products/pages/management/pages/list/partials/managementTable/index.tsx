@@ -81,7 +81,7 @@ function ManagementTable({ isLoading, products }: IManagementTableProps) {
             </tr>
           ) : null}
           {products?.map((item, index: number) => (
-            <tr>
+            <tr key={item.id}>
               <td>
                 {((+searchParams.get("page")! || 1) - 1) *
                   (+searchParams.get("page_size")! || 10) +

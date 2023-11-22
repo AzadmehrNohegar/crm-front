@@ -30,15 +30,7 @@ function CollapseWrapper({
         {!isOpen && <Plus />}
         <span>{title}</span>
       </button>
-      <Transition
-        show={isOpen}
-        enter="transition ease-out duration-500"
-        enterFrom="opacity-0 -translate-y-full"
-        enterTo="opacity-100 translate-y-0"
-        leave="transition ease-in duration-500"
-        leaveFrom="opacity-100 translate-y-0"
-        leaveTo="opacity-0 -translate-y-full"
-      >
+      <Transition show={isOpen}>
         <div
           className={clsx(
             "border-grey-200 rounded-[20px] border pt-10 px-4 pb-4 relative -top-10",

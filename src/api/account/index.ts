@@ -63,3 +63,15 @@ export const putAccountUserUpdate = async ({
 }: AxiosCustomRequestConfig) => {
   return await http.put("/account/user_update/", body);
 };
+
+export const getAccountAdminList = async ({
+  params,
+}: AxiosCustomRequestConfig) => {
+  return await http.get("/account/admin_list/", { params });
+};
+
+export const postAccountAdminList = async ({
+  body,
+}: AxiosCustomRequestConfig) => {
+  return await http.post("/account/admin_list/", body);
+};

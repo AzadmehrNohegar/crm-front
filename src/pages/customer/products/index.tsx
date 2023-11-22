@@ -8,7 +8,7 @@ function Products() {
   return (
     <Routes>
       <Route index element={<ProductsListPage />} />
-      <Route path=":productId" element={<ProductDetailsPage />} />
+      <Route path=":product_id" element={<ProductDetailsPage />} />
     </Routes>
   );
 }

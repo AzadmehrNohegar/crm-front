@@ -12,11 +12,11 @@ import { Plus } from "@/assets/icons/Plus";
 import Skeleton from "react-loading-skeleton";
 
 function ProductDetails() {
-  const { productId } = useParams();
+  const { product_id } = useParams();
 
   const { data: productDetails, isLoading } = useQuery(
-    `product-${productId}`,
-    () => getProductProductById({ id: productId })
+    `product-${product_id}`,
+    () => getProductProductById({ id: product_id })
   );
 
   const [selectedPrice, setSelectedPrice] = useState<listOption | null>(null);
@@ -72,7 +72,7 @@ function ProductDetails() {
     );
   }, [productDetails]);
 
-  if (!productId) return <Navigate to=".." />;
+  if (!product_id) return <Navigate to=".." />;
 
   if (isLoading)
     return (

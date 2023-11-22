@@ -68,6 +68,10 @@
   details.collapse summary {
     display: flex !important;
   }
+  .input-bordered,
+  .textarea-bordered {
+    border-color: rgb(230, 230, 230) !important;
+  }
 }
 
 .range-slider .range-slider__range {
