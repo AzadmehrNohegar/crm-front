@@ -159,6 +159,7 @@ function ProductsManagementList() {
         }}
         setPerPage={(val) => {
           searchParams.set("page_size", String(val));
+          searchParams.set("page", "1");
           setSearchParams(searchParams);
         }}
       />

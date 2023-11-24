@@ -257,6 +257,12 @@ export interface IProductsManagementCreateForm {
   }[];
 }
 
+export type wholesale_warehouse = {
+  id: number;
+  stock: number;
+  warehouse: warehouse;
+};
+
 export const ORDER_TYPES: IDictionary<string> = {
   completed: "موفق",
   pending: "درحال بررسی",

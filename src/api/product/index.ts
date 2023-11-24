@@ -76,6 +76,12 @@ export const getProductProductById = async ({
   return await http.get(`/product/product/${id}/`);
 };
 
+export const deleteProductProductById = async ({
+  id,
+}: AxiosCustomRequestConfig) => {
+  return await http.delete(`/product/product/${id}/`);
+};
+
 export const postProductCreateWholeSale = async ({
   body,
 }: AxiosCustomRequestConfig) => {

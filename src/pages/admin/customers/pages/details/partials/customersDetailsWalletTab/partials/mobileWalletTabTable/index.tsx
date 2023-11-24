@@ -8,15 +8,15 @@ import { Fragment } from "react";
 import Skeleton from "react-loading-skeleton";
 import { useSearchParams } from "react-router-dom";
 
-interface IMobileWalletTableProps {
+interface IMobileWalletTabTableProps {
   wallet_transactions?: wallet_transaction[];
   isLoading: boolean;
 }
 
-function MobileWalletTable({
+function MobileWalletTabTable({
   isLoading,
   wallet_transactions,
-}: IMobileWalletTableProps) {
+}: IMobileWalletTabTableProps) {
   const [searchParams] = useSearchParams();
 
   return (
@@ -155,4 +155,4 @@ function MobileWalletTable({
   );
 }
 
-export { MobileWalletTable };
+export { MobileWalletTabTable };

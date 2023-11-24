@@ -5,7 +5,7 @@ import { MOBILE_FORMAT } from "@/constants";
 import { usePersianConvert } from "@/utils/usePersianConvert";
 import { AxiosError } from "axios";
 import { useForm } from "react-hook-form";
-import { useMutation, useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import { toast } from "react-toastify";
 
 interface IAccountEditProps {
@@ -44,11 +44,14 @@ function AccountJuridicalEdit({ resetForm }: IAccountEditProps) {
     mode: "onChange",
   });
 
+  const queryClient = useQueryClient();
+
   const updateUser = useMutation(putAccountUserUpdate, {
     onSuccess: () => {
       toast("اطلاعات کاربر تغییر یافت.", {
         type: "success",
       });
+      queryClient.invalidateQueries();
     },
     onError: (err: AxiosError) => {
       if ((err?.response?.data as Record<string, string>).user_national_code)
@@ -58,14 +61,12 @@ function AccountJuridicalEdit({ resetForm }: IAccountEditProps) {
     },
   });
 
-  const onSubmit = (values: IAccountJuridicalEditForm) => {
-    console.log(dirtyFields);
+  const onSubmit = (values: IAccountJuridicalEditForm) =>
     updateUser.mutate({
       body: {
         ...values,
       },
     });
-  };
 
   return (
     <form

@@ -22,7 +22,7 @@ function OrdersList() {
   const matches = useMediaQuery("(max-width: 1280px)");
 
   const { data: ordersPagination, isLoading } = useQuery(
-    ["orders-transactions", debouncedSearch, locationSearch],
+    ["orders-list-pagination", debouncedSearch, locationSearch],
     () =>
       getOrderOrderList({
         params: {
@@ -212,6 +212,7 @@ function OrdersList() {
         }}
         setPerPage={(val) => {
           searchParams.set("page_size", String(val));
+          searchParams.set("page", "1");
           setSearchParams(searchParams);
         }}
       />

@@ -58,6 +58,32 @@ export const getAccountAdminAccount = async ({
   return await http.get("/account/admin/account/", { params });
 };
 
+export const deleteAccountAdminAccountById = async ({
+  id,
+}: AxiosCustomRequestConfig) => {
+  return await http.delete(`/account/admin/account/${id}/`);
+};
+
+export const getAccountAdminAccountById = async ({
+  id,
+}: AxiosCustomRequestConfig) => {
+  return await http.get(`/account/admin/account/${id}/`);
+};
+
+export const putAccountAdminAccountById = async ({
+  id,
+  body,
+}: AxiosCustomRequestConfig) => {
+  return await http.put(`/account/admin/account/${id}/`, body);
+};
+
+export const putAccountAdminCustomerById = async ({
+  id,
+  body,
+}: AxiosCustomRequestConfig) => {
+  return await http.put(`/account/admin/customer/${id}/`, body);
+};
+
 export const putAccountUserUpdate = async ({
   body,
 }: AxiosCustomRequestConfig) => {

@@ -5,7 +5,7 @@ import { MOBILE_FORMAT } from "@/constants";
 import { usePersianConvert } from "@/utils/usePersianConvert";
 import { AxiosError } from "axios";
 import { useForm } from "react-hook-form";
-import { useMutation, useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import { toast } from "react-toastify";
 
 interface IAccountEditProps {
@@ -22,6 +22,8 @@ function AccountEdit({ resetForm }: IAccountEditProps) {
   const { data: userProfile } = useQuery("user-profile", () =>
     getAccountMyProfile()
   );
+
+  const queryClient = useQueryClient();
 
   const { convertPersian2English } = usePersianConvert();
 
@@ -49,6 +51,7 @@ function AccountEdit({ resetForm }: IAccountEditProps) {
       toast("اطلاعات کاربر تغییر یافت.", {
         type: "success",
       });
+      queryClient.invalidateQueries();
     },
     onError: (err: AxiosError) => {
       if ((err?.response?.data as Record<string, string>).user_national_code)
