@@ -167,7 +167,7 @@ function OrdersTable({ isLoading, orders }: IOrdersTableProps) {
                   .slice(0, 2)
                   .map((entry) => entry.name)
                   .map((str) => (
-                    <Fragment>
+                    <Fragment key={str}>
                       {str}
                       <span className="last-of-type:hidden">/</span>
                     </Fragment>

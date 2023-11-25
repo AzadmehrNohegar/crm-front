@@ -77,7 +77,10 @@ function AuthLoginPassword({ changeStep, phone }: IAuthLoginPasswordProps) {
       navigate("/");
     },
     onError: (err: AxiosError) => {
-      if ((err?.response?.data as Record<string, string>).non_field_errors) {
+      if (
+        (err?.response?.data as Record<string, string>).non_field_errors &&
+        err.status === 406
+      ) {
         toast("حساب کاربری شما تایید نشده است.", {
           type: "error",
         });

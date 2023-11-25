@@ -5,3 +5,9 @@ export const getPaymentWalletTransaction = async ({
 }: AxiosCustomRequestConfig) => {
   return await http.get("/payment/wallet_transaction/", { params });
 };
+
+export const postPaymentWalletTransaction = async ({
+  body,
+}: AxiosCustomRequestConfig) => {
+  return await http.post("/payment/wallet_transaction/", body);
+};
