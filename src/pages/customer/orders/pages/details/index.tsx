@@ -110,7 +110,10 @@ function OrderDetails() {
       <CollapseWrapper title="سبد خرید شما" className="flex flex-col divide-y">
         {orderDetails?.data.order_item.map(
           (item: order_item, index: number) => (
-            <div className="flex w-full gap-x-4 py-5 items-stretch">
+            <div
+              className="flex w-full gap-x-4 py-5 items-stretch"
+              key={item.id}
+            >
               <span className="inline-flex h-auto items-center justify-center rounded-lg bg-grey-100 text-grey-600 text-center min-w-[30px]">
                 {index + 1}
               </span>

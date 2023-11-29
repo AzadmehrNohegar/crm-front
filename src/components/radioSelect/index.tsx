@@ -1,7 +1,7 @@
 import { Listbox, Transition } from "@headlessui/react";
 import { listOption } from "@/model";
 import { ChevronDown } from "react-iconly";
-import { Fragment } from "react";
+import React, { Fragment } from "react";
 import clsx from "clsx";
 
 interface IListProps {
@@ -12,6 +12,7 @@ interface IListProps {
   setSelected: (option: listOption | null) => void;
   label?: string;
   bordered?: boolean;
+  searchComponent?: React.ReactNode;
 }
 
 function RadioSelect({
@@ -22,6 +23,7 @@ function RadioSelect({
   label,
   variant = "primary",
   bordered = true,
+  searchComponent,
 }: IListProps) {
   return (
     <Listbox value={selected} by="id" onChange={setSelected}>
@@ -59,6 +61,7 @@ function RadioSelect({
           leaveTo="opacity-0"
         >
           <Listbox.Options className="absolute z-20 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg focus:outline-none">
+            {searchComponent}
             {options?.map((option) => (
               <Listbox.Option
                 key={option.id}

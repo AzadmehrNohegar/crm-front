@@ -14,6 +14,7 @@ function OrdersTable({ isLoading, orders }: IOrdersTableProps) {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const parsePaymentType = (order: order) => {
+    if (!order.payment) return "پرداخت نشده";
     if (order.payment.offline_transaction)
       return PAYMENT_TYPE["offline_transaction"];
     if (order.payment.online_transaction)
@@ -34,7 +35,7 @@ function OrdersTable({ isLoading, orders }: IOrdersTableProps) {
   return (
     <div className="overflow-x-auto">
       <table className="table table-auto text-start">
-        <thead className="bg-grey-50">
+        <thead className="bg-secondary-50">
           <tr>
             <th align="right">
               <span className="text-2xl font-light">#</span>
@@ -51,8 +52,8 @@ function OrdersTable({ isLoading, orders }: IOrdersTableProps) {
                 </button>
               </span>
             </th>
-            <th align="right">
-              <span className="text-sm text-grey-800">عناوین محصول</span>
+            <th align="right" className="w-1/2">
+              <span className="text-sm text-grey-800">نام کاربر</span>
             </th>
             <th align="right">
               <span className="text-sm text-grey-800">نوع پرداخت‌</span>
@@ -106,7 +107,7 @@ function OrdersTable({ isLoading, orders }: IOrdersTableProps) {
                 <td>
                   <Skeleton height={51} />
                 </td>
-                <td>
+                <td className="w-1/2">
                   <Skeleton height={51} />
                 </td>
                 <td>
@@ -132,7 +133,7 @@ function OrdersTable({ isLoading, orders }: IOrdersTableProps) {
                 <td>
                   <Skeleton height={51} />
                 </td>
-                <td>
+                <td className="w-1/2">
                   <Skeleton height={51} />
                 </td>
                 <td>
@@ -162,19 +163,17 @@ function OrdersTable({ isLoading, orders }: IOrdersTableProps) {
                   1}
               </td>
               <td>{item.id}</td>
-              <td>
-                {item.order_item
-                  .slice(0, 2)
-                  .map((entry) => entry.name)
-                  .map((str) => (
-                    <Fragment key={str}>
-                      {str}
-                      <span className="last-of-type:hidden">/</span>
-                    </Fragment>
-                  ))}
+              <td className="w-1/2">
+                {item.customer?.first_name} {item.customer?.last_name}
               </td>
               <td>{parsePaymentType(item)}</td>
-              <td>{item.amount.toLocaleString()} تومان</td>
+              <td>
+                <span className="inline-block min-w-max">
+                  {item.payment
+                    ? `${item.payment?.amount.toLocaleString()} تومان`
+                    : "-"}{" "}
+                </span>
+              </td>
               <td>
                 {new Intl.DateTimeFormat("fa-IR", {
                   dateStyle: "short",
@@ -184,10 +183,15 @@ function OrdersTable({ isLoading, orders }: IOrdersTableProps) {
               <td>
                 <span
                   className={clsx(
-                    "font-light text-sm",
-                    item.status === "completed" && "text-success",
-                    item.status === "pending" && "text-grey-600",
-                    item.status === "canceled" && "text-danger"
+                    "badge font-light text-sm inline-block min-w-max",
+                    item.status === "completed" &&
+                      "bg-success-50 border-transparent text-success",
+                    item.status === "pending" &&
+                      "bg-grey-50 border-transparent text-grey",
+                    item.status === "need_payment" &&
+                      "bg-warning-50 border-transparent text-warning",
+                    item.status === "canceled" &&
+                      "bg-danger-50 border-transparent text-danger"
                   )}
                 >
                   {ORDER_TYPES[item.status]}

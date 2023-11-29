@@ -101,3 +101,9 @@ export const postAccountAdminList = async ({
 }: AxiosCustomRequestConfig) => {
   return await http.post("/account/admin_list/", body);
 };
+
+export const getAccountRegisteredList = async ({
+  params,
+}: AxiosCustomRequestConfig) => {
+  return await http.get("/account/registered_list/", { params });
+};

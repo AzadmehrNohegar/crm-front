@@ -69,6 +69,7 @@ export type product_price = {
 export type listOption = {
   id: number | string;
   label: string;
+  obj?: unknown;
 };
 
 export type product = {
@@ -132,13 +133,14 @@ export type wallet_transaction = {
 
 export type ticket = {
   id: number;
-  new_massage: 0;
+  new_massage: number;
   status: ticket_type;
   title: string;
   message: string;
   file: string;
   is_admin_ticket: boolean;
   created_at: string;
+  user: account;
 };
 
 export type ticket_reply = {
@@ -162,6 +164,10 @@ export type order_type = "completed" | "pending" | "canceled" | "need_payment";
 export type order = {
   id: number;
   order_item: order_item[];
+  customer?: {
+    first_name: string;
+    last_name: string;
+  };
   payment: {
     id: number;
     status: string;
@@ -173,6 +179,7 @@ export type order = {
   status: order_type;
   need_tax: boolean;
   created_date: string;
+  amount: number;
 };
 
 export type notification = {
@@ -263,11 +270,20 @@ export type wholesale_warehouse = {
   warehouse: warehouse;
 };
 
+export type inventory_item = {
+  id: number;
+  count: number;
+  order_item: order_item;
+  warehouse: warehouse;
+};
+
 export const ORDER_TYPES: IDictionary<string> = {
-  completed: "موفق",
+  completed: "تکمیل شده",
   pending: "درحال بررسی",
-  canceled: "ناموفق",
+  canceled: "لغو شده",
   need_payment: "نیاز به پرداخت",
+  processing: "در حال تامین",
+  sending: "در حال ارسال",
 };
 
 export const PAYMENT_TYPE: IDictionary<string> = {

@@ -174,7 +174,7 @@ function OrdersTable({ isLoading, orders }: IOrdersTableProps) {
                   ))}
               </td>
               <td>{parsePaymentType(item)}</td>
-              <td>{item.payment.amount.toLocaleString()} تومان</td>
+              <td>{item.amount.toLocaleString()} تومان</td>
               <td>
                 {new Intl.DateTimeFormat("fa-IR", {
                   dateStyle: "short",

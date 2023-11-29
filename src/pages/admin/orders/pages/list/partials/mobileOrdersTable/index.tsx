@@ -114,15 +114,6 @@ function MobileOrdersTable({ isLoading, orders }: IMobileOrdersTableProps) {
                       index +
                       1}
                   </span>
-                  {item.order_item
-                    .slice(0, 2)
-                    .map((entry) => entry.name)
-                    .map((str) => (
-                      <Fragment key={str}>
-                        {str}
-                        <span className="last-of-type:hidden">/</span>
-                      </Fragment>
-                    ))}
                 </strong>
 
                 <Link
@@ -137,6 +128,13 @@ function MobileOrdersTable({ isLoading, orders }: IMobileOrdersTableProps) {
                   <span className="text-sm font-semibold">شماره سفارش‌</span>
                   <span className="font-light text-grey-600">{item.id}</span>
                 </li>
+                <li className="flex items-center justify-between">
+                  <span className="text-sm font-semibold">نام کاربر</span>
+                  <span className="font-light text-grey-600">
+                    {item.customer?.first_name} {item.customer?.last_name}
+                  </span>
+                </li>
+
                 <li className="flex items-center justify-between">
                   <span className="text-sm font-semibold">نوع پرداخت</span>
                   <span className="font-light text-grey-600">

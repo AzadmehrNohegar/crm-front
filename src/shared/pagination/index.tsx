@@ -45,10 +45,15 @@ function Pagination({
       )}
     >
       <div className="flex justify-center xl:justify-normal order-3 xl:order-none text-sm items-center gap-x-2 p-2 rounded-xl basis-full xl:basis-auto">
-        <button className="btn btn-sm xl:btn-md btn-square btn-ghost" disabled>
+        <button
+          type="button"
+          className="btn btn-sm xl:btn-md btn-square btn-ghost"
+          disabled
+        >
           <DoubleArrowRight />
         </button>
         <button
+          type="button"
           className="btn btn-sm xl:btn-md btn-square btn-ghost"
           disabled={!prev}
           onClick={() => setPage(page - 1)}
@@ -59,6 +64,7 @@ function Pagination({
           new Array(Math.ceil(count / perPage)).fill(null).map((_, index) => (
             <button
               key={index}
+              type="button"
               className={clsx(
                 "btn btn-sm xl:btn-md btn-square rounded-xl",
                 !(page === index + 1) && "btn-ghost",
@@ -70,13 +76,18 @@ function Pagination({
             </button>
           ))}
         <button
+          type="button"
           className="btn btn-sm xl:btn-md btn-square btn-ghost"
           disabled={!next}
           onClick={() => setPage(page + 1)}
         >
           <ArrowLeft />
         </button>
-        <button className="btn btn-sm xl:btn-md btn-square btn-ghost" disabled>
+        <button
+          type="button"
+          className="btn btn-sm xl:btn-md btn-square btn-ghost"
+          disabled
+        >
           <DoubleArrowLeft />
         </button>
       </div>
