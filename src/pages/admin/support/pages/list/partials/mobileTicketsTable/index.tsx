@@ -149,7 +149,7 @@ function MobileTicketsTable({ isLoading, tickets }: IMobileTicketsTableProps) {
                       "badge font-light inline-block px-1 text-xs",
                       item.status === "new" && "badge-success text-white",
                       item.status === "processing" &&
-                        "badge-secondary text-secondary",
+                        "badge-secondary text-white",
                       item.status === "closed" && "badge-accent text-grey-400"
                     )}
                   >

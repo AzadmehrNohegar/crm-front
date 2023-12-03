@@ -7,6 +7,7 @@ import { SettingsTable } from "./partials/settingsTable";
 import { useQuery } from "react-query";
 import { getAccountAdminList } from "@/api/account";
 import { useLocation, useSearchParams } from "react-router-dom";
+import { MobileSettingsTable } from "./partials/mobileSettingsTable";
 
 function Settings() {
   const matches = useMediaQuery("(max-width: 1280px)");
@@ -58,7 +59,7 @@ function Settings() {
             }
           />
           <button
-            className="ms-auto btn btn-secondary"
+            className="ms-auto btn btn-secondary btn-block xl:w-fit"
             onClick={() => setIsCreateAdminDialogOpen(true)}
           >
             <Plus />
@@ -69,14 +70,12 @@ function Settings() {
           <div className="my-6">
             <div className="rounded-custom border border-grey-200">
               <div className="flex items-center bg-secondary-50 rounded-t-custom justify-between p-4 xl:py-0">
-                <h3 className="text-sm xl:text-base w-full py-5">
-                  لیست ادمین‌ها
-                </h3>
+                <h3 className="text-sm xl:text-base w-full">لیست ادمین‌ها</h3>
               </div>
-              {/* <MobileWalletTable
-              wallet_transactions={walletTransactions?.data.results}
-              isLoading={isLoading}
-            /> */}
+              <MobileSettingsTable
+                admins={admins?.data.results}
+                isLoading={isLoading}
+              />
             </div>
           </div>
         ) : (

@@ -24,7 +24,7 @@ function CollapseWrapper({
       <button
         type="button"
         onClick={() => setIsOpen((prevState) => !prevState)}
-        className="text-sm border border-grey-200 relative start-4 flex items-center gap-x-2 px-4 py-3 rounded-lg bg-white z-10 my-4 w-fit"
+        className="text-sm border border-grey-200 relative start-4 flex items-center gap-x-2 px-4 py-3 rounded-lg bg-white z-[1] my-4 w-fit"
       >
         {isOpen && <Minus />}
         {!isOpen && <Plus />}

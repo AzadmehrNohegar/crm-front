@@ -2,7 +2,7 @@ import { getAccountAdminAccount } from "@/api/account";
 import { Fragment, useState } from "react";
 import { useQuery } from "react-query";
 import { Link, useLocation, useSearchParams } from "react-router-dom";
-import { useDebounce } from "usehooks-ts";
+import { useDebounce, useMediaQuery } from "usehooks-ts";
 import { CustomersTable } from "./partials/customersTable";
 import { Pagination } from "@/shared/pagination";
 import { Checkbox } from "@/components/checkbox";
@@ -10,8 +10,11 @@ import { Popover, PopoverButton } from "@/components/popover";
 import { Filter2, Search } from "react-iconly";
 import { Input } from "@/components/input";
 import { Plus } from "@/assets/icons/Plus";
+import { MobileCustomersTable } from "./partials/mobileCustomersTable";
 
 function CustomersList() {
+  const matches = useMediaQuery("(max-width: 1280px)");
+
   const [search, setSearch] = useState("");
   const debouncedSearch = useDebounce(search);
 
@@ -19,7 +22,7 @@ function CustomersList() {
 
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const { data: accountPagination } = useQuery(
+  const { data: accountPagination, isLoading } = useQuery(
     ["account-pagination", debouncedSearch, locationSearch],
     () =>
       getAccountAdminAccount({
@@ -44,11 +47,11 @@ function CustomersList() {
   );
   return (
     <Fragment>
-      <div className="flex items-center w-full gap-x-4 relative justify-between">
+      <div className="flex flex-wrap xl:flex-nowrap items-center w-full gap-4 relative justify-between">
         <Input
           name="search"
           placeholder="جست و جو..."
-          containerClassName="w-fit relative hidden xl:block me-auto"
+          containerClassName="w-fit relative order-3 xl:order-none me-auto"
           className="input input-bordered w-96"
           block={false}
           value={search}
@@ -153,19 +156,26 @@ function CustomersList() {
             </button>
           </div>
         </Popover>
-        <Link to="create" className="btn btn-secondary">
+        <Link to="create" className="btn btn-secondary ms-auto xl:ms-0">
           <Plus />
           افزودن کاربر جدید
         </Link>
       </div>
-      <div className="mt-6 pb-36 xl:pb-24 text-start relative">
+      <div className="mt-6 mb-36 xl:mb-24 text-start relative border rounded-custom xl:border-none">
         <div className="flex items-center bg-secondary-50 rounded-t-custom justify-between">
           <h3 className="text-sm xl:text-base w-full p-5">لیست کاربران</h3>
         </div>
-        <CustomersTable
-          accounts={accountPagination?.data.results}
-          isLoading={false}
-        />
+        {matches ? (
+          <MobileCustomersTable
+            accounts={accountPagination?.data.results}
+            isLoading={isLoading}
+          />
+        ) : (
+          <CustomersTable
+            accounts={accountPagination?.data.results}
+            isLoading={isLoading}
+          />
+        )}
         <Pagination
           count={accountPagination?.data.count}
           next={accountPagination?.data.next}

@@ -4,6 +4,7 @@ import { DoubleArrowLeft } from "@/assets/icons/DoubleArrowLeft";
 import { DoubleArrowRight } from "@/assets/icons/DoubleArrowRight";
 import { Input } from "@/components/input";
 import { Select } from "@/components/select";
+import { useAuthStore } from "@/store/auth";
 import clsx from "clsx";
 import { useSearchParams } from "react-router-dom";
 
@@ -34,12 +35,18 @@ function Pagination({
 }: IPaginationProps) {
   const [searchParams, setSearchParams] = useSearchParams();
 
+  const { role } = useAuthStore();
+
   return (
     <div
       className={clsx(
-        "flex items-center p-4 bg-white z-30 flex-wrap xl:flex-nowrap",
+        "flex items-center p-4 bg-white z-10 flex-wrap xl:flex-nowrap",
         isFixed &&
+          role === "CUSTOMER" &&
           "w-full xl:w-container fixed bottom-12 xl:bottom-0 inset-x-0 xl:inset-x-auto",
+        isFixed &&
+          role === "ADMIN" &&
+          "w-full xl:w-container fixed bottom-0 xl:bottom-0 inset-x-0 xl:inset-x-auto",
         !isFixed && "absolute bottom-0 w-full",
         containerClassName
       )}
@@ -113,6 +120,7 @@ function Pagination({
           options={isEven ? [9, 18, 27] : [10, 20, 100]}
           selected={perPage}
           setSelected={setPerPage}
+          variant={role === "ADMIN" ? "secondary" : "primary"}
           isBottom
         />
         <span className="text-grey-500 text-sm inline-block min-w-[50%] max-w-full xl:max-w-full">

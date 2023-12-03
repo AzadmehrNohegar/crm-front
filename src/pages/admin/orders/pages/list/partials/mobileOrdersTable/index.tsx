@@ -14,9 +14,10 @@ function MobileOrdersTable({ isLoading, orders }: IMobileOrdersTableProps) {
   const [searchParams] = useSearchParams();
 
   const parsePaymentType = (order: order) => {
-    if (order.payment.offline_transaction)
+    if (!order.payment) return "پرداخت نشده";
+    if (order.payment?.offline_transaction)
       return PAYMENT_TYPE["offline_transaction"];
-    if (order.payment.online_transaction)
+    if (order.payment?.online_transaction)
       return PAYMENT_TYPE["online_transaction"];
     return PAYMENT_TYPE["wallet_transaction"];
   };

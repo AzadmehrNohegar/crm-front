@@ -5,12 +5,13 @@ import { useQuery } from "react-query";
 import { OrdersCreateAccountTable } from "./partials/ordersCreateAddAccountTable";
 import { useLocation, useSearchParams } from "react-router-dom";
 import { useState } from "react";
-import { useDebounce } from "usehooks-ts";
+import { useDebounce, useMediaQuery } from "usehooks-ts";
 import { Input } from "@/components/input";
 import { Filter2, Search } from "react-iconly";
 import { Popover, PopoverButton } from "@/components/popover";
 import { Checkbox } from "@/components/checkbox";
 import { Pagination } from "@/shared/pagination";
+import { MobileOrdersCreateAccountTable } from "./partials/mobileOrdersCreateAddAccountTable";
 
 interface IOrdersCreateAddAccountDialogProps extends IExtendedDialogProps {
   setUser: (value: account) => void;
@@ -23,6 +24,8 @@ function OrdersCreateAddAccountDialog({
 }: IOrdersCreateAddAccountDialogProps) {
   const [selectedAccount, setSelectedAccount] = useState<account | null>(null);
 
+  const matches = useMediaQuery("(max-width: 1280px)");
+
   const [search, setSearch] = useState("");
   const debouncedSearch = useDebounce(search);
 
@@ -30,7 +33,7 @@ function OrdersCreateAddAccountDialog({
 
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const { data: accountPagination } = useQuery(
+  const { data: accountPagination, isLoading } = useQuery(
     ["account-pagination", debouncedSearch, locationSearch],
     () =>
       getAccountAdminAccount({
@@ -68,13 +71,13 @@ function OrdersCreateAddAccountDialog({
         <h2 className="text-base xl:text-xl">افزودن کاربر</h2>
       </Dialog.Title>
 
-      <Dialog.Panel className="p-5 flex flex-col gap-y-6">
+      <Dialog.Panel className="p-5 flex flex-col">
         <div className="flex items-center w-full gap-x-4 relative justify-between">
           <Input
             name="search"
             placeholder="جست و جو..."
-            containerClassName="w-fit relative hidden xl:block me-auto"
-            className="input input-bordered w-96"
+            containerClassName="w-fit relative me-auto"
+            className="input input-bordered w-64 xl:w-96"
             block={false}
             value={search}
             onChange={(e) => setSearch(e.target.value)}
@@ -150,12 +153,22 @@ function OrdersCreateAddAccountDialog({
           <div className="flex items-center bg-grey-50 rounded-t-custom justify-between">
             <h3 className="text-sm xl:text-base w-full p-5">لیست کاربران</h3>
           </div>
-          <OrdersCreateAccountTable
-            selectedAccount={selectedAccount}
-            setSelectedAccount={(account) => setSelectedAccount(account)}
-            accounts={accountPagination?.data.results}
-            isLoading={false}
-          />
+          {matches ? (
+            <MobileOrdersCreateAccountTable
+              selectedAccount={selectedAccount}
+              setSelectedAccount={(account) => setSelectedAccount(account)}
+              accounts={accountPagination?.data.results}
+              isLoading={isLoading}
+            />
+          ) : (
+            <OrdersCreateAccountTable
+              selectedAccount={selectedAccount}
+              setSelectedAccount={(account) => setSelectedAccount(account)}
+              accounts={accountPagination?.data.results}
+              isLoading={isLoading}
+            />
+          )}
+
           <Pagination
             count={accountPagination?.data.count}
             next={accountPagination?.data.next}

@@ -44,7 +44,7 @@ export type category = {
   name: string;
   image: string;
   is_active: boolean;
-  parent_category: number | null;
+  parent_category: category | number | null;
   categories?: category[];
 };
 

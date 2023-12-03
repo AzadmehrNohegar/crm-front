@@ -11,6 +11,7 @@ import { RadioSelect } from "@/components/radioSelect";
 import { category } from "@/model";
 import { ManagementTable } from "./partials/managementTable";
 import { ManagementSelectTypeDialog } from "./partials/managementSelectTypeDialog";
+import { MobileManagementTable } from "./partials/mobileManagementTable";
 
 function ProductsManagementList() {
   const matches = useMediaQuery("(max-width: 1280px)");
@@ -61,7 +62,7 @@ function ProductsManagementList() {
           <Input
             name="search"
             placeholder="جست و جو..."
-            containerClassName="w-fit relative hidden xl:block me-auto"
+            containerClassName="w-fit relative me-auto order-3 xl:order-none"
             className="input input-bordered w-96"
             block={false}
             value={search}
@@ -115,7 +116,7 @@ function ProductsManagementList() {
           </Popover>
           <button
             onClick={() => setIsManagemenetSelectTypeDialogOpen(true)}
-            className="btn btn-secondary"
+            className="btn btn-secondary ms-auto xl:ms-0"
           >
             <Plus />
             افزودن محصول جدید
@@ -125,14 +126,12 @@ function ProductsManagementList() {
           <div className="mt-6 mb-36 xl:mb-24">
             <div className="rounded-custom border border-grey-200">
               <div className="flex items-center bg-secondary-50 rounded-t-custom justify-between p-4 xl:py-0">
-                <h3 className="text-sm xl:text-base w-full py-5">
-                  لیست محصولات
-                </h3>
+                <h3 className="text-sm xl:text-base w-full">لیست محصولات</h3>
               </div>
-              {/* <MobileWalletTable
-              wallet_transactions={walletTransactions?.data.results}
-              isLoading={isLoading}
-            /> */}
+              <MobileManagementTable
+                products={productsPagination?.data.results}
+                isLoading={isLoading}
+              />
             </div>
           </div>
         ) : (

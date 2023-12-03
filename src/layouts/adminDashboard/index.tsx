@@ -13,9 +13,9 @@ function AdminDashboardLayout() {
       </Helmet>
       <section className="flex relative items-center h-screen overflow-y-hidden">
         <AdminDashboardSidebar />
-        <main className="w-5/6 h-screen">
+        <main className="w-full xl:w-5/6 h-screen">
           <AdminDashboardHeader />
-          <section className="p-5 h-container overflow-y-auto">
+          <section className="p-5 h-container overflow-y-auto relative xl:static z-0">
             <Suspense fallback={<MovasaghLoading />}>
               <Outlet />
             </Suspense>

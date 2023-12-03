@@ -53,8 +53,8 @@ function ProductsManagementDetails() {
 
   return (
     <Fragment>
-      <div className="flex items-start gap-x-2">
-        <div className="flex items-start gap-x-2">
+      <div className="flex items-center xl:items-start gap-x-2">
+        <div className="flex items-center xl:items-start gap-x-2">
           <img
             src={productDetails?.data.image}
             width={80}

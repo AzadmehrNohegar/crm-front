@@ -14,7 +14,7 @@ import { useMutation } from "react-query";
 import { postAccountAuthLogout } from "@/api/account";
 import { useAuthStore } from "@/store/auth";
 import { toast } from "react-toastify";
-import { useOnClickOutside } from "usehooks-ts";
+import { useMediaQuery, useOnClickOutside } from "usehooks-ts";
 
 function AdminDashboardSidebar() {
   const navigate = useNavigate();
@@ -47,6 +47,10 @@ function AdminDashboardSidebar() {
   useOnClickOutside(dropdownRef, () =>
     dropdownRef.current?.removeAttribute("open")
   );
+
+  const matches = useMediaQuery("(max-width: 1280px)");
+
+  if (matches) return null;
 
   return (
     <aside className="w-1/6 bg-white relative z-20 h-full shadow-ev3">

@@ -8,6 +8,7 @@ import { useDebounce, useMediaQuery } from "usehooks-ts";
 import { CategoriesTable } from "./partials/categoriesTable";
 import { Popover, PopoverButton } from "@/components/popover";
 import { Checkbox } from "@/components/checkbox";
+import { MobileCategoriesTable } from "./partials/mobileCategoriesTable";
 
 function ProductsCategoriesList() {
   const matches = useMediaQuery("(max-width: 1280px)");
@@ -23,7 +24,7 @@ function ProductsCategoriesList() {
       getProductCategory({
         params: {
           page_size: 20,
-          return_parents: true,
+          ...(matches ? {} : { return_parents: true }),
           search: debouncedSearch,
         },
       })
@@ -36,7 +37,7 @@ function ProductsCategoriesList() {
           <Input
             name="search"
             placeholder="جست و جو..."
-            containerClassName="w-fit relative hidden xl:block me-auto"
+            containerClassName="w-fit relative me-auto order-3 xl:order-none"
             className="input input-bordered w-96"
             block={false}
             value={search}
@@ -104,7 +105,7 @@ function ProductsCategoriesList() {
               </button>
             </div>
           </Popover>
-          <Link to="./create" className="btn btn-secondary">
+          <Link to="./create" className="btn btn-secondary ms-auto xl:ms-0">
             <Plus />
             افزودن دسته‌بندی جدید
           </Link>
@@ -113,14 +114,14 @@ function ProductsCategoriesList() {
           <div className="mt-6 mb-36 xl:mb-24">
             <div className="rounded-custom border border-grey-200">
               <div className="flex items-center bg-secondary-50 rounded-t-custom justify-between p-4 xl:py-0">
-                <h3 className="text-sm xl:text-base w-full py-5">
+                <h3 className="text-sm xl:text-base w-full">
                   لیست دسته‌بندی محصولات
                 </h3>
               </div>
-              {/* <MobileWalletTable
-              wallet_transactions={walletTransactions?.data.results}
-              isLoading={isLoading}
-            /> */}
+              <MobileCategoriesTable
+                categories={categories?.data.results}
+                isLoading={isLoading}
+              />
             </div>
           </div>
         ) : (

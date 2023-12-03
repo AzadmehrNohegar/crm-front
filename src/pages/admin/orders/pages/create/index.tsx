@@ -188,7 +188,7 @@ function OrdersCreate() {
                     <td className="rounded-lg border border-grey-200 p-0 text-center">
                       {index + 1}
                     </td>
-                    <td className="rounded-lg border border-grey-200 w-1/3 p-0">
+                    <td className="rounded-lg border border-grey-200 w-1/3 min-w-[150px] p-0">
                       <Controller
                         control={control}
                         name={`order_item.${index}.product`}
@@ -228,7 +228,7 @@ function OrdersCreate() {
                         )}
                       />
                     </td>
-                    <td className="rounded-lg border border-grey-200 p-0">
+                    <td className="rounded-lg border border-grey-200 min-w-[150px] p-0">
                       <Controller
                         control={control}
                         name={`order_item.${index}.product_price`}
@@ -255,7 +255,7 @@ function OrdersCreate() {
                         )}
                       />
                     </td>
-                    <td className="rounded-lg border border-grey-200 p-0">
+                    <td className="rounded-lg border border-grey-200 min-w-[200px] p-0">
                       <div className="flex items-center gap-x-4">
                         <Controller
                           control={control}
@@ -309,7 +309,7 @@ function OrdersCreate() {
             افزودن مورد دیگر
           </button>
         </CollapseWrapper>
-        <div className="bg-white xl:bg-grey-50 shadow-ev3 xl:shadow-none p-5 rounded-custom flex flex-col gap-y-5">
+        <div className="bg-white xl:bg-grey-50 shadow-ev3 xl:shadow-none p-5 rounded-custom flex flex-col gap-y-5 mb-6 xl:mb-0">
           <h5 className="text-base font-semibold flex items-center gap-x-2">
             <span className="bg-grey-50 xl:bg-secondary p-1.5 rounded-lg text-grey-600 xl:text-white">
               <Bookmark size="small" />
@@ -317,8 +317,8 @@ function OrdersCreate() {
             فاکتور رسمی
           </h5>
           <p>
-            کاربر عزیز شما میتونید از این قسمت با پرداخت ۹ درصد مالیات ارزش بر
-            افزوده درخواست فاکتور رسمی داشته باشید.
+            با درخواست فاکتور رسمی ۹ درصد مالیات ارزش بر افزوده به هزینه‌های
+            پرداختی کاربر اضافه می‌شود.
           </p>
           <Checkbox
             label="درخواست فاکتور رسمی دارم"

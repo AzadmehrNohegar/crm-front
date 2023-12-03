@@ -143,7 +143,10 @@ function AuthLoginPassword({ changeStep, phone }: IAuthLoginPasswordProps) {
           },
         })}
       />
-      <button className="btn btn-primary btn-block mt-auto xl:mt-5">
+      <button
+        className="btn btn-primary btn-block mt-auto xl:mt-5"
+        disabled={passwordLogin.isLoading}
+      >
         ورود با رمز عبور
       </button>
 

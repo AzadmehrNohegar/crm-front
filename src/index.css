@@ -4,8 +4,8 @@
 
 @layer base {
   h1 {
-    @apply text-xl;
-    @apply leading-8;
+    @apply text-base xl:text-base;
+    @apply leading-6 xl:leading-8;
     @apply font-bold;
   }
   h2 {

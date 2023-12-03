@@ -22,7 +22,7 @@ function SupportList() {
   const debouncedSearch = useDebounce(search, 200);
 
   const { data: ticketsPagination, isLoading } = useQuery(
-    ["tickets-transactions", debouncedSearch, locationSearch],
+    ["tickets-pagination", debouncedSearch, locationSearch],
     () =>
       getTicketTickets({
         params: {
@@ -178,7 +178,9 @@ function SupportList() {
           <div className="mt-6 mb-36 xl:mb-24">
             <div className="rounded-custom border border-grey-200">
               <div className="flex items-center bg-grey-50 rounded-t-custom justify-between p-4 xl:py-0">
-                <h3 className="text-sm xl:text-base w-full">سفارشات</h3>
+                <h3 className="text-sm xl:text-base w-full">
+                  لیست تیکت پشتیبانی
+                </h3>
               </div>
               <MobileTicketsTable
                 tickets={ticketsPagination?.data.results}

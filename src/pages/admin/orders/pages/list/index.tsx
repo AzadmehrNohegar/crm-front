@@ -2,7 +2,7 @@ import { Checkbox } from "@/components/checkbox";
 import { Input } from "@/components/input";
 import { Popover, PopoverButton } from "@/components/popover";
 import { useState } from "react";
-import { Filter2, Search, Upload } from "react-iconly";
+import { Filter2, Search } from "react-iconly";
 import { useQuery } from "react-query";
 import { Link, useLocation, useSearchParams } from "react-router-dom";
 import { useDebounce, useMediaQuery } from "usehooks-ts";
@@ -47,10 +47,26 @@ function OrdersList() {
 
   return (
     <div className="relative">
-      <div className="flex items-center w-full gap-x-4 relative">
-        <button className="btn btn-success btn-square me-auto">
-          <Upload />
-        </button>
+      <div className="flex items-center w-full gap-4 relative flex-wrap xl:flex-nowrap">
+        <Input
+          name="search"
+          placeholder="جست و جو..."
+          containerClassName="w-fit relative me-auto order-3 xl:order-none"
+          className="input input-bordered w-96"
+          block={false}
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          onFocus={() => setSearch("")}
+          iconEnd={
+            <button
+              type="button"
+              className="absolute end-2 inset-y-auto btn btn-secondary btn-sm"
+            >
+              پیدا کن
+              <Search />
+            </button>
+          }
+        />
         <Popover
           popoverBtn={
             <PopoverButton className="btn btn-warning btn-square text-grey-800">
@@ -154,25 +170,13 @@ function OrdersList() {
             </button>
           </div>
         </Popover>
-        <Link to="create" className="btn btn-secondary">
+        <Link to="create" className="btn btn-secondary ms-auto xl:ms-0">
           <Plus />
           ایجاد سفارش جدید
         </Link>
       </div>
       {matches ? (
         <div className="mt-6 mb-36 xl:mb-24">
-          <Input
-            className="input input-bordered h-10 ms-auto input-ghost max-w-full w-96"
-            containerClassName="my-4"
-            placeholder="جست‌وجو"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            iconEnd={
-              <button className="btn btn-secondary btn-square btn-sm absolute end-1 inset-y-auto">
-                <Search size="small" />
-              </button>
-            }
-          />
           <div className="rounded-custom border border-grey-200">
             <div className="flex items-center bg-secondary-50 rounded-t-custom justify-between p-4 xl:py-0">
               <h3 className="text-sm xl:text-base w-full">سفارشات</h3>
@@ -186,19 +190,7 @@ function OrdersList() {
       ) : (
         <div className="mt-6 mb-36 xl:mb-24">
           <div className="flex items-center bg-secondary-50 rounded-t-custom justify-between px-4">
-            <h3 className="text-base w-full">سفارشات</h3>
-            <Input
-              className="input input-bordered h-10 ms-auto input-ghost max-w-full w-96"
-              containerClassName="my-4"
-              placeholder="جست‌وجو"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              iconEnd={
-                <button className="btn btn-secondary btn-square btn-sm absolute end-1 inset-y-auto">
-                  <Search />
-                </button>
-              }
-            />
+            <h3 className="text-base w-full py-5">سفارشات</h3>
           </div>
           <div className="overflow-x-auto">
             <OrdersTable

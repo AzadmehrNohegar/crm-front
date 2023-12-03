@@ -10,6 +10,7 @@ interface ISelectProps {
   options: string[] | number[];
   isBottom?: boolean;
   className?: string;
+  variant?: "primary" | "secondary";
 }
 
 function Select({
@@ -18,6 +19,7 @@ function Select({
   options,
   isBottom = false,
   className,
+  variant = "primary",
 }: ISelectProps) {
   return (
     <Listbox value={selected} onChange={setSelected}>
@@ -51,7 +53,11 @@ function Select({
                 key={optionIdx}
                 className={({ active }) =>
                   `relative cursor-default select-none py-2 pl-10 pr-4 ${
-                    active ? "bg-primary-100 text-primary-900" : "text-grey-900"
+                    active
+                      ? variant === "primary"
+                        ? "bg-primary-100 text-primary-900"
+                        : "bg-secondary-100 text-secondary-900"
+                      : "text-grey-900"
                   }`
                 }
                 value={option}
