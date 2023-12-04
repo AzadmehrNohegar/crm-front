@@ -11,6 +11,10 @@ function ProductsManagement() {
       <Route index element={<ProductsManagementListPage />} />
       <Route path="create" element={<ProductsManagementCreatePage />} />
       <Route path=":product_id" element={<ProductsManagementDetailsPage />} />
+      <Route
+        path=":product_id/edit"
+        element={<ProductsManagementCreatePage />}
+      />
     </Routes>
   );
 }

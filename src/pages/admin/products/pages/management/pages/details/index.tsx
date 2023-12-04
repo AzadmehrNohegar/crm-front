@@ -75,7 +75,10 @@ function ProductsManagementDetails() {
         >
           <Delete />
         </button>
-        <Link to="edit" className="btn btn-secondary btn-square">
+        <Link
+          to={`edit?type=${productDetails?.data.type}`}
+          className="btn btn-secondary btn-square"
+        >
           <Edit />
         </Link>
       </div>
