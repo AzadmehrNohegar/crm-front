@@ -37,8 +37,8 @@ function RadioSelect({
         <Listbox.Label className="text-grey-500 text-xs">{label}</Listbox.Label>
         <Listbox.Button
           className={clsx(
-            "relative w-full text-start cursor-default rounded-lg min-h-[46px] ps-4 pe-10 focus:outline-none focus:border-secondary-100 text-sm overflow-x-auto",
-            bordered && "border border-grey-200 focus:border-secondary-100"
+            "relative w-full text-start cursor-default rounded-lg min-h-[46px] ps-4 pe-10 focus:outline-none focus:border-info text-sm overflow-x-auto transition-colors",
+            bordered && "border border-grey-200 focus:border-info"
           )}
         >
           <span

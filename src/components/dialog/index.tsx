@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useRef } from "react";
 import { Dialog as HeadlessDialog, Transition } from "@headlessui/react";
 import clsx from "clsx";
 import { placement, size } from "@/model";
@@ -18,9 +18,12 @@ function Dialog({
   size = "standard",
   children,
 }: IDialogProps) {
+  const focusRef = useRef(null);
+
   return (
     <Transition appear show={isOpen} as={Fragment}>
       <HeadlessDialog
+        initialFocus={focusRef}
         as="div"
         className={clsx("relative z-50")}
         onClose={closeModal}
@@ -37,6 +40,7 @@ function Dialog({
           <div className="fixed inset-0 bg-grey-900 bg-opacity-80" />
         </Transition.Child>
         <div
+          ref={focusRef}
           className={clsx(
             "fixed  overflow-y-auto",
             placement === "top" && "inset-x-0 top-0",

@@ -174,7 +174,7 @@ function OrdersCreateAddAccountDialog({
             next={accountPagination?.data.next}
             page={+searchParams.get("page")! || 1}
             perPage={+searchParams.get("page_size")! || 10}
-            prev={accountPagination?.data.prev}
+            prev={accountPagination?.data.previous}
             setPage={(val) => {
               searchParams.set("page", String(val));
               setSearchParams(searchParams);

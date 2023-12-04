@@ -90,10 +90,12 @@ function NotificationCreate() {
       file: notificationData?.data.file,
       message: notificationData?.data.message,
       title: notificationData?.data.title,
-      type: {
-        id: notificationData?.data.type,
-        label: NOTIFICATION_TYPE_DB[notificationData?.data.type],
-      },
+      type: notificationData
+        ? {
+            id: notificationData?.data.type,
+            label: NOTIFICATION_TYPE_DB[notificationData?.data.type],
+          }
+        : null,
       user_type: notificationData?.data.user_type,
     },
   });
@@ -166,8 +168,8 @@ function NotificationCreate() {
       >
         <Input
           type="text"
-          placeholder="نام دسته‌بندی را وارد کنید"
-          label="نام دسته‌بندی"
+          placeholder="موضوع را وارد کنید"
+          label="موضوع"
           className="input input-bordered w-full"
           error={errors.title}
           iconEnd={
@@ -213,10 +215,7 @@ function NotificationCreate() {
                 variant="secondary"
                 containerClassName="w-full"
                 options={NOTIFICATION_TYPES}
-                selected={{
-                  id: value?.id || "",
-                  label: value?.label || "یک گزینه را انتخاب کنید",
-                }}
+                selected={value}
                 setSelected={(option) => onChange(option)}
               />
             )}

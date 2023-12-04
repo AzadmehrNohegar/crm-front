@@ -3,7 +3,6 @@ import { Plus } from "@/assets/icons/Plus";
 import { Checkbox } from "@/components/checkbox";
 import { DatePicker } from "@/components/datepicker";
 import { Input } from "@/components/input";
-import { Popover, PopoverButton } from "@/components/popover";
 import { Pagination } from "@/shared/pagination";
 import { Fragment, useState } from "react";
 import { Filter2, Search, Wallet as WalletIcon } from "react-iconly";
@@ -15,8 +14,11 @@ import { getAccountMyProfile } from "@/api/account";
 import { WalletTable } from "./partials/walletTable";
 import Skeleton from "react-loading-skeleton";
 import { MobileWalletTable } from "./partials/mobileWalletTable";
+import { FilterDialog } from "@/shared/filterDialog";
 
 function Wallet() {
+  const [isFilterDialogOpen, setIsFilterDialogOpen] = useState(false);
+
   const [searchParams, setSearchParams] = useSearchParams();
   const { search: locationSearch } = useLocation();
 
@@ -50,7 +52,10 @@ function Wallet() {
             ? { date: searchParams.get("date") || "" }
             : {}),
         },
-      })
+      }),
+    {
+      keepPreviousData: true,
+    }
   );
 
   return (
@@ -71,91 +76,13 @@ function Wallet() {
               تومان
             </span>
           </span>
-          <Popover
-            popoverBtn={
-              <PopoverButton className="btn btn-warning btn-square text-grey-800">
-                <Filter2 />
-              </PopoverButton>
-            }
-            className="w-full top-full rounded-lg shadow-ev3 inset-x-0"
+          <button
+            className="btn btn-warning btn-square text-grey-800"
+            onClick={() => setIsFilterDialogOpen(true)}
           >
-            <div className="flex flex-wrap py-4 gap-4">
-              <div className="flex flex-wrap items-start gap-x-2 gap-y-4 pe-4 border-e border-e-grey-200">
-                <DatePicker
-                  value={new Date(searchParams.get("date") || "")}
-                  onChange={(val) => {
-                    searchParams.set(
-                      "date",
-                      new Intl.DateTimeFormat("fa-IR", {
-                        dateStyle: "short",
-                        calendar: "gregory",
-                        numberingSystem: "latn",
-                      })
-                        .format(new Date((val?.valueOf() as number) || ""))
-                        .replace(/\//g, "-")
-                    );
-                    setSearchParams(searchParams);
-                  }}
-                  containerClassName="w-full min-w-[350px]"
-                  id="date"
-                  placeholder="تاریخ مورد نظر را انتخاب کنید."
-                />
-              </div>
-              <div className="flex items-center gap-x-4 flex-wrap xl:flex-nowrap gap-y-2">
-                <span className="font-semibold basis-full xl:basis-auto">
-                  وضعیت:
-                </span>
-                <Checkbox
-                  label="موفق"
-                  containerClassName="w-fit"
-                  checked={searchParams.get("status") === "success"}
-                  onChange={(e) => {
-                    if (e.currentTarget.checked) {
-                      searchParams.set("status", "success");
-                      setSearchParams(searchParams);
-                    } else {
-                      searchParams.delete("status");
-                      setSearchParams(searchParams);
-                    }
-                  }}
-                />
-                <Checkbox
-                  label="درحال بررسی"
-                  containerClassName="w-fit"
-                  checked={searchParams.get("status") === "pending"}
-                  onChange={(e) => {
-                    if (e.currentTarget.checked) {
-                      searchParams.set("status", "pending");
-                      setSearchParams(searchParams);
-                    } else {
-                      searchParams.delete("status");
-                      setSearchParams(searchParams);
-                    }
-                  }}
-                />
-                <Checkbox
-                  label="ناموفق"
-                  containerClassName="w-fit"
-                  checked={searchParams.get("status") === "failed"}
-                  onChange={(e) => {
-                    if (e.currentTarget.checked) {
-                      searchParams.set("status", "failed");
-                      setSearchParams(searchParams);
-                    } else {
-                      searchParams.delete("status");
-                      setSearchParams(searchParams);
-                    }
-                  }}
-                />
-              </div>
-              <button
-                className="btn text-primary btn-link decoration-transparent ms-auto"
-                onClick={() => setSearchParams("")}
-              >
-                پاکسازی فیلتر
-              </button>
-            </div>
-          </Popover>
+            <Filter2 />
+          </button>
+
           <button
             className="ms-auto xl:ms-0 btn btn-primary"
             onClick={() => setIsCreateWalletTransactionDialogOpen(true)}
@@ -217,7 +144,7 @@ function Wallet() {
         next={walletTransactions?.data.next}
         page={+searchParams.get("page")! || 1}
         perPage={+searchParams.get("page_size")! || 10}
-        prev={walletTransactions?.data.prev}
+        prev={walletTransactions?.data.previous}
         setPage={(val) => {
           searchParams.set("page", String(val));
           setSearchParams(searchParams);
@@ -233,6 +160,81 @@ function Wallet() {
         closeModal={() => setIsCreateWalletTransactionDialogOpen(false)}
         customer={userProfile?.data.customer?.id}
       />
+      <FilterDialog
+        isOpen={isFilterDialogOpen}
+        closeModal={() => setIsFilterDialogOpen(false)}
+      >
+        <div className="flex flex-wrap py-4 gap-4">
+          <div className="flex flex-wrap items-start gap-x-2 gap-y-4 pe-4 border-e border-e-grey-200">
+            <DatePicker
+              value={new Date(searchParams.get("date") || "")}
+              onChange={(val) => {
+                searchParams.set(
+                  "date",
+                  new Intl.DateTimeFormat("fa-IR", {
+                    dateStyle: "short",
+                    calendar: "gregory",
+                    numberingSystem: "latn",
+                  })
+                    .format(new Date((val?.valueOf() as number) || ""))
+                    .replace(/\//g, "-")
+                );
+                setSearchParams(searchParams);
+              }}
+              containerClassName="w-full min-w-[350px]"
+              id="date"
+              placeholder="تاریخ مورد نظر را انتخاب کنید."
+            />
+          </div>
+          <div className="flex items-center gap-x-4 flex-wrap xl:flex-nowrap gap-y-2">
+            <span className="font-semibold basis-full xl:basis-auto">
+              وضعیت:
+            </span>
+            <Checkbox
+              label="موفق"
+              containerClassName="w-fit"
+              checked={searchParams.get("status") === "success"}
+              onChange={(e) => {
+                if (e.currentTarget.checked) {
+                  searchParams.set("status", "success");
+                  setSearchParams(searchParams);
+                } else {
+                  searchParams.delete("status");
+                  setSearchParams(searchParams);
+                }
+              }}
+            />
+            <Checkbox
+              label="درحال بررسی"
+              containerClassName="w-fit"
+              checked={searchParams.get("status") === "pending"}
+              onChange={(e) => {
+                if (e.currentTarget.checked) {
+                  searchParams.set("status", "pending");
+                  setSearchParams(searchParams);
+                } else {
+                  searchParams.delete("status");
+                  setSearchParams(searchParams);
+                }
+              }}
+            />
+            <Checkbox
+              label="ناموفق"
+              containerClassName="w-fit"
+              checked={searchParams.get("status") === "failed"}
+              onChange={(e) => {
+                if (e.currentTarget.checked) {
+                  searchParams.set("status", "failed");
+                  setSearchParams(searchParams);
+                } else {
+                  searchParams.delete("status");
+                  setSearchParams(searchParams);
+                }
+              }}
+            />
+          </div>
+        </div>
+      </FilterDialog>
     </Fragment>
   );
 }

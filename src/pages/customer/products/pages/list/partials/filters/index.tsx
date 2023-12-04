@@ -72,8 +72,10 @@ function ProductListFilters() {
       </div>
 
       <div className="flex flex-col">
-        <h5 className="text-sm font-bold text-primary mb-2 bg-clip-content relative after:absolute after:w-3/4 after:h-px after:inset-y-1/2 after:left-0 after:bg-primary">
-          دسته‌بندی‌ها
+        <h5 className="text-sm font-bold text-primary mb-2 bg-clip-content relative after:absolute after:w-full after:h-px after:inset-y-1/2 after:left-0 after:bg-primary">
+          <span className="bg-white inline-block relative z-[1] pe-2">
+            دسته‌بندی‌ها
+          </span>
         </h5>
         <Checkbox
           label="انتخاب همه"
@@ -107,8 +109,10 @@ function ProductListFilters() {
         )}
       </div>
       <div className="flex flex-col">
-        <h5 className="text-sm font-bold text-primary mb-2 bg-clip-content relative after:absolute after:w-[70%] after:h-px after:inset-y-1/2 after:left-0 after:bg-primary">
-          محدوده قیمت
+        <h5 className="text-sm font-bold text-primary mb-2 bg-clip-content relative after:absolute after:w-full after:h-px after:inset-y-1/2 after:left-0 after:bg-primary">
+          <span className="bg-white inline-block relative z-[1] pe-2">
+            محدوده قیمت
+          </span>
         </h5>
         <RangeSlider
           min={0}
@@ -124,8 +128,10 @@ function ProductListFilters() {
         </div>
       </div>
       <div className="flex flex-col">
-        <h5 className="text-sm font-bold text-primary mb-2 bg-clip-content relative after:absolute after:w-[85%] after:h-px after:inset-y-1/2 after:left-0 after:bg-primary">
-          برند ها
+        <h5 className="text-sm font-bold text-primary mb-2 bg-clip-content relative after:absolute after:w-full after:h-px after:inset-y-1/2 after:left-0 after:bg-primary">
+          <span className="bg-white inline-block relative z-[1] pe-2">
+            برند ها
+          </span>
         </h5>
         <Input
           className="input input-bordered w-full"

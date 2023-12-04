@@ -51,11 +51,12 @@ function Pagination({
         containerClassName
       )}
     >
-      <div className="flex justify-center xl:justify-normal order-3 xl:order-none text-sm items-center gap-x-2 p-2 rounded-xl basis-full xl:basis-auto">
+      <div className="flex justify-center xl:justify-normal order-4 xl:order-none text-sm items-center gap-x-2 p-2 rounded-xl basis-full xl:basis-auto">
         <button
           type="button"
           className="btn btn-sm xl:btn-md btn-square btn-ghost"
-          disabled
+          disabled={!prev}
+          onClick={() => setPage(1)}
         >
           <DoubleArrowRight />
         </button>
@@ -93,7 +94,8 @@ function Pagination({
         <button
           type="button"
           className="btn btn-sm xl:btn-md btn-square btn-ghost"
-          disabled
+          disabled={!next}
+          onClick={() => setPage(Math.ceil(count / perPage))}
         >
           <DoubleArrowLeft />
         </button>
@@ -103,7 +105,7 @@ function Pagination({
         <Input
           name="page"
           className="input input-bordered max-w-[50px] text-sm"
-          value={searchParams.get("page") || ""}
+          value={searchParams.get("page") || "1"}
           onChange={(e) => {
             if (e.target.value) {
               searchParams.set("page", e.target.value);

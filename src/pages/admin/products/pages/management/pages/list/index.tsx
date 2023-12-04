@@ -5,15 +5,17 @@ import { Filter2, Plus, Search } from "react-iconly";
 import { useQuery } from "react-query";
 import { useLocation, useSearchParams } from "react-router-dom";
 import { useDebounce, useMediaQuery } from "usehooks-ts";
-import { Popover, PopoverButton } from "@/components/popover";
 import { Pagination } from "@/shared/pagination";
 import { RadioSelect } from "@/components/radioSelect";
 import { category } from "@/model";
 import { ManagementTable } from "./partials/managementTable";
 import { ManagementSelectTypeDialog } from "./partials/managementSelectTypeDialog";
 import { MobileManagementTable } from "./partials/mobileManagementTable";
+import { FilterDialog } from "@/shared/filterDialog";
 
 function ProductsManagementList() {
+  const [isFilterDialogOpen, setIsFilterDialogOpen] = useState(false);
+
   const matches = useMediaQuery("(max-width: 1280px)");
 
   const [
@@ -52,7 +54,10 @@ function ProductsManagementList() {
               }
             : {}),
         },
-      })
+      }),
+    {
+      keepPreviousData: true,
+    }
   );
 
   return (
@@ -62,7 +67,7 @@ function ProductsManagementList() {
           <Input
             name="search"
             placeholder="جست و جو..."
-            containerClassName="w-fit relative me-auto order-3 xl:order-none"
+            containerClassName="w-fit relative me-auto order-4 xl:order-none"
             className="input input-bordered w-96"
             block={false}
             value={search}
@@ -78,42 +83,12 @@ function ProductsManagementList() {
               </button>
             }
           />
-          <Popover
-            popoverBtn={
-              <PopoverButton className="btn btn-warning btn-square text-grey-800">
-                <Filter2 />
-              </PopoverButton>
-            }
-            className="w-full top-full rounded-lg shadow-ev3 inset-x-0"
+          <button
+            className="btn btn-warning btn-square text-grey-800"
+            onClick={() => setIsFilterDialogOpen(true)}
           >
-            <div className="flex flex-wrap py-4 gap-4">
-              <RadioSelect
-                variant="secondary"
-                containerClassName="w-full"
-                options={categories?.data.results.map((item: category) => ({
-                  id: item.id,
-                  label: item.name,
-                }))}
-                selected={{
-                  id: searchParams.get("category__id") || "",
-                  label:
-                    searchParams.get("category__slug") ||
-                    "یک دسته‌بندی را انتخاب کنید",
-                }}
-                setSelected={(option) => {
-                  searchParams.set("category__id", option?.id as string);
-                  searchParams.set("category__slug", option?.label as string);
-                  setSearchParams(searchParams);
-                }}
-              />
-              <button
-                className="btn text-primary btn-link decoration-transparent ms-auto"
-                onClick={() => setSearchParams("")}
-              >
-                پاکسازی فیلتر
-              </button>
-            </div>
-          </Popover>
+            <Filter2 />
+          </button>
           <button
             onClick={() => setIsManagemenetSelectTypeDialogOpen(true)}
             className="btn btn-secondary ms-auto xl:ms-0"
@@ -151,7 +126,7 @@ function ProductsManagementList() {
         next={productsPagination?.data.next}
         page={+searchParams.get("page")! || 1}
         perPage={+searchParams.get("page_size")! || 10}
-        prev={productsPagination?.data.prev}
+        prev={productsPagination?.data.previous}
         setPage={(val) => {
           searchParams.set("page", String(val));
           setSearchParams(searchParams);
@@ -166,6 +141,36 @@ function ProductsManagementList() {
         isOpen={isManagemenetSelectTypeDialogOpen}
         closeModal={() => setIsManagemenetSelectTypeDialogOpen(false)}
       />
+      <FilterDialog
+        isOpen={isFilterDialogOpen}
+        closeModal={() => setIsFilterDialogOpen(false)}
+      >
+        <div className="flex flex-wrap py-4 gap-4">
+          <RadioSelect
+            variant="secondary"
+            containerClassName="w-full"
+            options={categories?.data.results.map((item: category) => ({
+              id: item.id,
+              label: item.name,
+            }))}
+            selected={
+              searchParams.get("category__id")
+                ? {
+                    id: searchParams.get("category__id") || "",
+                    label:
+                      searchParams.get("category__slug") ||
+                      "یک دسته‌بندی را انتخاب کنید",
+                  }
+                : null
+            }
+            setSelected={(option) => {
+              searchParams.set("category__id", option?.id as string);
+              searchParams.set("category__slug", option?.label as string);
+              setSearchParams(searchParams);
+            }}
+          />
+        </div>
+      </FilterDialog>
     </Fragment>
   );
 }

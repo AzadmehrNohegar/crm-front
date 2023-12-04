@@ -6,13 +6,15 @@ import { useDebounce, useMediaQuery } from "usehooks-ts";
 import { CustomersTable } from "./partials/customersTable";
 import { Pagination } from "@/shared/pagination";
 import { Checkbox } from "@/components/checkbox";
-import { Popover, PopoverButton } from "@/components/popover";
 import { Filter2, Search } from "react-iconly";
 import { Input } from "@/components/input";
 import { Plus } from "@/assets/icons/Plus";
 import { MobileCustomersTable } from "./partials/mobileCustomersTable";
+import { FilterDialog } from "@/shared/filterDialog";
 
 function CustomersList() {
+  const [isFilterDialogOpen, setIsFilterDialogOpen] = useState(false);
+
   const matches = useMediaQuery("(max-width: 1280px)");
 
   const [search, setSearch] = useState("");
@@ -43,7 +45,10 @@ function CustomersList() {
               }
             : {}),
         },
-      })
+      }),
+    {
+      keepPreviousData: true,
+    }
   );
   return (
     <Fragment>
@@ -51,7 +56,7 @@ function CustomersList() {
         <Input
           name="search"
           placeholder="جست و جو..."
-          containerClassName="w-fit relative order-3 xl:order-none me-auto"
+          containerClassName="w-fit relative order-4 xl:order-none me-auto"
           className="input input-bordered w-96"
           block={false}
           value={search}
@@ -67,95 +72,13 @@ function CustomersList() {
             </button>
           }
         />
-        <Popover
-          popoverBtn={
-            <PopoverButton className="btn btn-warning btn-square text-grey-800">
-              <Filter2 />
-            </PopoverButton>
-          }
-          className="w-full top-full rounded-lg shadow-ev3 inset-x-0"
+        <button
+          className="btn btn-warning btn-square text-grey-800"
+          onClick={() => setIsFilterDialogOpen(true)}
         >
-          <div className="flex flex-wrap py-4 gap-4">
-            <div className="flex items-center gap-x-4 flex-wrap xl:flex-nowrap gap-y-2">
-              <span className="font-semibold basis-full xl:basis-auto">
-                نوع کاربر:
-              </span>
-              <Checkbox
-                label="حقیقی"
-                className="checkbox-accent"
-                containerClassName="w-fit"
-                checked={searchParams.get("account__contract_type") === "REAL"}
-                onChange={(e) => {
-                  if (e.currentTarget.checked) {
-                    searchParams.set("account__contract_type", "REAL");
-                    setSearchParams(searchParams);
-                  } else {
-                    searchParams.delete("account__contract_type");
-                    setSearchParams(searchParams);
-                  }
-                }}
-              />
-              <Checkbox
-                label="حقوقی"
-                className="checkbox-accent"
-                containerClassName="w-fit"
-                checked={
-                  searchParams.get("account__contract_type") === "JURIDICAL"
-                }
-                onChange={(e) => {
-                  if (e.currentTarget.checked) {
-                    searchParams.set("account__contract_type", "JURIDICAL");
-                    setSearchParams(searchParams);
-                  } else {
-                    searchParams.delete("account__contract_type");
-                    setSearchParams(searchParams);
-                  }
-                }}
-              />
-            </div>
-            <div className="flex items-center gap-x-4 flex-wrap xl:flex-nowrap gap-y-2">
-              <span className="font-semibold basis-full xl:basis-auto">
-                وضعیت:
-              </span>
-              <Checkbox
-                label="تایید شده"
-                className="checkbox-accent"
-                containerClassName="w-fit"
-                checked={searchParams.get("is_verified") === "true"}
-                onChange={(e) => {
-                  if (e.currentTarget.checked) {
-                    searchParams.set("is_verified", "true");
-                    setSearchParams(searchParams);
-                  } else {
-                    searchParams.delete("is_verified");
-                    setSearchParams(searchParams);
-                  }
-                }}
-              />
-              <Checkbox
-                label="در انتظار تایید"
-                className="checkbox-accent"
-                containerClassName="w-fit"
-                checked={searchParams.get("is_verified") === "false"}
-                onChange={(e) => {
-                  if (e.currentTarget.checked) {
-                    searchParams.set("is_verified", "false");
-                    setSearchParams(searchParams);
-                  } else {
-                    searchParams.delete("is_verified");
-                    setSearchParams(searchParams);
-                  }
-                }}
-              />
-            </div>
-            <button
-              className="btn text-primary btn-link decoration-transparent ms-auto"
-              onClick={() => setSearchParams("")}
-            >
-              پاکسازی فیلتر
-            </button>
-          </div>
-        </Popover>
+          <Filter2 />
+        </button>
+
         <Link to="create" className="btn btn-secondary ms-auto xl:ms-0">
           <Plus />
           افزودن کاربر جدید
@@ -181,7 +104,7 @@ function CustomersList() {
           next={accountPagination?.data.next}
           page={+searchParams.get("page")! || 1}
           perPage={+searchParams.get("page_size")! || 10}
-          prev={accountPagination?.data.prev}
+          prev={accountPagination?.data.previous}
           setPage={(val) => {
             searchParams.set("page", String(val));
             setSearchParams(searchParams);
@@ -193,6 +116,85 @@ function CustomersList() {
           }}
         />
       </div>
+      <FilterDialog
+        isOpen={isFilterDialogOpen}
+        closeModal={() => setIsFilterDialogOpen(false)}
+      >
+        <div className="flex flex-wrap py-4 gap-4">
+          <div className="flex items-center gap-x-4 flex-wrap xl:flex-nowrap gap-y-2">
+            <span className="font-semibold basis-full xl:basis-auto">
+              نوع کاربر:
+            </span>
+            <Checkbox
+              label="حقیقی"
+              className="checkbox-accent"
+              containerClassName="w-fit"
+              checked={searchParams.get("account__contract_type") === "REAL"}
+              onChange={(e) => {
+                if (e.currentTarget.checked) {
+                  searchParams.set("account__contract_type", "REAL");
+                  setSearchParams(searchParams);
+                } else {
+                  searchParams.delete("account__contract_type");
+                  setSearchParams(searchParams);
+                }
+              }}
+            />
+            <Checkbox
+              label="حقوقی"
+              className="checkbox-accent"
+              containerClassName="w-fit"
+              checked={
+                searchParams.get("account__contract_type") === "JURIDICAL"
+              }
+              onChange={(e) => {
+                if (e.currentTarget.checked) {
+                  searchParams.set("account__contract_type", "JURIDICAL");
+                  setSearchParams(searchParams);
+                } else {
+                  searchParams.delete("account__contract_type");
+                  setSearchParams(searchParams);
+                }
+              }}
+            />
+          </div>
+          <div className="flex items-center gap-x-4 flex-wrap xl:flex-nowrap gap-y-2">
+            <span className="font-semibold basis-full xl:basis-auto">
+              وضعیت:
+            </span>
+            <Checkbox
+              label="تایید شده"
+              className="checkbox-accent"
+              containerClassName="w-fit"
+              checked={searchParams.get("is_verified") === "true"}
+              onChange={(e) => {
+                if (e.currentTarget.checked) {
+                  searchParams.set("is_verified", "true");
+                  setSearchParams(searchParams);
+                } else {
+                  searchParams.delete("is_verified");
+                  setSearchParams(searchParams);
+                }
+              }}
+            />
+            <Checkbox
+              label="در انتظار تایید"
+              className="checkbox-accent"
+              containerClassName="w-fit"
+              checked={searchParams.get("is_verified") === "false"}
+              onChange={(e) => {
+                if (e.currentTarget.checked) {
+                  searchParams.set("is_verified", "false");
+                  setSearchParams(searchParams);
+                } else {
+                  searchParams.delete("is_verified");
+                  setSearchParams(searchParams);
+                }
+              }}
+            />
+          </div>
+        </div>
+      </FilterDialog>
     </Fragment>
   );
 }

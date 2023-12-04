@@ -78,8 +78,8 @@ function AuthLoginCredentials({
         type="text"
         className={clsx(
           "input input-bordered w-full ltr text-end",
-          isValid && "border-success focus:outline-success-100",
-          !isValid && isDirty && "border-danger focus:outline-danger-100"
+          isValid && "border-success focus:border-success-100",
+          !isValid && isDirty && "border-danger focus:border-danger-100"
         )}
         label="شماره موبایل"
         placeholder="شماره موبایل را وارد کنید"

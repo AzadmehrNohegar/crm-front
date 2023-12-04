@@ -74,7 +74,7 @@ function ProductsCategoriesCreate() {
     },
     values: {
       image: categoryData?.data.image,
-      is_active: `${categoryData?.data.is_active}`,
+      is_active: `${categoryData ? categoryData?.data.is_active : false}`,
       name: categoryData?.data.name,
       parent_category: {
         id: categoryData?.data.parent_category?.id || "",
@@ -261,10 +261,12 @@ function ProductsCategoriesCreate() {
                     label: item?.name,
                   }))
                 )}
-                selected={{
-                  id: value?.id || "",
-                  label: value?.label || "بدون سرگروه",
-                }}
+                selected={
+                  value || {
+                    id: "",
+                    label: "بدون سرگروه",
+                  }
+                }
                 setSelected={(option) => onChange(option)}
               />
             )}

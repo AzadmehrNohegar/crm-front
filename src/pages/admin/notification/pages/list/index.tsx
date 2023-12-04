@@ -4,15 +4,17 @@ import { Filter2, Plus, Search } from "react-iconly";
 import { useQuery } from "react-query";
 import { Link, useLocation, useSearchParams } from "react-router-dom";
 import { useDebounce, useMediaQuery } from "usehooks-ts";
-import { Popover, PopoverButton } from "@/components/popover";
 import { Checkbox } from "@/components/checkbox";
 import { getNotificationNotification } from "@/api/notification";
 import { NotificationTable } from "./partials/notificationTable";
 import { Pagination } from "@/shared/pagination";
 import { DatePicker } from "@/components/datepicker";
 import { MobileNotificationTable } from "./partials/mobileNotificationTable";
+import { FilterDialog } from "@/shared/filterDialog";
 
 function NotificationList() {
+  const [isFilterDialogOpen, setIsFilterDialogOpen] = useState(false);
+
   const matches = useMediaQuery("(max-width: 1280px)");
   const { search: locationSearch } = useLocation();
 
@@ -39,7 +41,10 @@ function NotificationList() {
             ? { user_type: searchParams.get("user_type") || "" }
             : {}),
         },
-      })
+      }),
+    {
+      keepPreviousData: true,
+    }
   );
 
   return (
@@ -49,7 +54,7 @@ function NotificationList() {
           <Input
             name="search"
             placeholder="جست و جو..."
-            containerClassName="w-fit relative me-auto order-3 xl:order-none"
+            containerClassName="w-fit relative me-auto order-4 xl:order-none"
             className="input input-bordered w-96"
             block={false}
             value={search}
@@ -65,94 +70,13 @@ function NotificationList() {
               </button>
             }
           />
-          <Popover
-            popoverBtn={
-              <PopoverButton className="btn btn-warning btn-square text-grey-800">
-                <Filter2 />
-              </PopoverButton>
-            }
-            className="w-full top-full rounded-lg shadow-ev3 inset-x-0"
+          <button
+            className="btn btn-warning btn-square text-grey-800"
+            onClick={() => setIsFilterDialogOpen(true)}
           >
-            <div className="flex flex-wrap py-4 gap-4">
-              <div className="flex flex-wrap items-start gap-x-2 gap-y-4 pe-4 border-e border-e-grey-200">
-                <DatePicker
-                  value={new Date(searchParams.get("date") || "")}
-                  onChange={(val) => {
-                    searchParams.set(
-                      "date",
-                      new Intl.DateTimeFormat("fa-IR", {
-                        dateStyle: "short",
-                        calendar: "gregory",
-                        numberingSystem: "latn",
-                      })
-                        .format(new Date((val?.valueOf() as number) || ""))
-                        .replace(/\//g, "-")
-                    );
-                    setSearchParams(searchParams);
-                  }}
-                  containerClassName="w-full min-w-[350px]"
-                  id="date"
-                  placeholder="تاریخ مورد نظر را انتخاب کنید."
-                />
-              </div>
-              <div className="flex items-center gap-x-4 flex-wrap xl:flex-nowrap gap-y-2">
-                <span className="font-semibold basis-full xl:basis-auto">
-                  وضعیت:
-                </span>
-                <Checkbox
-                  label="همه"
-                  containerClassName="w-fit"
-                  className="checkbox-accent"
-                  checked={searchParams.get("user_type") === "ALL"}
-                  onChange={(e) => {
-                    if (e.currentTarget.checked) {
-                      searchParams.set("user_type", "ALL");
-                      setSearchParams(searchParams);
-                    } else {
-                      searchParams.delete("is_active");
-                      setSearchParams(searchParams);
-                    }
-                  }}
-                />
-                <Checkbox
-                  label="حقیقی"
-                  containerClassName="w-fit"
-                  className="checkbox-accent"
-                  checked={searchParams.get("user_type") === "REAL"}
-                  onChange={(e) => {
-                    if (e.currentTarget.checked) {
-                      searchParams.set("user_type", "REAL");
-                      setSearchParams(searchParams);
-                    } else {
-                      searchParams.delete("is_active");
-                      setSearchParams(searchParams);
-                    }
-                  }}
-                />
-                <Checkbox
-                  label="حقوقی"
-                  containerClassName="w-fit"
-                  className="checkbox-accent"
-                  checked={searchParams.get("user_type") === "JURIDICAL"}
-                  onChange={(e) => {
-                    if (e.currentTarget.checked) {
-                      searchParams.set("user_type", "JURIDICAL");
-                      setSearchParams(searchParams);
-                    } else {
-                      searchParams.delete("is_active");
-                      setSearchParams(searchParams);
-                    }
-                  }}
-                />
-              </div>
-              <button
-                className="btn text-primary btn-link decoration-transparent ms-auto"
-                onClick={() => setSearchParams("")}
-              >
-                پاکسازی فیلتر
-              </button>
-            </div>
-          </Popover>
+            <Filter2 />
+          </button>
+
           <Link to="./create" className="btn btn-secondary ms-auto xl:ms-0">
             <Plus />
             افزودن پیام سیستم
@@ -189,7 +113,7 @@ function NotificationList() {
         next={notifications?.data.next}
         page={+searchParams.get("page")! || 1}
         perPage={+searchParams.get("page_size")! || 10}
-        prev={notifications?.data.prev}
+        prev={notifications?.data.previous}
         setPage={(val) => {
           searchParams.set("page", String(val));
           setSearchParams(searchParams);
@@ -200,6 +124,84 @@ function NotificationList() {
           setSearchParams(searchParams);
         }}
       />
+      <FilterDialog
+        isOpen={isFilterDialogOpen}
+        closeModal={() => setIsFilterDialogOpen(false)}
+      >
+        <div className="flex flex-wrap py-4 gap-4">
+          <div className="flex flex-wrap items-start gap-x-2 gap-y-4 pe-4 border-e border-e-grey-200">
+            <DatePicker
+              value={new Date(searchParams.get("date") || "")}
+              onChange={(val) => {
+                searchParams.set(
+                  "date",
+                  new Intl.DateTimeFormat("fa-IR", {
+                    dateStyle: "short",
+                    calendar: "gregory",
+                    numberingSystem: "latn",
+                  })
+                    .format(new Date((val?.valueOf() as number) || ""))
+                    .replace(/\//g, "-")
+                );
+                setSearchParams(searchParams);
+              }}
+              containerClassName="w-full min-w-[350px]"
+              id="date"
+              placeholder="تاریخ مورد نظر را انتخاب کنید."
+            />
+          </div>
+          <div className="flex items-center gap-x-4 flex-wrap xl:flex-nowrap gap-y-2">
+            <span className="font-semibold basis-full xl:basis-auto">
+              وضعیت:
+            </span>
+            <Checkbox
+              label="همه"
+              containerClassName="w-fit"
+              className="checkbox-accent"
+              checked={searchParams.get("user_type") === "ALL"}
+              onChange={(e) => {
+                if (e.currentTarget.checked) {
+                  searchParams.set("user_type", "ALL");
+                  setSearchParams(searchParams);
+                } else {
+                  searchParams.delete("is_active");
+                  setSearchParams(searchParams);
+                }
+              }}
+            />
+            <Checkbox
+              label="حقیقی"
+              containerClassName="w-fit"
+              className="checkbox-accent"
+              checked={searchParams.get("user_type") === "REAL"}
+              onChange={(e) => {
+                if (e.currentTarget.checked) {
+                  searchParams.set("user_type", "REAL");
+                  setSearchParams(searchParams);
+                } else {
+                  searchParams.delete("is_active");
+                  setSearchParams(searchParams);
+                }
+              }}
+            />
+            <Checkbox
+              label="حقوقی"
+              containerClassName="w-fit"
+              className="checkbox-accent"
+              checked={searchParams.get("user_type") === "JURIDICAL"}
+              onChange={(e) => {
+                if (e.currentTarget.checked) {
+                  searchParams.set("user_type", "JURIDICAL");
+                  setSearchParams(searchParams);
+                } else {
+                  searchParams.delete("is_active");
+                  setSearchParams(searchParams);
+                }
+              }}
+            />
+          </div>
+        </div>
+      </FilterDialog>
     </Fragment>
   );
 }

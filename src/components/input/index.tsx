@@ -45,7 +45,9 @@ const Input = forwardRef(
             ref={ref}
             className={clsx(
               className,
-              error && "border-danger focus:outline-danger-100"
+              "focus:outline-none transition-colors",
+              error && "focus:bg-info-50 border-danger",
+              !error && "focus:bg-info-50 focus:border-info"
             )}
             {...rest}
           />

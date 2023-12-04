@@ -83,6 +83,7 @@ function CustomersDetailsWalletTab() {
         }),
       {
         enabled: !!accountData,
+        keepPreviousData: true,
       }
     );
 
@@ -318,7 +319,7 @@ function CustomersDetailsWalletTab() {
         next={walletTransactions?.data.next}
         page={+searchParams.get("page")! || 1}
         perPage={+searchParams.get("page_size")! || 10}
-        prev={walletTransactions?.data.prev}
+        prev={walletTransactions?.data.previous}
         setPage={(val) => {
           searchParams.set("page", String(val));
           setSearchParams(searchParams);

@@ -6,11 +6,13 @@ import { useQuery } from "react-query";
 import { Link, useSearchParams } from "react-router-dom";
 import { useDebounce, useMediaQuery } from "usehooks-ts";
 import { CategoriesTable } from "./partials/categoriesTable";
-import { Popover, PopoverButton } from "@/components/popover";
 import { Checkbox } from "@/components/checkbox";
 import { MobileCategoriesTable } from "./partials/mobileCategoriesTable";
+import { FilterDialog } from "@/shared/filterDialog";
 
 function ProductsCategoriesList() {
+  const [isFilterDialogOpen, setIsFilterDialogOpen] = useState(false);
+
   const matches = useMediaQuery("(max-width: 1280px)");
 
   const [search, setSearch] = useState("");
@@ -37,7 +39,7 @@ function ProductsCategoriesList() {
           <Input
             name="search"
             placeholder="جست و جو..."
-            containerClassName="w-fit relative me-auto order-3 xl:order-none"
+            containerClassName="w-fit relative me-auto order-4 xl:order-none"
             className="input input-bordered w-96"
             block={false}
             value={search}
@@ -53,58 +55,12 @@ function ProductsCategoriesList() {
               </button>
             }
           />
-          <Popover
-            popoverBtn={
-              <PopoverButton className="btn btn-warning btn-square text-grey-800">
-                <Filter2 />
-              </PopoverButton>
-            }
-            className="w-full top-full rounded-lg shadow-ev3 inset-x-0"
+          <button
+            className="btn btn-warning btn-square text-grey-800"
+            onClick={() => setIsFilterDialogOpen(true)}
           >
-            <div className="flex flex-wrap py-4 gap-4">
-              <div className="flex items-center gap-x-4 flex-wrap xl:flex-nowrap gap-y-2">
-                <span className="font-semibold basis-full xl:basis-auto">
-                  وضعیت:
-                </span>
-                <Checkbox
-                  label="فعال"
-                  containerClassName="w-fit"
-                  className="checkbox-accent"
-                  checked={searchParams.get("is_active") === "true"}
-                  onChange={(e) => {
-                    if (e.currentTarget.checked) {
-                      searchParams.set("is_active", "true");
-                      setSearchParams(searchParams);
-                    } else {
-                      searchParams.delete("is_active");
-                      setSearchParams(searchParams);
-                    }
-                  }}
-                />
-                <Checkbox
-                  label="غیرفعال"
-                  containerClassName="w-fit"
-                  className="checkbox-accent"
-                  checked={searchParams.get("is_active") === "false"}
-                  onChange={(e) => {
-                    if (e.currentTarget.checked) {
-                      searchParams.set("is_active", "false");
-                      setSearchParams(searchParams);
-                    } else {
-                      searchParams.delete("is_active");
-                      setSearchParams(searchParams);
-                    }
-                  }}
-                />
-              </div>
-              <button
-                className="btn text-primary btn-link decoration-transparent ms-auto"
-                onClick={() => setSearchParams("")}
-              >
-                پاکسازی فیلتر
-              </button>
-            </div>
-          </Popover>
+            <Filter2 />
+          </button>
           <Link to="./create" className="btn btn-secondary ms-auto xl:ms-0">
             <Plus />
             افزودن دسته‌بندی جدید
@@ -138,6 +94,48 @@ function ProductsCategoriesList() {
           </div>
         )}
       </div>
+      <FilterDialog
+        isOpen={isFilterDialogOpen}
+        closeModal={() => setIsFilterDialogOpen(false)}
+      >
+        <div className="flex flex-wrap py-4 gap-4">
+          <div className="flex items-center gap-x-4 flex-wrap xl:flex-nowrap gap-y-2">
+            <span className="font-semibold basis-full xl:basis-auto">
+              وضعیت:
+            </span>
+            <Checkbox
+              label="فعال"
+              containerClassName="w-fit"
+              className="checkbox-accent"
+              checked={searchParams.get("is_active") === "true"}
+              onChange={(e) => {
+                if (e.currentTarget.checked) {
+                  searchParams.set("is_active", "true");
+                  setSearchParams(searchParams);
+                } else {
+                  searchParams.delete("is_active");
+                  setSearchParams(searchParams);
+                }
+              }}
+            />
+            <Checkbox
+              label="غیرفعال"
+              containerClassName="w-fit"
+              className="checkbox-accent"
+              checked={searchParams.get("is_active") === "false"}
+              onChange={(e) => {
+                if (e.currentTarget.checked) {
+                  searchParams.set("is_active", "false");
+                  setSearchParams(searchParams);
+                } else {
+                  searchParams.delete("is_active");
+                  setSearchParams(searchParams);
+                }
+              }}
+            />
+          </div>
+        </div>
+      </FilterDialog>
     </Fragment>
   );
 }

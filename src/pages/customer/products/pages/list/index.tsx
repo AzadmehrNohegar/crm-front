@@ -36,12 +36,15 @@ function ProductsList() {
             "product_price__price__lt"
           ),
         },
-      })
+      }),
+    {
+      keepPreviousData: true,
+    }
   );
 
   return (
     <Fragment>
-      <div className="flex items-stretch gap-x-4">
+      <div className="flex items-stretch gap-x-4 pb-0 xl:pb-24">
         {!matches ? <ProductListFilters /> : null}
         <div className="w-full xl:w-3/4 flex justify-start flex-wrap gap-4 h-fit mb-36 xl:mb-24 relative">
           <div className="basis-full flex justify-end w-full">
@@ -138,7 +141,7 @@ function ProductsList() {
         next={productsPagination?.data.next}
         page={+searchParams.get("page")! || 1}
         perPage={+searchParams.get("page_size")! || 9}
-        prev={productsPagination?.data.prev}
+        prev={productsPagination?.data.previous}
         setPage={(val) => {
           searchParams.set("page", String(val));
           setSearchParams(searchParams);

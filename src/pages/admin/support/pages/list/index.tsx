@@ -2,7 +2,6 @@ import { getTicketTickets } from "@/api/ticket";
 import { Plus } from "@/assets/icons/Plus";
 import { Checkbox } from "@/components/checkbox";
 import { Input } from "@/components/input";
-import { Popover, PopoverButton } from "@/components/popover";
 import { Fragment, useState } from "react";
 import { Filter2, Search } from "react-iconly";
 import { useQuery } from "react-query";
@@ -12,8 +11,11 @@ import { TicketsTable } from "./partials/ticketsTable";
 import { Pagination } from "@/shared/pagination";
 import { DatePicker } from "@/components/datepicker";
 import { MobileTicketsTable } from "./partials/mobileTicketsTable";
+import { FilterDialog } from "@/shared/filterDialog";
 
 function SupportList() {
+  const [isFilterDialogOpen, setIsFilterDialogOpen] = useState(false);
+
   const [searchParams, setSearchParams] = useSearchParams();
   const { search: locationSearch } = useLocation();
   const matches = useMediaQuery("(max-width: 1280px)");
@@ -39,11 +41,15 @@ function SupportList() {
             ? { date: searchParams.get("date") || "" }
             : {}),
         },
-      })
+      }),
+    {
+      keepPreviousData: true,
+    }
   );
 
   if (
     !isLoading &&
+    debouncedSearch === "" &&
     ticketsPagination?.data.results.length === 0 &&
     searchParams.toString() === ""
   )
@@ -61,11 +67,11 @@ function SupportList() {
   return (
     <Fragment>
       <div className="relative">
-        <div className="flex items-center w-full gap-x-4 relative justify-between">
+        <div className="flex flex-wrap xl:flex-nowrap items-center w-full gap-4 relative justify-between">
           <Input
             name="search"
             placeholder="جست و جو..."
-            containerClassName="w-fit relative hidden xl:block me-auto"
+            containerClassName="w-fit relative order-4 xl:order-none me-auto"
             className="input input-bordered w-96"
             block={false}
             value={search}
@@ -81,94 +87,13 @@ function SupportList() {
               </button>
             }
           />
-          <Popover
-            popoverBtn={
-              <PopoverButton className="btn btn-warning btn-square text-grey-800">
-                <Filter2 />
-              </PopoverButton>
-            }
-            className="w-full top-full rounded-lg shadow-ev3 inset-x-0"
+          <button
+            className="btn btn-warning btn-square text-grey-800"
+            onClick={() => setIsFilterDialogOpen(true)}
           >
-            <div className="flex flex-wrap py-4 gap-4">
-              <div className="flex flex-wrap items-start gap-x-2 gap-y-4 pe-4 border-e border-e-grey-200">
-                <DatePicker
-                  value={new Date(searchParams.get("date") || "")}
-                  onChange={(val) => {
-                    searchParams.set(
-                      "date",
-                      new Intl.DateTimeFormat("fa-IR", {
-                        dateStyle: "short",
-                        calendar: "gregory",
-                        numberingSystem: "latn",
-                      })
-                        .format(new Date((val?.valueOf() as number) || ""))
-                        .replace(/\//g, "-")
-                    );
-                    setSearchParams(searchParams);
-                  }}
-                  containerClassName="w-full min-w-[350px]"
-                  id="date"
-                  placeholder="تاریخ مورد نظر را انتخاب کنید."
-                />
-              </div>
-              <div className="flex items-center gap-x-4 flex-wrap xl:flex-nowrap gap-y-2">
-                <span className="font-semibold basis-full xl:basis-auto">
-                  وضعیت:
-                </span>
-                <Checkbox
-                  label="جدید"
-                  className="checkbox-accent"
-                  containerClassName="w-fit"
-                  checked={searchParams.get("status") === "new"}
-                  onChange={(e) => {
-                    if (e.currentTarget.checked) {
-                      searchParams.set("status", "new");
-                      setSearchParams(searchParams);
-                    } else {
-                      searchParams.delete("status");
-                      setSearchParams(searchParams);
-                    }
-                  }}
-                />
-                <Checkbox
-                  label="درحال بررسی"
-                  className="checkbox-accent"
-                  containerClassName="w-fit"
-                  checked={searchParams.get("status") === "processing"}
-                  onChange={(e) => {
-                    if (e.currentTarget.checked) {
-                      searchParams.set("status", "processing");
-                      setSearchParams(searchParams);
-                    } else {
-                      searchParams.delete("status");
-                      setSearchParams(searchParams);
-                    }
-                  }}
-                />
-                <Checkbox
-                  label="بسته شده"
-                  className="checkbox-accent"
-                  containerClassName="w-fit"
-                  checked={searchParams.get("status") === "closed"}
-                  onChange={(e) => {
-                    if (e.currentTarget.checked) {
-                      searchParams.set("status", "closed");
-                      setSearchParams(searchParams);
-                    } else {
-                      searchParams.delete("status");
-                      setSearchParams(searchParams);
-                    }
-                  }}
-                />
-              </div>
-              <button
-                className="btn text-primary btn-link decoration-transparent ms-auto"
-                onClick={() => setSearchParams("")}
-              >
-                پاکسازی فیلتر
-              </button>
-            </div>
-          </Popover>
+            <Filter2 />
+          </button>
+
           <Link to="./create" className="btn btn-secondary">
             <Plus />
             تیکت پشتیبانی جدید
@@ -207,7 +132,7 @@ function SupportList() {
         next={ticketsPagination?.data.next}
         page={+searchParams.get("page")! || 1}
         perPage={+searchParams.get("page_size")! || 10}
-        prev={ticketsPagination?.data.prev}
+        prev={ticketsPagination?.data.previous}
         setPage={(val) => {
           searchParams.set("page", String(val));
           setSearchParams(searchParams);
@@ -218,6 +143,84 @@ function SupportList() {
           setSearchParams(searchParams);
         }}
       />
+      <FilterDialog
+        isOpen={isFilterDialogOpen}
+        closeModal={() => setIsFilterDialogOpen(false)}
+      >
+        <div className="flex flex-wrap py-4 gap-4 h-fit">
+          <div className="flex flex-wrap items-start gap-x-2 gap-y-4 pe-4 border-e border-e-grey-200">
+            <DatePicker
+              value={new Date(searchParams.get("date") || "")}
+              onChange={(val) => {
+                searchParams.set(
+                  "date",
+                  new Intl.DateTimeFormat("fa-IR", {
+                    dateStyle: "short",
+                    calendar: "gregory",
+                    numberingSystem: "latn",
+                  })
+                    .format(new Date((val?.valueOf() as number) || ""))
+                    .replace(/\//g, "-")
+                );
+                setSearchParams(searchParams);
+              }}
+              containerClassName="w-full min-w-[350px]"
+              id="date"
+              placeholder="تاریخ مورد نظر را انتخاب کنید."
+            />
+          </div>
+          <div className="flex items-center gap-x-4 flex-wrap xl:flex-nowrap gap-y-2">
+            <span className="font-semibold basis-full xl:basis-auto">
+              وضعیت:
+            </span>
+            <Checkbox
+              label="جدید"
+              className="checkbox-accent"
+              containerClassName="w-fit"
+              checked={searchParams.get("status") === "new"}
+              onChange={(e) => {
+                if (e.currentTarget.checked) {
+                  searchParams.set("status", "new");
+                  setSearchParams(searchParams);
+                } else {
+                  searchParams.delete("status");
+                  setSearchParams(searchParams);
+                }
+              }}
+            />
+            <Checkbox
+              label="درحال بررسی"
+              className="checkbox-accent"
+              containerClassName="w-fit"
+              checked={searchParams.get("status") === "processing"}
+              onChange={(e) => {
+                if (e.currentTarget.checked) {
+                  searchParams.set("status", "processing");
+                  setSearchParams(searchParams);
+                } else {
+                  searchParams.delete("status");
+                  setSearchParams(searchParams);
+                }
+              }}
+            />
+            <Checkbox
+              label="بسته شده"
+              className="checkbox-accent"
+              containerClassName="w-fit"
+              checked={searchParams.get("status") === "closed"}
+              onChange={(e) => {
+                if (e.currentTarget.checked) {
+                  searchParams.set("status", "closed");
+                  setSearchParams(searchParams);
+                } else {
+                  searchParams.delete("status");
+                  setSearchParams(searchParams);
+                }
+              }}
+            />
+          </div>
+        </div>
+      </FilterDialog>
     </Fragment>
   );
 }
